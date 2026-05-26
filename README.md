@@ -1,121 +1,121 @@
-# A-DAP: Custody-Graph Verification and NDC
+# A-DAP: Verificação por Grafo de Custódia e NDC
 
-This repository contains an early technical note on A-DAP, a custody-graph verification model for opaque AI decision systems.
+Este repositório contém uma nota técnica inicial sobre o A-DAP, um modelo de verificação por grafo de custódia para sistemas opacos de decisão em IA.
 
-A-DAP does not claim to prove hidden AI causality. Instead, it binds observable decision artifacts before action, models their custody as a temporal graph, and defines the Custody Disjunction Number (NDC) as a conservative measure of the structural cost required to falsify observable decision records without detection.
+O A-DAP não afirma provar a causalidade interna oculta de um sistema de IA. Em vez disso, ele vincula artefatos observáveis de decisão antes da ação, modela sua custódia como um grafo temporal e define o Número de Disjunção de Custódia (NDC) como uma medida conservadora do custo estrutural necessário para falsificar registros observáveis de decisão sem detecção.
 
-## Current status
+## Status atual
 
-Working Draft: Technical Note v0.3.1
+Rascunho de trabalho: Nota Técnica v0.3.1
 
-This draft is formal and architectural. It does not yet provide empirical validation across real deployments, nor does it yet provide an implemented min-cut solver for NDC computation.
+Este rascunho é formal e arquitetural. Ele ainda não fornece validação empírica em implantações reais, nem apresenta uma implementação completa de solver min-cut para cálculo do NDC.
 
-## Core thesis
+## Tese central
 
-A-DAP does not prove why an AI system decided.
+O A-DAP não prova por que um sistema de IA decidiu.
 
-It proves what was observably committed before action, measures how many effective custody domains would need to collude, fail, or be compromised for a false observable history to remain acceptable to a declared verifier, and identifies the boundary where falsification ceases to be merely registral and becomes causally indistinguishable.
+Ele prova o que foi observavelmente comprometido antes da ação, mede quantos domínios efetivos de custódia precisariam coludir, falhar ou ser comprometidos para que uma história observável falsa permanecesse aceitável para um verificador declarado, e identifica o limite em que a falsificação deixa de ser apenas registral e se torna causalmente indistinguível.
 
-## Key concepts
+## Conceitos-chave
 
-- Pre-action decision envelope
-- Temporal custody graph
-- Conservative custody-domain collapse
-- Custody Disjunction Number (NDC)
-- Scope commitment
-- Generation evidence
-- Execution evidence
-- Temporal Anchoring Insufficiency
-- Observationally complete causal showcase
-- Envelope Bottleneck
-- Public technical custody layer
+- Envelope de decisão pré-ação
+- Grafo temporal de custódia
+- Colapso conservador de domínios de custódia
+- Número de Disjunção de Custódia (NDC)
+- Compromisso de escopo
+- Evidência de geração
+- Evidência de execução
+- Insuficiência de ancoragem temporal
+- Vitrine causal observacionalmente completa
+- Gargalo do Envelope
+- Camada pública de custódia técnica
 
-## Main claim
+## Afirmação principal
 
-External timestamping, hashing, signatures, or Merkle anchoring alone do not raise NDC above 1 against an internal operator capable of constructing a coherent showcase state before anchoring.
+Carimbo de tempo externo, hashing, assinaturas ou ancoragem Merkle, isoladamente, não elevam o NDC acima de 1 contra um operador interno capaz de construir um estado demonstrativo coerente antes da ancoragem.
 
-NDC greater than 1 requires custody disjunction at the origin of generation, not merely posterior anchoring.
+NDC maior que 1 exige disjunção de custódia na origem da geração, não apenas ancoragem posterior.
 
-In other words, a system does not become structurally verifiable only because its outputs are timestamped after creation. Structural verifiability requires that the creation, commitment, custody, and verification layers are separated in a way that makes retroactive falsification require compromise across disjoint domains.
+Em outras palavras, um sistema não se torna estruturalmente verificável apenas porque seus outputs são carimbados após a criação. A verificabilidade estrutural exige que as camadas de criação, compromisso, custódia e verificação sejam separadas de modo que a falsificação retroativa exija comprometimento de domínios disjuntos.
 
-## What A-DAP does not claim
+## O que o A-DAP não afirma
 
-A-DAP does not prove:
+O A-DAP não prova:
 
-- hidden internal causality;
-- moral legitimacy;
-- fairness;
-- correctness;
-- legal accountability by itself;
-- the truth of declared reasons.
+- causalidade interna oculta;
+- legitimidade moral;
+- justiça/fairness;
+- correção da decisão;
+- accountability jurídica por si só;
+- a verdade das razões declaradas.
 
-A-DAP provides a forensic substrate. Institutional accountability still requires an authority external to the generator.
+O A-DAP fornece um substrato forense. A accountability institucional ainda exige uma autoridade externa ao gerador.
 
-## Envelope Bottleneck
+## Gargalo do Envelope
 
-A-DAP primarily proves non-retroactive alteration after commitment and anchoring.
+O A-DAP prova principalmente a não adulteração retroativa após o compromisso e a ancoragem.
 
-It does not, by itself, prove that the initial envelope faithfully represented everything that occurred at decision time. If the initial record is false, incomplete, or manipulated at write-time, A-DAP may preserve that record with integrity, but it does not transform original falsity into truth.
+Ele não prova, por si só, que o envelope inicial representou fielmente tudo o que ocorreu no momento da decisão. Se o registro inicial nasce falso, incompleto ou manipulado no instante da escrita, o A-DAP pode preservar esse registro com integridade, mas não transforma falsidade original em verdade.
 
-This is the Envelope Bottleneck.
+Esse é o Gargalo do Envelope.
 
-The purpose of A-DAP is therefore not to eliminate trust entirely, but to relocate and distribute trust across public, auditable, and independently verifiable layers.
+Portanto, o objetivo do A-DAP não é eliminar totalmente a confiança, mas relocalizar e distribuir a confiança entre camadas públicas, auditáveis e verificáveis de forma independente.
 
-## Legal trust vs structural verifiability
+## Fé pública vs. verificabilidade estrutural
 
-A-DAP should not be confused with a legal notarial system.
+O A-DAP não deve ser confundido com um sistema notarial ou cartorial.
 
-A digital notary proves through legal public faith. A-DAP verifies through distributed architecture.
+Um cartório digital prova por fé pública. O A-DAP verifica por arquitetura distribuída.
 
-The former concentrates trust in a legally sanctioned authority. The latter distributes trust across public and auditable technical assumptions.
+O primeiro concentra confiança em uma autoridade juridicamente sancionada. O segundo distribui confiança entre premissas técnicas públicas e auditáveis.
 
-A-DAP does not replace courts, regulators, notaries, or institutional authorities. It provides a pre-forensic verification layer that allows an independent auditor to reconstruct technical evidence before that evidence is brought into an institutional forum.
+O A-DAP não substitui tribunais, reguladores, cartórios ou autoridades institucionais. Ele fornece uma camada pré-forense de verificabilidade, permitindo que um auditor independente reconstrua evidências técnicas antes que essas evidências sejam levadas a um foro institucional.
 
-The distinction is:
+A distinção é:
 
-- legal notarial systems answer the legal question of admissibility, authority, and formal recognition;
-- A-DAP answers the adversarial technical question of whether an observable decision record could have been retroactively altered without crossing disjoint custody domains.
+- sistemas notariais respondem à pergunta jurídica sobre admissibilidade, autoridade e reconhecimento formal;
+- o A-DAP responde à pergunta técnica adversarial sobre se um registro observável de decisão poderia ter sido adulterado retroativamente sem atravessar domínios disjuntos de custódia.
 
-These are complementary layers, not competing systems.
+Essas são camadas complementares, não sistemas concorrentes.
 
-## Public Technical Custody Layer
+## Camada Pública de Custódia Técnica
 
-This repository is not a legal notary.
+Este repositório não é um cartório jurídico.
 
-It provides a public technical custody layer for A-DAP artifacts through:
+Ele fornece uma camada pública de custódia técnica para artefatos A-DAP por meio de:
 
-- public versioning;
-- SHA-256 release manifests;
-- signed commit verification instructions;
-- timestamp claim documentation;
-- planned RFC 3161 / ICP-Brasil anchoring;
-- planned OpenTimestamps anchoring;
-- future independent reconstruction through solver-based verification.
+- versionamento público;
+- manifestos SHA-256 de release;
+- instruções de verificação de commits assinados;
+- documentação de reivindicação de carimbo de tempo;
+- ancoragem RFC 3161 / ICP-Brasil planejada;
+- ancoragem OpenTimestamps planejada;
+- futura reconstrução independente por verificação baseada em solver.
 
-The purpose is not to eliminate trust, but to relocate and distribute trust across public, auditable, and independently verifiable layers.
+O objetivo não é eliminar a confiança, mas relocalizá-la e distribuí-la entre camadas públicas, auditáveis e verificáveis de forma independente.
 
-## Proof artifacts
+## Artefatos de prova
 
-The `proofs/` directory contains the initial structure for public custody and external verification artifacts.
+O diretório `proofs/` contém a estrutura inicial para custódia pública e artefatos de verificação externa.
 
-Current proof structure:
+Estrutura atual de prova:
 
-- `proofs/public-key.asc` — public key placeholder for commit and artifact verification
-- `proofs/release-v0.3.1.sha256` — SHA-256 release manifest placeholder
-- `proofs/signed-commit-instructions.md` — instructions for offline commit signature verification
-- `proofs/timestamp-claim.md` — timestamping status and planned anchoring layer
-- `proofs/ots-proof/` — planned OpenTimestamps proof directory
-- `proofs/rfc3161-proof/` — planned RFC 3161 / ICP-Brasil timestamp proof directory
+- `proofs/public-key.asc` — placeholder da chave pública para verificação de commits e artefatos;
+- `proofs/release-v0.3.1.sha256` — placeholder do manifesto SHA-256 da release;
+- `proofs/signed-commit-instructions.md` — instruções para verificação offline de assinatura de commit;
+- `proofs/timestamp-claim.md` — status de carimbo de tempo e camada de ancoragem planejada;
+- `proofs/ots-proof/` — diretório de provas OpenTimestamps planejado;
+- `proofs/rfc3161-proof/` — diretório de provas RFC 3161 / ICP-Brasil planejado.
 
-These files do not yet constitute completed external proof. They define the proof surface and declare the intended verification layers.
+Esses arquivos ainda não constituem uma prova externa completa. Eles definem a superfície de prova e declaram as camadas de verificação pretendidas.
 
-## Verification model
+## Modelo de verificação
 
-A-DAP distinguishes between platform-visible trust and independently reconstructible proof.
+O A-DAP distingue entre confiança visível na plataforma e prova reconstruível de forma independente.
 
-For example, GitHub's "Verified" badge is a convenience layer. The independently verifiable evidence is the cryptographic signature attached to the commit, which can be checked outside GitHub using the relevant public key.
+Por exemplo, o selo “Verified” do GitHub é uma camada de conveniência. A evidência verificável de forma independente é a assinatura criptográfica anexada ao commit, que pode ser verificada fora do GitHub usando a chave pública correspondente.
 
-A future auditor should be able to verify:
+Um futuro auditor deverá ser capaz de verificar:
 
 ```bash
 git verify-commit <commit_hash>
