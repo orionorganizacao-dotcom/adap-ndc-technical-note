@@ -1,0 +1,20 @@
+# SHA-256 Release Manifest
+
+This file will contain SHA-256 hashes for release v0.3.1 artifacts.
+
+Current status: pending final hash generation.
+
+Expected format:
+
+<sha256_hash>  README.md
+<sha256_hash>  technical-note-v0.3.1.md
+<sha256_hash>  references.md
+<sha256_hash>  solver/<file>
+<sha256_hash>  examples/<file>
+
+Purpose:
+This manifest allows independent auditors to verify that the published artifacts have not been modified after release.
+
+Scope limitation:
+A SHA-256 manifest proves integrity of the listed artifacts after hashing.
+It does not prove the truth or correctness of the original content.
