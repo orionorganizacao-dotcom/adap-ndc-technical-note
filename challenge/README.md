@@ -1,58 +1,30 @@
-# A-DAP Public Challenge
+# A-DAP Reconstruction Challenge
 
-This repository does not ask you to trust A-DAP.
+This directory contains public reconstruction challenges for A-DAP.
 
-It asks you to test whether A-DAP evidence can be independently reconstructed, and whether tampering can remain undetected.
+A-DAP does not ask reviewers to trust the author.
 
-## Challenge objective
+It asks reviewers to reconstruct decision evidence, test custody claims, identify oracle boundaries, and determine whether tampering, ambiguity, or incorrect claims can be detected.
 
-A valid public challenge has two possible paths:
+This directory separates two different types of challenge:
 
-1. Reconstruct the registered decision independently.
-2. Modify the decision, envelope, custody trail, or claimed NDC without being detected by the verifier.
+1. **Synthetic Case**
+2. **GCD-001 Adversarial Reconstruction**
 
-Both outcomes are useful.
+They must not be treated as the same thing.
 
-A-DAP does not claim that tampering is impossible. It claims that undetected tampering has a measurable structural cost.
+---
 
-## Current status
+## Why This Separation Matters
 
-The public challenge currently includes:
+The synthetic case is a controlled demonstration.
 
-- public challenge README
-- roadmap
-- synthetic challenge case
-- attack template
-- manual verification instructions
-- tampered examples
-- one-command synthetic verifier
+GCD-001 is the adversarial reconstruction target.
 
-The synthetic case is now automatically verifiable with a one-command Python verifier.
+Mixing the two would weaken the project, because a synthetic case is designed by the author and cannot serve as adversarial validation.
 
-The tampered examples show how changes to inputs, outputs, envelope references, and custody declarations can alter the evidence state.
-
-The verifier validates the original synthetic case and detects the documented tampering examples.
-
-## Challenge structure
+The correct distinction is:
 
 ```text
-challenge/
-  README.md
-  ROADMAP.md
-  attacks/
-    attack-template.md
-  synthetic-case/
-    README.md
-    input.json
-    output.json
-    envelope.json
-    custody.json
-    expected-verdict.json
-    run.md
-    verify_synthetic_case.py
-    tampered/
-      README.md
-      input-risk-score-modified.json
-      output-decision-modified.json
-      envelope-file-reference-modified.json
-      custody-file-list-modified.json
+Synthetic Case = executable demonstration
+GCD-001 = adversarial reconstruction target
