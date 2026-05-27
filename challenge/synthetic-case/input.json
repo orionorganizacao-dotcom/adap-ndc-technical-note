@@ -1,0 +1,7 @@
+{
+  "case_id": "synthetic-001",
+  "decision_context": "Synthetic public challenge case for A-DAP reconstruction.",
+  "input_claim": "Approve low-risk request",
+  "risk_score": 0.12,
+  "threshold": 0.50
+}
