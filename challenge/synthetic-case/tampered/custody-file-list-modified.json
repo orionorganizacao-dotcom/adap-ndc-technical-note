@@ -1,0 +1,12 @@
+{
+  "case_id": "synthetic-001",
+  "custody_model": "synthetic-public-challenge",
+  "created_for": "A-DAP Public Challenge",
+  "files_under_custody": [
+    "input.json",
+    "output.json"
+  ],
+  "custody_claim": "This tampered custody file removes envelope.json from the evidence set.",
+  "verification_note": "A verifier should detect that the custody trail no longer includes the full evidence set required for reconstruction.",
+  "tampering_note": "This file modifies the original custody list by removing envelope.json."
+}
