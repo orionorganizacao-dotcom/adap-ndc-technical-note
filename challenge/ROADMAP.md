@@ -85,9 +85,9 @@ This version documents expected tampering failures, but does not yet execute aut
 
 ## v0.4 — One-command synthetic verifier
 
-Status: pending
+Status: completed
 
-To include:
+Included:
 
 - verification script
 - deterministic reconstruction logic
@@ -95,6 +95,11 @@ To include:
 - clear command instructions
 - validation of the original synthetic case
 - detection of the tampered examples
+
+Files:
+
+- `challenge/synthetic-case/verify_synthetic_case.py`
+- `challenge/synthetic-case/run.md`
 
 Target command:
 
