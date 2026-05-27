@@ -1,0 +1,16 @@
+{
+  "case_id": "synthetic-001",
+  "protocol": "A-DAP",
+  "challenge_version": "0.2",
+  "decision_type": "synthetic_approval",
+  "input_file": "input-modified.json",
+  "output_file": "output.json",
+  "claim": "The decision can be reconstructed from the input and output files.",
+  "tamper_detection_scope": [
+    "input-modified.json",
+    "output.json",
+    "envelope.json"
+  ],
+  "declared_ndc": 1,
+  "tampering_note": "This file modifies the envelope reference from input.json to input-modified.json. A verifier should detect that the declared evidence path no longer matches the original custody set."
+}
