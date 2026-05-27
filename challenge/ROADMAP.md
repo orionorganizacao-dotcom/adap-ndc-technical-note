@@ -21,55 +21,82 @@ Purpose:
 
 ## v0.2 — Executable synthetic case
 
-Status: pending
+Status: completed
 
-To include:
+Included:
 
 - minimal decision input
 - minimal decision output
 - decision envelope
 - custody trail
 - expected verifier result
-- one-command verification script
+- manual verification instructions
+
+Files:
+
+- `challenge/synthetic-case/input.json`
+- `challenge/synthetic-case/output.json`
+- `challenge/synthetic-case/envelope.json`
+- `challenge/synthetic-case/custody.json`
+- `challenge/synthetic-case/expected-verdict.json`
+- `challenge/synthetic-case/run.md`
 
 Success condition:
 
-A third party can clone the repository, run one command, and reproduce the expected verifier result.
+A third party can inspect the case, reconstruct the decision manually, and confirm that the expected verdict is consistent with the declared input, output, envelope, and custody trail.
+
+Current limitation:
+
+This version is manually verifiable, but not yet a full one-command automated verifier.
 
 ## v0.3 — Tampering examples
 
-Status: pending
+Status: completed
 
-To include:
+Included:
 
 - modified input example
 - modified output example
 - modified envelope example
 - modified custody trail example
-- expected verifier failures
+- tampered examples README
+
+Files:
+
+- `challenge/synthetic-case/tampered/README.md`
+- `challenge/synthetic-case/tampered/input-risk-score-modified.json`
+- `challenge/synthetic-case/tampered/output-decision-modified.json`
+- `challenge/synthetic-case/tampered/envelope-file-reference-modified.json`
+- `challenge/synthetic-case/tampered/custody-file-list-modified.json`
+
+Purpose:
+
+- show how small modifications affect the evidence state
+- make tamper detection understandable to third parties
+- prepare the ground for automated verification
 
 Success condition:
 
-A third party can see how small modifications are detected by the verification process.
+A third party can compare the original synthetic case with tampered examples and understand why the expected verdict should fail.
 
-## v0.4 — GCD-001 challenge
+Current limitation:
+
+This version documents expected tampering failures, but does not yet execute automated detection.
+
+## v0.4 — One-command synthetic verifier
 
 Status: pending
 
 To include:
 
-- GCD-001 case documentation
-- claimed NDC
-- reconstruction instructions
-- verifier instructions
-- issue-based challenge process
+- verification script
+- deterministic reconstruction logic
+- expected pass/fail output
+- clear command instructions
+- validation of the original synthetic case
+- detection of the tampered examples
 
-Success condition:
+Target command:
 
-A third party can independently reconstruct the GCD-001 claim or challenge it through a documented attack attempt.
-
-## Principle
-
-This challenge is not a claim of invincibility.
-
-A-DAP gains credibility only when its claims remain open to public reconstruction, adversarial testing, and falsification.
+```bash
+python verify_synthetic_case.py
