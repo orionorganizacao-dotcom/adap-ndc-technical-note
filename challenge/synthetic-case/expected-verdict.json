@@ -1,0 +1,14 @@
+{
+  "case_id": "synthetic-001",
+  "expected_result": "pass",
+  "expected_decision": "approved",
+  "expected_reason": "risk_score is below threshold",
+  "expected_ndc": 1,
+  "files_expected": [
+    "input.json",
+    "output.json",
+    "envelope.json",
+    "custody.json"
+  ],
+  "verifier_expectation": "A verifier should confirm that the output decision is consistent with the input risk_score and threshold, and that all declared evidence files are present."
+}
