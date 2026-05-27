@@ -1,0 +1,18 @@
+# Synthetic Challenge
+
+This is the entry point of the A-DAP Public Challenge.
+
+Its purpose is to provide a minimal and reproducible case that anyone can run quickly.
+
+Goals:
+- reduce friction for first-time testers
+- allow independent reconstruction of the case
+- provide a simple baseline before the GCD-001 challenge
+
+Expected outcome:
+- the verifier should pass on the unmodified case
+- tampering attempts should be detectable by the verifier
+
+Next step:
+- complete this synthetic case first
+- then proceed to the GCD-001 challenge
