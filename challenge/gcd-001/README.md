@@ -1,35 +1,53 @@
-# GCD-001 Reviewer Guidelines
+# GCD-001 Reconstruction Challenge
 
-This document provides guidance for reviewers evaluating submissions to the **GCD-001 External Reconstruction Package**.
+This document defines the planned public reconstruction challenge for **GCD-001**, the first public A-DAP/NDC external reconstruction target.
 
 GCD-001 is a candidate public reconstruction package prepared for independent adversarial review.
 
 At the current stage:
 
-- External disjoint reconstruction is **pending**.
-- Acceptance Committee is **not yet appointed**.
-- Public bounty is **not yet active**.
-- Submission channel is **not yet open**.
+- external disjoint reconstruction is **pending**;
+- Acceptance Committee is **not yet appointed**;
+- public bounty is **not yet active**;
+- submission channel is **not yet open**.
 
-These guidelines define the intended evaluation standard for future external review.
+This document defines the intended challenge structure.
 
-They do not imply that any submission has already been independently accepted.
+It does not imply that the challenge is already active.
 
 ---
 
-## 1. Reviewer Role
+## 1. Challenge Summary
 
-The reviewer’s role is not to defend A-DAP.
-
-The reviewer’s role is to test whether the GCD-001 custody/NDC claim can be:
+The GCD-001 Reconstruction Challenge asks external reviewers to test whether the published GCD-001 custody/NDC claim can be:
 
 - independently reproduced;
 - constructively falsified;
 - shown to be structurally ambiguous.
 
-The reviewer should evaluate the submission according to the published specification, not according to the author’s intent.
+The purpose is not to prove that A-DAP is correct.
+
+The purpose is to expose a specific public custody/NDC claim to independent reconstruction pressure.
+
+---
+
+## 2. Object of the Challenge
+
+The object of the challenge is the published **GCD-001 decision-custody/NDC claim**.
+
+Participants are asked to:
+
+- reconstruct the decision-custody graph;
+- inspect the declared evidence structure;
+- identify oracle-bound claims;
+- compute or challenge the claimed Network Dependency Coefficient;
+- determine whether the published claim qualifies as R1, R2, or R3.
 
 The expected posture is:
 
 ```text
-skeptical by default
+Do not trust the author.
+Reconstruct the graph.
+Compute the cut.
+Challenge the NDC claim.
+Declare the oracle boundary.
