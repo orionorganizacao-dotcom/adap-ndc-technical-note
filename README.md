@@ -44,7 +44,7 @@ A-DAP addresses this problem by separating:
 
 The goal is not blind transparency.
 
-The goal is **independent reconstruction**.
+The goal is independent reconstruction.
 
 ---
 
