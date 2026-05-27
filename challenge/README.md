@@ -24,21 +24,33 @@ The public challenge currently includes:
 - synthetic challenge case
 - attack template
 - manual verification instructions
+- tampered examples
 
 The synthetic case is manually verifiable.
 
-The next step is to add tampering examples and then a one-command verifier.
+The tampered examples show how changes to inputs, outputs, envelope references, and custody declarations can alter the evidence state.
 
-## How to participate
+The next step is to add a one-command verifier.
 
-Clone the repository, inspect the challenge case, and try to break the claim.
+## Challenge structure
 
-If you can reconstruct the evidence, document your result.
-
-If you can falsify or modify the case without detection, open an issue explaining your method.
-
-## Principle
-
-Do not trust the author.
-
-Reconstruct the evidence, or falsify it without detection.
+```text
+challenge/
+  README.md
+  ROADMAP.md
+  attacks/
+    attack-template.md
+  synthetic-case/
+    README.md
+    input.json
+    output.json
+    envelope.json
+    custody.json
+    expected-verdict.json
+    run.md
+    tampered/
+      README.md
+      input-risk-score-modified.json
+      output-decision-modified.json
+      envelope-file-reference-modified.json
+      custody-file-list-modified.json
