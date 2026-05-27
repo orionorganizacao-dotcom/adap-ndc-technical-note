@@ -1,0 +1,8 @@
+{
+  "case_id": "synthetic-001",
+  "decision": "rejected",
+  "reason": "decision was modified from approved to rejected without changing the original input evidence",
+  "risk_score": 0.12,
+  "threshold": 0.50,
+  "tampering_note": "This file modifies the original decision from approved to rejected while keeping the original risk_score below the threshold."
+}
