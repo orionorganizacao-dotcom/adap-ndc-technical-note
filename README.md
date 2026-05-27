@@ -1,180 +1,84 @@
 # A-DAP: Verifiability Architecture for Auditable Decisions
 
-A-DAP — Auditable Decision Accountability Protocol — is an architectural protocol for making AI decision evidence independently reconstructible, falsifiable, and externally verifiable.
+**A-DAP** — **Auditable Decision Accountability Protocol** — is a structural approach for making high-stakes automated decisions externally reconstructible, independently challengeable, and resistant to post-hoc manipulation.
 
-This repository is the main public technical access point for the A-DAP / NDC work.
+This repository is the **public technical home of A-DAP**.
 
-It does not ask readers to trust the author.
+It does not ask readers to trust the author, the model, the log, or the institution operating the system.
 
-It asks readers to inspect the evidence, reconstruct the decision-custody process, and test whether an alteration could remain undetected.
+It provides a layered structure for:
 
----
+- technical analysis;
+- reconstruction challenges;
+- attack templates;
+- proof material;
+- architectural objections;
+- independent review.
 
-## Main Thesis
+The central claim is simple:
 
-AI governance cannot rely only on explanations, logs, screenshots, dashboards, or after-the-fact documentation.
-
-For high-impact AI systems, the central question is not only:
-
-“Why did the system make this decision?”
-
-The harder question is:
-
-“Can an independent third party reconstruct and verify the evidence that existed at the moment the decision was made?”
-
-A-DAP addresses this problem through a decision-custody architecture.
-
-The protocol separates:
-
-- decision input
-- decision output
-- decision envelope
-- custody process
-- verification evidence
-- expected verdict
-- oracle boundaries
-
-The goal is not to prove that a decision was correct.
-
-The goal is to make decision evidence independently reconstructible and structurally difficult to alter without detection.
+> Auditability is not a report generated after a decision.  
+> Auditability is an architectural condition that must exist before the decision can be trusted.
 
 ---
 
-## What A-DAP Claims
+## 1. Problem Statement
 
-A-DAP does not claim that tampering is impossible.
+Modern AI and automated decision systems often produce decisions, logs, explanations, and internal records inside the same operational boundary.
 
-A-DAP claims that undetected tampering should have a measurable structural cost.
+This creates a structural problem:
 
-A-DAP does not replace legal accountability, institutional review, or regulatory authority.
+> the same system that decides may also record, explain, and validate its own decision.
 
-It provides a verifiability layer that can support them.
+When this happens, auditability becomes fragile.
 
-A-DAP does not require opening the internal model.
+A system may appear documented while still being externally unverifiable.
 
-It focuses on the evidence surrounding a decision.
+A-DAP addresses this problem by separating:
 
-This includes artifacts such as:
+- the decision;
+- the evidence of the decision;
+- the reconstruction path;
+- the verification boundary;
+- the challenge process.
 
-- canonical decision envelopes
-- hashes
-- signatures
-- timestamp anchors
-- hash-chain integrity
-- input hashes
-- policy hashes
-- externally published commitments
-- deterministic reconstruction procedures
-- expected verdicts
-- oracle boundaries
+The goal is not blind transparency.
+
+The goal is **independent reconstruction**.
 
 ---
 
-## Oracle Boundary
+## 2. Core Thesis
 
-A-DAP does not claim to make AI decisions fully trustless.
+A-DAP is based on the following thesis:
 
-Its verifiable core applies to decision records, not to decision truth.
+> A decision cannot be considered meaningfully auditable if the only party capable of reconstructing its evidentiary path is the same system or institution that produced it.
 
-This means A-DAP can independently verify artifacts such as:
+In practical terms:
 
-- canonical decision envelopes
-- hashes
-- signatures
-- timestamp anchors
-- hash-chain integrity
-- input hashes
-- policy hashes
-- externally published commitments
-- deterministic record reconstruction
+- logs are not enough;
+- explanations are not enough;
+- screenshots are not enough;
+- internal dashboards are not enough;
+- self-attestation is not enough.
 
-However, A-DAP does not prove by itself:
-
-- that the input was true in the real world
-- that the model actually executed the decision
-- that the model state was real
-- that the declared agent identity was institutionally valid
-- that the policy was legally valid or in force
-- that the explanation reflects real internal causality
-- that the decision was correct, fair, or legitimate
-
-These claims remain oracle-bound unless separately supported by external evidence.
-
-In summary:
-
-A-DAP makes decision records independently reconstructible as records.
-
-It separates what can be cryptographically verified from what remains dependent on external oracles.
-
-The correct claim is not that A-DAP proves decision truth.
-
-The correct claim is that A-DAP proves what was committed about a decision, when it was committed, by which cryptographic key, and whether that commitment was altered after the fact.
+A decision becomes auditable only when an external party can reconstruct, inspect, challenge, or falsify the evidentiary path under defined conditions.
 
 ---
 
-## Current Verification Status
+## 3. What This Repository Contains
 
-This repository currently provides a structured public challenge for independent reconstruction.
+This repository is organized as a layered technical structure.
 
-It does not claim that independent reconstruction has already occurred.
-
-At this stage, the repository demonstrates:
-
-- a public decision-custody architecture
-- challenge materials for GCD-001
-- reconstruction specifications
-- reviewer guidelines
-- submission templates
-- proof artifacts anchored outside GitHub
-- a technical note describing the NDC and detectability model
-
-The repository becomes external evidence only when an independent third party clones the repository, reconstructs or challenges the GCD-001 claim, submits the result, and that result can be reviewed without relying on the maintainer.
-
-Until then, the correct claim is:
-
-A-DAP has produced an externally reconstructible challenge, not yet an externally validated reconstruction.
-
----
-
-## Current Public Challenge
-
-The repository includes the A-DAP Reconstruction Challenge — GCD-001.
-
-The challenge invites independent reviewers to reconstruct the GCD-001 decision-custody graph, compute or challenge the claimed Network Dependency Coefficient (NDC), and classify the result under one of three admissible outcomes:
-
-- R1 — Reproduction
-- R2 — Falsification
-- R3 — Structural Ambiguity
-
-This challenge is not designed to prove that A-DAP is correct.
-
-It is designed to make the GCD-001 claim independently reconstructible, falsifiable, or correctable.
-
-Key files:
-
-- `challenge/gcd-001/gcd-001-reconstruction-challenge.md`
-
-  Defines the public reconstruction challenge, eligible outcomes, prize structure, acceptance mechanism, author non-voting rule, and submission requirements.
-
-- `challenge/gcd-001/gcd-001-reconstruction-spec.md`
-
-  Defines how an external verifier should reconstruct the GCD-001 decision-custody graph, compute or challenge the claimed NDC, and distinguish independent reconstruction from simple execution of author-provided scripts.
-
-- `challenge/gcd-001/submission-template.md`
-
-  Provides the required structure for external submissions.
-
-- `challenge/gcd-001/reviewer-guidelines.md`
-
-  Provides criteria for reviewers evaluating reconstruction submissions.
-
----
-
-## Core Reconstruction Principle
-
-```txt
-Do not trust the author.
-Reconstruct the graph.
-Compute the cut.
-Challenge the NDC claim.
-Declare the oracle boundary.
+```text
+adap-ndc-technical-note/
+├── architecture/
+├── challenge/
+├── examples/
+├── proofs/
+├── solver/
+├── README.md
+├── references.md
+├── technical-note-v0.3.1.md
+├── oracle-boundary.md
+└── oracle-boundary-short.md
