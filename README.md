@@ -16,11 +16,11 @@ AI governance cannot rely only on explanations, logs, screenshots, dashboards, o
 
 For high-impact AI systems, the central question is not only:
 
-> “Why did the system make this decision?”
+“Why did the system make this decision?”
 
 The harder question is:
 
-> “Can an independent third party reconstruct and verify the evidence that existed at the moment the decision was made?”
+“Can an independent third party reconstruct and verify the evidence that existed at the moment the decision was made?”
 
 A-DAP addresses this problem through a decision-custody architecture.
 
@@ -53,6 +53,20 @@ It provides a verifiability layer that can support them.
 A-DAP does not require opening the internal model.
 
 It focuses on the evidence surrounding a decision.
+
+This includes artifacts such as:
+
+- canonical decision envelopes
+- hashes
+- signatures
+- timestamp anchors
+- hash-chain integrity
+- input hashes
+- policy hashes
+- externally published commitments
+- deterministic reconstruction procedures
+- expected verdicts
+- oracle boundaries
 
 ---
 
@@ -98,15 +112,39 @@ The correct claim is that A-DAP proves what was committed about a decision, when
 
 ---
 
+## Current Verification Status
+
+This repository currently provides a structured public challenge for independent reconstruction.
+
+It does not claim that independent reconstruction has already occurred.
+
+At this stage, the repository demonstrates:
+
+- a public decision-custody architecture
+- challenge materials for GCD-001
+- reconstruction specifications
+- reviewer guidelines
+- submission templates
+- proof artifacts anchored outside GitHub
+- a technical note describing the NDC and detectability model
+
+The repository becomes external evidence only when an independent third party clones the repository, reconstructs or challenges the GCD-001 claim, submits the result, and that result can be reviewed without relying on the maintainer.
+
+Until then, the correct claim is:
+
+A-DAP has produced an externally reconstructible challenge, not yet an externally validated reconstruction.
+
+---
+
 ## Current Public Challenge
 
-The repository includes the **A-DAP Reconstruction Challenge — GCD-001**.
+The repository includes the A-DAP Reconstruction Challenge — GCD-001.
 
 The challenge invites independent reviewers to reconstruct the GCD-001 decision-custody graph, compute or challenge the claimed Network Dependency Coefficient (NDC), and classify the result under one of three admissible outcomes:
 
-- **R1 — Reproduction**
-- **R2 — Falsification**
-- **R3 — Structural Ambiguity**
+- R1 — Reproduction
+- R2 — Falsification
+- R3 — Structural Ambiguity
 
 This challenge is not designed to prove that A-DAP is correct.
 
@@ -114,17 +152,27 @@ It is designed to make the GCD-001 claim independently reconstructible, falsifia
 
 Key files:
 
-- [`gcd-001-reconstruction-challenge.md`](gcd-001-reconstruction-challenge.md)  
+- `challenge/gcd-001/gcd-001-reconstruction-challenge.md`
+
   Defines the public reconstruction challenge, eligible outcomes, prize structure, acceptance mechanism, author non-voting rule, and submission requirements.
 
-- [`gcd-001-reconstruction-spec.md`](gcd-001-reconstruction-spec.md)  
+- `challenge/gcd-001/gcd-001-reconstruction-spec.md`
+
   Defines how an external verifier should reconstruct the GCD-001 decision-custody graph, compute or challenge the claimed NDC, and distinguish independent reconstruction from simple execution of author-provided scripts.
+
+- `challenge/gcd-001/submission-template.md`
+
+  Provides the required structure for external submissions.
+
+- `challenge/gcd-001/reviewer-guidelines.md`
+
+  Provides criteria for reviewers evaluating reconstruction submissions.
 
 ---
 
 ## Core Reconstruction Principle
 
-```text
+```txt
 Do not trust the author.
 Reconstruct the graph.
 Compute the cut.
