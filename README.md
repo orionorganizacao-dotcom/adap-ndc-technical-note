@@ -6,7 +6,7 @@ Este repositório é o principal ponto de acesso público para o trabalho técni
 
 Não exige que os leitores confiem no autor.
 
-O teste pede que eles examinem as evidências, reconstruam o processo de tomada de decisão e testem se a adulteração pode permanecer indetectável.
+O teste pede que eles examinem as evidências, reconstruam o processo de custódia da decisão e testem se uma adulteração pode permanecer indetectável.
 
 ---
 
@@ -33,6 +33,7 @@ O protocolo separa:
 - evidência de verificação
 - veredicto esperado
 - tentativas de falsificação
+- fronteiras de oráculo
 
 O objetivo não é provar que a decisão foi correta.
 
@@ -40,19 +41,19 @@ O objetivo é tornar as evidências da decisão reconstruíveis de forma indepen
 
 ---
 
-## O que a A-DAP afirma
+## O que o A-DAP afirma
 
-A A-DAP não afirma que a adulteração seja impossível.
+O A-DAP não afirma que a adulteração seja impossível.
 
-A A-DAP afirma que adulterações não detectadas devem ter um custo estrutural mensurável.
+O A-DAP afirma que adulterações não detectadas devem ter um custo estrutural mensurável.
 
-O A-DAP não substitui a responsabilidade legal, a revisão institucional ou a autoridade regulatória.
+O A-DAP não substitui responsabilidade legal, revisão institucional ou autoridade regulatória.
 
-Ele fornece uma camada de verificabilidade que pode suportá-los.
+Ele fornece uma camada de verificabilidade que pode apoiá-las.
 
 O A-DAP não requer a abertura do modelo interno.
 
-Concentra-se no conjunto de evidências que envolvem uma decisão.
+Ele se concentra no conjunto de evidências que envolve uma decisão.
 
 ---
 
@@ -88,7 +89,7 @@ Essas afirmações permanecem dependentes de oráculos, salvo quando apoiadas se
 
 Essa distinção está formalizada na nota:
 
-[Leia a GCD-001 Oracle Boundary Note](./oracle-boundary.md)
+[GCD-001 Oracle Boundary Note](./oracle-boundary.md)
 
 Em resumo:
 
@@ -102,171 +103,32 @@ A afirmação correta é que o A-DAP prova o que foi comprometido sobre uma deci
 
 ---
 
-## Por que isso é importante?
+## Notas Técnicas Centrais
 
-Muitas abordagens de governança de IA dependem de registros internos, explicações de modelos, relatórios de auditoria ou confiança institucional.
+Este repositório atualmente inclui três notas técnicas centrais que definem o escopo, os limites e o caminho de reconstrução do A-DAP:
 
-Esses mecanismos podem ser úteis, mas muitas vezes permanecem dentro do sistema ou sob o controle da mesma organização que tomou a decisão.
+- [GCD-001 Oracle Boundary Note](./oracle-boundary.md)  
+  Define o que o A-DAP consegue reconstruir de forma independente e o que permanece dependente de oráculos por desenho.
 
-O A-DAP foi projetado com base em um princípio diferente:
+- [GCD-001 Oracle Boundary Note — Short Version](./oracle-boundary-short.md)  
+  Fornece uma versão curta em inglês para revisores externos.
 
-A verificação não deve depender apenas da confiança no sistema que tomou a decisão.
+- [GCD-001 Reconstruction Specification](./gcd-001-reconstruction-spec.md)  
+  Define como um verificador externo deve reconstruir o grafo de custódia de decisão, calcular ou desafiar o NDC alegado e distinguir reconstrução independente de simples execução de scripts fornecidos pelo autor.
 
-Para IA de alto risco, as evidências em torno de uma decisão devem ser reconstruíveis fora dos limites originais do sistema.
+Juntos, esses documentos estabelecem uma distinção crítica:
 
----
+O A-DAP não prova a verdade da decisão.
 
-## O que é verificado
+O A-DAP torna registros de decisão reconstruíveis de forma independente enquanto registros.
 
-O A-DAP permite verificar:
+Ele separa o que pode ser verificado criptograficamente daquilo que permanece dependente de oráculos externos.
 
-- se o envelope de decisão foi preservado
-- se os hashes correspondem aos artefatos originais
-- se a cadeia de custódia permanece consistente
-- se uma assinatura criptográfica é válida
-- se um commitment foi alterado depois do registro
-- se a evidência reconstruída corresponde ao veredicto esperado
-- se uma tentativa de adulteração muda o resultado da verificação
-
-O A-DAP não verifica automaticamente:
-
-- verdade factual do mundo externo
-- legitimidade jurídica da decisão
-- intenção humana
-- validade institucional completa
-- causalidade interna total do modelo
-- justiça moral da decisão
-
-Esses elementos podem exigir revisão humana, institucional, jurídica ou regulatória.
-
-O papel do A-DAP é tornar a camada técnica de evidência mais verificável, menos dependente de confiança e mais resistente à adulteração silenciosa.
-
----
-
-## NDC: Custo de Não Detecção
-
-O conceito central deste repositório é o NDC:
-
-Non-Detection Cost.
-
-NDC mede o custo estrutural necessário para adulterar um grafo de custódia de decisão sem que a adulteração seja detectada.
-
-Em vez de perguntar apenas se um registro existe, o NDC pergunta:
-
-“Quanto teria que ser alterado para que uma falsificação permanecesse consistente?”
-
-Quanto maior o custo estrutural de falsificação indetectável, mais forte é a custódia da decisão.
-
-Quanto menor o custo, mais frágil é a alegação de auditabilidade.
-
----
-
-## A-DAP e Proof-of-Work
-
-Existe uma analogia limitada, mas útil, entre A-DAP e proof-of-work.
-
-No Bitcoin, a segurança vem do custo de reescrever o histórico sem ser detectado.
-
-No A-DAP, o NDC mede o custo estrutural de alterar a custódia de uma decisão sem quebrar a consistência verificável.
-
-Mas há uma diferença essencial:
-
-Bitcoin verifica um universo fechado.
-
-O ledger do Bitcoin não precisa provar que uma transação corresponde a uma verdade externa. Ele só precisa verificar se a transação é válida dentro do próprio ledger.
-
-O A-DAP opera em um mundo aberto.
-
-Decisões de IA envolvem entradas, agentes, políticas, modelos, estados, ambientes de execução e fatos externos.
-
-Por isso, o A-DAP não herda a trustlessness completa do Bitcoin.
-
-O A-DAP herda apenas a intuição estrutural:
-
-aumentar o custo de falsificação indetectável.
-
-A fronteira entre registro verificável e verdade externa deve ser declarada explicitamente.
-
----
-
-## Regimes de verificação
-
-O A-DAP separa três regimes:
-
-### Regime I — Verificação fechada
-
-Artefatos que podem ser verificados sem referência ao mundo externo.
-
-Exemplos:
-
-- hashes
-- assinaturas
-- envelopes canônicos
-- cadeias de hash
-- integridade de ledger
-- reconstrução determinística de digests
-
-Esse regime verifica integridade de registro.
-
-Não verifica verdade da decisão.
-
-### Regime II — Verificação ancorada externamente
-
-Artefatos cuja força depende de uma âncora externa.
-
-Exemplos:
-
-- RFC 3161 timestamp
-- OpenTimestamps
-- âncoras em blockchain pública
-- publicação externa de Merkle roots
-- múltiplas autoridades independentes de tempo
-
-Esse regime fortalece anterioridade e integridade temporal.
-
-Não prova a verdade do conteúdo registrado.
-
-### Regime III — Afirmações dependentes de oráculo
-
-Afirmações que não podem ser reconstruídas apenas a partir de artefatos criptográficos.
-
-Exemplos:
-
-- verdade do input no mundo real
-- identidade real do agente
-- custódia operacional da chave
-- execução real do modelo
-- estado real do modelo
-- causalidade interna da inferência
-- validade jurídica da política
-- legitimidade ou correção da decisão
-
-Essas afirmações devem ser declaradas como fronteiras de oráculo.
-
-Não devem ser escondidas dentro do ledger.
-
----
-
-## O que este repositório contém
-
-Este repositório reúne os materiais técnicos públicos do A-DAP, incluindo:
-
-- nota técnica principal
-- modelo conceitual do protocolo
-- estrutura de verificação
-- análise de NDC
-- mapa de fronteiras de oráculo
-- exemplos de reconstrução
-- desafio público de verificabilidade
-- materiais para revisão externa
-
-O objetivo é permitir que terceiros avaliem a arquitetura sem depender da autoridade do autor.
-
----
-
-## Estado do repositório
-
-Versão pública atual:
+O padrão correto de revisão é:
 
 ```text
-A-DAP Public Challenge v0.4
+Não confie no autor.
+Reconstrua o grafo.
+Calcule o corte.
+Desafie o NDC.
+Declare a fronteira de oráculo.
