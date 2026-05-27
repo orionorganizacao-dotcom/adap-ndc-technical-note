@@ -1,0 +1,12 @@
+{
+  "case_id": "synthetic-001",
+  "custody_model": "synthetic-public-challenge",
+  "created_for": "A-DAP Public Challenge",
+  "files_under_custody": [
+    "input.json",
+    "output.json",
+    "envelope.json"
+  ],
+  "custody_claim": "The listed files define the minimal evidence set required to reconstruct the synthetic decision.",
+  "verification_note": "Any modification to the listed files should alter the reconstructed evidence state and require verifier detection."
+}
