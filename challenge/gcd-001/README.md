@@ -1,53 +1,82 @@
-# GCD-001 External Reconstruction Package
+# A-DAP: Auditable Decision Accountability Protocol
 
-This directory contains the external reconstruction package for **GCD-001**, the first public A-DAP/NDC reconstruction target.
+A-DAP is an architectural protocol for making AI decision evidence independently reconstructible, falsifiable, and externally verifiable.
 
-GCD-001 is not a synthetic demonstration.
+This repository is the main public technical access point for A-DAP/NDC work.
 
-It is a candidate public reconstruction package prepared for independent adversarial review.
+It does not ask readers to trust the author.
 
-Until external reviewers are named and submissions are evaluated by a non-author committee, no result in this directory should be described as independently validated.
-
----
-
-## Current Status
-
-Status: **candidate external reconstruction package**.
-
-External disjoint reconstruction: **pending**.
-
-Acceptance Committee: **not yet appointed**.
-
-Public bounty: **not yet active**.
-
-Submission channel: **not yet open**.
-
-No claim in this directory should be interpreted as independently validated until reviewed by external parties under published challenge rules.
-
-This repository currently prepares the materials required for external review.
-
-It does not yet claim that such review has occurred.
+It asks them to inspect the evidence, reconstruct the decision-custody process, and test whether undetected alteration has a measurable structural cost.
 
 ---
 
-## Purpose
+## Main Thesis
 
-The purpose of this directory is to expose the GCD-001 custody/NDC claim to external reconstruction pressure.
+AI governance cannot rely only on explanations, logs, screenshots, dashboards, or after-the-fact documentation.
 
-External reviewers will be invited to:
+For high-impact AI systems, the central question is not only:
 
-- reconstruct the GCD-001 decision-custody graph;
-- inspect the declared evidence structure;
-- compute or challenge the claimed Network Dependency Coefficient (NDC);
-- identify oracle-bound claims;
-- detect specification ambiguity;
-- submit one of three admissible outcomes: R1, R2, or R3.
+```text
+Why did the system make this decision?
+```
 
-The goal is not to prove that A-DAP is correct.
+The harder question is:
 
-The goal is to make the GCD-001 claim independently reconstructible, falsifiable, or correctable.
+```text
+Can an independent third party reconstruct and verify the evidence that existed when the decision was made?
+```
 
-At the current stage, this package is prepared for external reconstruction, but the formal challenge is not yet active.
+A-DAP addresses this problem through a decision-custody architecture.
+
+The protocol separates:
+
+- decision input;
+- decision output;
+- decision envelope;
+- custody graph;
+- verification evidence;
+- expected verdict;
+- oracle boundaries.
+
+The objective is not to prove that a decision was correct.
+
+The objective is to make the evidence surrounding a decision independently reconstructible and structurally difficult to alter without detection.
+
+---
+
+## What A-DAP Claims
+
+A-DAP does not claim that tampering is impossible.
+
+A-DAP claims that undetected tampering should have a measurable structural cost.
+
+A-DAP does not replace legal responsibility, institutional review, regulatory authority, or human accountability.
+
+It provides a verification layer that can support them.
+
+A-DAP does not require opening the internal model.
+
+It focuses on the evidence structure surrounding a decision.
+
+---
+
+## What A-DAP Does Not Claim
+
+A-DAP does not prove by itself:
+
+- that the original decision was true;
+- that the original decision was fair;
+- that the original decision was lawful;
+- that the input was true in the real world;
+- that the model actually executed the decision;
+- that the declared model state was real;
+- that the declared agent identity was institutionally valid;
+- that the policy was legally valid or in force;
+- that the explanation reflects real internal causality.
+
+These claims remain oracle-bound unless separately supported by external evidence.
+
+A-DAP separates what can be verified cryptographically from what still depends on external institutions, witnesses, systems, or real-world facts.
 
 ---
 
@@ -61,52 +90,260 @@ Challenge the NDC claim.
 Declare the oracle boundary.
 ```
 
-A valid reconstruction must not depend on the author’s authority.
+---
 
-A valid reconstruction must be inspectable, reproducible, and independent of author-controlled tools for the primary computation path.
+## Key Concepts
+
+### Decision Envelope
+
+A structured pre-action or action-bound record containing decision-relevant artifacts.
+
+A decision envelope may include references to:
+
+- inputs;
+- outputs;
+- policies;
+- model references;
+- hashes;
+- signatures;
+- timestamps;
+- custody declarations;
+- expected verdicts.
+
+The envelope is not automatically proof of decision truth.
+
+It is a structured object for reconstruction.
 
 ---
 
-## What GCD-001 Is
+### Custody Graph
 
-GCD-001 is a decision-custody reconstruction case.
+A graph representing dependency, control, evidence, and alteration paths around a decision claim.
 
-It focuses on the evidence structure surrounding a decision claim, not on whether the original decision was true, fair, lawful, or correct.
+The custody graph helps reviewers inspect which parts of the evidence structure would need to be altered to change the claim without detection.
 
-GCD-001 asks whether a third party can reconstruct the custody graph and evaluate the claimed NDC using the published specification.
+---
 
-The relevant question is:
+### Network Dependency Coefficient — NDC
+
+NDC is a structural dependency measure computed from the minimum sufficient vertex-cut required to alter a decision-custody graph without detection by the verifier.
+
+In simplified form:
 
 ```text
-Can the published GCD-001 NDC claim be independently reproduced, falsified, or shown to be structurally underspecified?
+NDC = minimum sufficient vertex-cut for undetected alteration
+```
+
+A higher NDC may indicate that undetected alteration requires compromising more independent parts of the custody structure.
+
+A lower NDC may indicate an evidence bottleneck, weak custody structure, or excessive dependency on a single authority.
+
+NDC is not a full governance score.
+
+It is a structural measure for a specific custody claim.
+
+---
+
+### Oracle Boundary
+
+The oracle boundary separates what can be independently reconstructed from the published artifacts from what depends on external truth sources.
+
+A-DAP may help verify:
+
+- canonical envelopes;
+- hashes;
+- signatures;
+- timestamp anchors;
+- hash-chain integrity;
+- policy hashes;
+- custody declarations;
+- graph declarations;
+- externally published commitments;
+- deterministic reconstruction paths.
+
+A-DAP does not by itself verify:
+
+- real-world truth;
+- fairness;
+- legality;
+- legitimacy;
+- institutional authority;
+- internal model causality.
+
+---
+
+## Repository Status
+
+This repository currently contains the technical scaffold for A-DAP/NDC reconstruction work.
+
+Current status:
+
+```text
+Technical notes: available
+Synthetic case: available
+GCD-001 external reconstruction package: available
+External disjoint reconstruction: pending
+Acceptance Committee: not yet appointed
+Public bounty: not yet active
+Submission channel: not yet open
+```
+
+No claim in this repository should be interpreted as independently validated unless it has been reviewed by external parties under published review rules.
+
+---
+
+## Repository Structure
+
+```text
+.
+├── README.md
+├── technical-note-v0.3.1.md
+├── references.md
+├── oracle-boundary.md
+├── oracle-boundary-short.md
+├── architecture/
+├── examples/
+├── proofs/
+├── solver/
+└── challenge/
+    ├── README.md
+    ├── ROADMAP.md
+    ├── attacks/
+    │   └── attack-template.md
+    ├── synthetic-case/
+    │   ├── README.md
+    │   ├── input.json
+    │   ├── output.json
+    │   ├── envelope.json
+    │   ├── custody.json
+    │   ├── expected-verdict.json
+    │   ├── run.md
+    │   ├── verify_synthetic_case.py
+    │   └── tampered/
+    └── gcd-001/
+        ├── README.md
+        ├── reconstruction-spec.md
+        ├── reconstruction-challenge.md
+        ├── submission-template.md
+        └── reviewer-guidelines.md
 ```
 
 ---
 
-## What GCD-001 Is Not
+## Main Technical Notes
 
-GCD-001 is not:
+### `technical-note-v0.3.1.md`
 
-- proof that the original decision was correct;
-- proof that the original decision was fair;
-- proof that the original decision was lawful;
-- proof that the dataset was morally or legally appropriate;
-- proof that A-DAP as a whole is validated;
-- proof that NDC alone is a complete governance metric;
-- proof that record integrity equals decision truth;
-- proof that external adversarial review has already occurred.
+Main technical note defining the A-DAP/NDC framing, including:
 
-GCD-001 tests a narrower claim:
-
-```text
-whether a published decision-custody/NDC claim can be independently reconstructed, challenged, or shown to be underspecified.
-```
+- decision custody;
+- structural verifiability;
+- NDC;
+- detectability boundaries;
+- limitations;
+- oracle-bound claims.
 
 ---
 
-## Directory Structure
+### `oracle-boundary.md`
 
-Recommended structure for this directory:
+Defines what A-DAP can independently reconstruct and what remains dependent on external oracles by design.
+
+This distinction is central.
+
+A-DAP does not claim to make AI decisions fully trustless.
+
+Its verifiable core applies to decision records and custody evidence, not to decision truth itself.
+
+---
+
+### `oracle-boundary-short.md`
+
+Short English version of the oracle-boundary note for external reviewers.
+
+Useful for quick review, outreach, and challenge participants.
+
+---
+
+## Public Challenge Area
+
+The `challenge/` directory contains public reconstruction materials.
+
+Its purpose is to expose A-DAP/NDC claims to external testing rather than author-controlled validation.
+
+The challenge area separates two different things:
+
+```text
+Synthetic Case = executable demonstration
+GCD-001 = external reconstruction target
+```
+
+They must not be treated as the same thing.
+
+---
+
+## Synthetic Case
+
+Location:
+
+```text
+challenge/synthetic-case/
+```
+
+The synthetic case is a controlled demonstration.
+
+It shows how A-DAP-style evidence can be represented, verified, and tamper-tested.
+
+It includes:
+
+- input artifact;
+- output artifact;
+- decision envelope;
+- custody declaration;
+- expected verdict;
+- tampered examples;
+- one-command Python verifier.
+
+The synthetic case is useful for demonstrating workflow mechanics.
+
+It is not independent adversarial validation because it was designed by the author.
+
+---
+
+## GCD-001 External Reconstruction Package
+
+Location:
+
+```text
+challenge/gcd-001/
+```
+
+GCD-001 is the first public A-DAP/NDC external reconstruction target.
+
+It is not a synthetic demonstration.
+
+It is a candidate public reconstruction package prepared for independent adversarial review.
+
+The purpose of GCD-001 is to test whether a published decision-custody/NDC claim can be:
+
+- independently reproduced;
+- constructively falsified;
+- shown to be structurally ambiguous.
+
+Current status:
+
+```text
+External disjoint reconstruction: pending
+Acceptance Committee: not yet appointed
+Public bounty: not yet active
+Submission channel: not yet open
+```
+
+No result in `challenge/gcd-001/` should be described as independently validated until reviewed by external parties under published challenge rules.
+
+---
+
+## GCD-001 Files
 
 ```text
 challenge/gcd-001/
@@ -117,92 +354,68 @@ challenge/gcd-001/
 └── reviewer-guidelines.md
 ```
 
-### Files
+### `challenge/gcd-001/README.md`
 
-- `README.md`  
-  Explains the purpose, status, scope, review path, and interpretation of GCD-001.
+Explains the purpose, scope, current status, review path, admissible outcomes, oracle boundary, and minimal honest claim for GCD-001.
 
-- `reconstruction-spec.md`  
-  Defines how an external verifier should reconstruct the GCD-001 decision-custody graph and compute or challenge the claimed NDC.
+### `challenge/gcd-001/reconstruction-spec.md`
 
-- `reconstruction-challenge.md`  
-  Defines the planned public challenge rules, admissible outcomes, prize structure, acceptance mechanism, and author non-voting rule.
+Defines how an external verifier should reconstruct the GCD-001 decision-custody graph and compute or challenge the claimed NDC.
 
-- `submission-template.md`  
-  Provides a standard format for external reviewers submitting R1, R2, or R3 results.
+### `challenge/gcd-001/reconstruction-challenge.md`
 
-- `reviewer-guidelines.md`  
-  Provides evaluation guidance for independent reviewers and future acceptance committee members.
+Defines the planned public challenge structure, admissible outcomes, prize logic, acceptance committee model, author non-voting rule, and disclosure standard.
 
----
+### `challenge/gcd-001/submission-template.md`
 
-## Relationship to the Synthetic Case
+Provides the standard format for external reviewers submitting R1, R2, or R3 results.
 
-The synthetic case and GCD-001 serve different purposes.
+### `challenge/gcd-001/reviewer-guidelines.md`
 
-```text
-Synthetic Case = executable demonstration
-GCD-001 = external reconstruction target
-```
-
-The synthetic case is controlled by the author and exists to demonstrate the reconstruction and tamper-detection workflow.
-
-GCD-001 is the external reconstruction target. It exists to test whether the published custody/NDC claim can survive independent reconstruction pressure.
-
-The synthetic case must not be used as independent validation of A-DAP.
-
-GCD-001 must not be reduced to simply running author-provided scripts.
+Provides evaluation guidance for independent reviewers and future committee members.
 
 ---
 
-## Admissible Review Outcomes
+## Admissible GCD-001 Outcomes
 
-External reviewers must classify their result as one of three admissible outcomes.
-
-At the current stage, these outcomes define the intended review structure.
-
-They do not imply that submissions are already open or that any outcome has been accepted.
-
----
+GCD-001 accepts three useful outcomes.
 
 ### R1 — Reproduction
 
 The claimed NDC is independently reproduced under the published specification.
 
-R1 means:
+Honest claim:
 
 ```text
 The specific GCD-001 NDC claim was reproduced under the published specification.
 ```
 
-R1 does not mean:
-
-- the original decision was true;
-- the original decision was fair;
-- the original decision was lawful;
-- A-DAP as a whole is validated.
-
-R1 is useful because it shows that the published claim can be independently reconstructed under the stated rules.
+R1 does not validate A-DAP as a whole.
 
 ---
 
 ### R2 — Falsification
 
-The claimed NDC is shown to be incorrect.
+The claimed NDC is shown to be incorrect through a constructive demonstration.
 
-A valid R2 submission must provide a constructive demonstration, such as:
+Examples:
 
-- a smaller valid vertex-cut;
-- an invalid edge assumption;
-- an invalid vertex classification;
-- an oracle-bound claim incorrectly counted as verified;
-- a graph reconstruction that contradicts the claimed NDC;
-- an error in the NDC calculation method;
-- a dependency path omitted by the published graph.
+- smaller valid vertex-cut;
+- invalid graph edge;
+- invalid vertex classification;
+- omitted dependency path;
+- oracle-bound claim incorrectly counted as verified;
+- incorrect NDC calculation.
 
-R2 is structurally valuable because falsification improves the protocol.
+Honest claim:
 
-If GCD-001 is falsified, the result should be treated as a successful adversarial finding, not as a failure of the review process.
+```text
+The GCD-001 NDC claim was falsified through a constructive demonstration.
+```
+
+R2 is not a failure of the review process.
+
+It is a successful adversarial finding.
 
 ---
 
@@ -210,328 +423,83 @@ If GCD-001 is falsified, the result should be treated as a successful adversaria
 
 The specification is incomplete or ambiguous enough to prevent deterministic reconstruction.
 
-A valid R3 submission must identify the missing or unstable part of the specification and show how it affects at least one of the following:
+Examples:
 
-- the custody graph;
-- the graph vertices;
-- the graph edges;
-- the A/V role assignment;
-- the minimum vertex-cut;
-- the NDC estimate;
-- the oracle-boundary classification;
-- the reconstruction process.
+- ambiguous canonicalization;
+- missing artifacts;
+- undefined graph vertices;
+- undefined graph edges;
+- unclear A/V role assignment;
+- unclear detection condition;
+- unclear alteration condition;
+- unstable oracle-boundary classification.
 
-R3 is useful because it identifies where the specification must become more precise.
+Honest claim:
 
-If GCD-001 produces R3, the proper response is specification correction, not rhetorical defense.
+```text
+The GCD-001 specification requires correction before deterministic reconstruction is possible.
+```
+
+R3 improves the specification.
 
 ---
 
 ## Independent Implementation Requirement
 
-For GCD-001, reviewers must not rely on the author’s solver, scripts, expected outputs, private infrastructure, or manually asserted conclusions for the primary reconstruction.
+For adversarial reconstruction, reviewers must not rely on author-controlled tools as the primary computation path.
 
-The author’s tools may be used only for secondary comparison after the reviewer has independently reconstructed the graph and computed the relevant cut.
+The author’s tools may be used only for secondary comparison after independent reconstruction.
 
-A valid reconstruction must be executable, inspectable, or reproducible without privileged access to the author.
+A valid reconstruction should be inspectable, reproducible, and independent of author authority.
 
-This requirement exists to prevent the challenge from becoming a self-check performed through author-controlled tools.
+A valid reconstruction must not depend on:
 
----
+- author’s solver;
+- author’s scripts;
+- expected outputs generated by the author;
+- private infrastructure;
+- undocumented author intent;
+- manually asserted conclusions.
 
-## Prohibited Primary Dependencies
-
-The primary reconstruction must not depend on:
-
-- the author’s solver;
-- the author’s scripts;
-- expected output files generated by the author;
-- private infrastructure controlled by the author;
-- undocumented assumptions;
-- manually asserted conclusions by the author.
-
-Use of author-provided tools for comparison after independent reconstruction is allowed, but must be disclosed.
+This requirement exists to prevent self-validation.
 
 ---
 
-## Required Reviewer Deliverables
+## What Counts as Progress
 
-A valid GCD-001 submission should include:
+Progress does not mean only confirmation.
 
-1. **Declared outcome**  
-   The submission must clearly declare one of:
-
-   - R1 — Reproduction
-   - R2 — Falsification
-   - R3 — Structural Ambiguity
-
-2. **Reconstruction code**  
-   Code may be written in any programming language.  
-   It must not use the author’s solver as the primary computation path.
-
-3. **Graph representation**  
-   The reconstructed graph may be submitted as JSON, CSV, DOT, GraphML, Mermaid, an image, or another inspectable format.
-
-4. **Min-cut calculation memo**  
-   The reviewer must explain how the graph was modeled and how the minimum vertex-cut was computed.
-
-5. **Oracle-boundary analysis**  
-   The reviewer must identify claims that cannot be independently reconstructed from the published artifacts.
-
-6. **Technical note**  
-   A 2–5 page document explaining the result and reasoning.
-
-7. **Reproducibility instructions**  
-   The reviewer must provide instructions sufficient for an independent party or committee to inspect, run, or reproduce the submission.
-
-8. **Independence declaration**  
-   The reviewer must disclose whether any author-provided tools were used, and if so, whether they were used only for secondary comparison.
-
-These deliverables define the intended submission standard.
-
-Formal submission is not open until the public challenge notice defines the submission channel, review period, and committee members.
-
----
-
-## Oracle Boundary
-
-A-DAP does not make decision truth fully trustless.
-
-Its verifiable core applies to decision records, not to decision truth.
-
-A-DAP can help verify artifacts such as:
-
-- canonical decision envelopes;
-- hashes;
-- signatures;
-- timestamp anchors;
-- hash-chain integrity;
-- input hashes;
-- policy hashes;
-- custody declarations;
-- graph declarations;
-- externally published commitments;
-- deterministic reconstruction paths.
-
-However, A-DAP does not prove by itself:
-
-- that the input was true in the real world;
-- that the model actually executed the decision;
-- that the model state was real;
-- that the declared agent identity was institutionally valid;
-- that the policy was legally valid or in force;
-- that the explanation reflects real internal causality;
-- that the decision was correct, fair, or legitimate.
-
-These claims remain oracle-bound unless separately supported by external evidence.
-
----
-
-## What Reviewers Must Not Assume
-
-Reviewers must not assume:
-
-- the author’s NDC is correct;
-- the author’s solver is authoritative;
-- the expected output is proof;
-- oracle-bound claims are structurally verified;
-- record integrity equals decision truth;
-- hash integrity equals semantic correctness;
-- timestamp presence equals independent reconstruction;
-- reconstruction success validates A-DAP as a whole;
-- a synthetic-case verifier proves the GCD-001 claim;
-- publication in this repository means independent validation.
-
-The expected reviewer posture is:
+The following outcomes all improve the protocol:
 
 ```text
-skeptical by default
+R1 — reproduction
+R2 — falsification
+R3 — structural ambiguity
 ```
 
----
+A-DAP/NDC becomes stronger when claims can be reconstructed, corrected, or falsified under public rules.
 
-## NDC Calculation
+The worst outcome is not falsification.
 
-NDC is computed as the minimum sufficient vertex-cut required to alter the decision-custody graph without detection by the verifier.
-
-A reviewer must explicitly state:
-
-- the graph model used;
-- the source and target conditions;
-- which vertices are included in the cut;
-- why the cut is sufficient;
-- why a smaller cut is not sufficient;
-- which claims are reconstructible;
-- which claims remain oracle-bound.
-
-If the reviewer finds a smaller valid cut than the claimed one, the result may qualify as R2.
-
-If the reviewer cannot determine the cut because the graph or specification is ambiguous, the result may qualify as R3.
-
----
-
-## Failure Conditions
-
-The reconstruction may fail if:
-
-- canonicalization is ambiguous;
-- artifacts are missing;
-- hashes do not match;
-- graph vertices are undefined;
-- graph edges are undefined;
-- A/V roles are unclear;
-- oracle-bound claims are counted as verified;
-- the verifier cannot independently reproduce the NDC reasoning;
-- the claimed NDC depends on author-controlled tools;
-- the specification permits more than one materially different reconstruction.
-
-Failure is not automatically negative.
-
-A failed reconstruction may indicate that the specification is incomplete, ambiguous, or dependent on unstated assumptions.
-
----
-
-## Acceptance Committee
-
-No Acceptance Committee has been publicly appointed yet.
-
-Until such committee is named, no submission should be described as independently accepted.
-
-The intended committee structure is:
-
-- three publicly named external reviewers;
-- no voting power for the protocol author;
-- skeptical interpretation prevails in case of disagreement.
-
-The committee should evaluate whether a submission qualifies as:
-
-- R1 — Reproduction;
-- R2 — Falsification;
-- R3 — Structural Ambiguity;
-- invalid or incomplete.
-
-The author may perform administrative completeness checks, but should not decide technical acceptance.
-
----
-
-## Author Non-Voting Rule
-
-The protocol author has no voting power over acceptance decisions.
-
-This rule becomes operational only after an independent Acceptance Committee is publicly appointed.
-
-The author may clarify:
-
-- file locations;
-- repository structure;
-- submission logistics;
-- published definitions;
-- administrative completeness.
-
-The author must not decide whether a technical claim is accepted.
-
-This rule exists to prevent adversarial validation from becoming self-validation with extra steps.
-
----
-
-## Administrative Validity Check
-
-Before committee review, a submission may be checked for administrative completeness.
-
-A submission is administratively valid if it includes:
-
-- declared outcome: R1, R2, or R3;
-- reconstruction code;
-- graph representation;
-- min-cut calculation memo;
-- oracle-boundary analysis;
-- 2–5 page technical note;
-- reproducibility instructions;
-- independence declaration.
-
-Administrative validity does not imply technical acceptance.
-
-At the current stage, this section defines the intended administrative standard.
-
-It does not mean that formal submissions are already open.
-
----
-
-## Public Bounty Status
-
-Public bounty status: **not yet active**.
-
-Any prize structure described in `reconstruction-challenge.md` should be interpreted as a proposed or planned challenge mechanism until a formal public notice defines:
-
-- opening date;
-- closing date;
-- prize values;
-- submission channel;
-- committee members;
-- review procedure;
-- payment conditions;
-- public disclosure procedure.
-
-No bounty should be considered active until these conditions are published.
-
----
-
-## Public Disclosure
-
-When the formal challenge is active and completed, the repository should disclose:
-
-- number of submissions received;
-- number of administratively valid submissions;
-- number of accepted R1 outcomes;
-- number of accepted R2 outcomes;
-- number of accepted R3 outcomes;
-- committee decision summary;
-- unresolved ambiguities;
-- specification changes triggered by the challenge.
-
-No result should be described as full validation of A-DAP.
-
----
-
-## Empty Challenge Clause
-
-If no valid external reconstruction is submitted, the challenge does not validate the GCD-001 claim.
-
-It only means that no qualifying external reconstruction was submitted within the challenge period.
-
-A future challenge, direct outreach, workshop review, or independent audit may still be required.
-
-Silence must not be represented as confirmation.
+The worst outcome is untestable self-confirmation.
 
 ---
 
 ## Minimal Honest Claim
 
-GCD-001 is not a proof of decision truth.
-
-It is a test of whether a published decision-custody claim can be independently reconstructed, challenged, or shown to be underspecified.
-
-A successful R1 result means:
+The minimal honest claim for this repository is:
 
 ```text
-The NDC claim was reproduced under the published specification.
+A-DAP is a protocol architecture for making decision evidence independently reconstructible as evidence.
 ```
 
-A successful R2 result means:
+It does not prove decision truth.
 
-```text
-The NDC claim was falsified.
-```
+It does not eliminate the need for legal, institutional, or regulatory authority.
 
-A successful R3 result means:
+It does not ask for trust.
 
-```text
-The specification requires correction before the claim can be deterministically evaluated.
-```
-
-All three outcomes are structurally useful.
-
-At the current stage, no R1, R2, or R3 result has been independently accepted.
+It asks for reconstruction.
 
 ---
 
@@ -540,48 +508,104 @@ At the current stage, no R1, R2, or R3 result has been independently accepted.
 For external reviewers:
 
 1. Read this README.
-2. Read `reconstruction-spec.md`.
-3. Read `reconstruction-challenge.md`.
-4. Inspect the published GCD-001 artifacts.
-5. Reconstruct the custody graph independently.
-6. Compute or challenge the claimed NDC.
-7. Declare oracle boundaries.
-8. Prepare R1, R2, or R3 using `submission-template.md`.
+2. Read `oracle-boundary.md`.
+3. Read `technical-note-v0.3.1.md`.
+4. Inspect `challenge/synthetic-case/`.
+5. Inspect `challenge/gcd-001/README.md`.
+6. Read `challenge/gcd-001/reconstruction-spec.md`.
+7. Read `challenge/gcd-001/reconstruction-challenge.md`.
+8. Use `challenge/gcd-001/submission-template.md` if preparing a submission.
+9. Use `challenge/gcd-001/reviewer-guidelines.md` if evaluating a submission.
 
-The reviewer should not trust the author.
+Reviewer posture:
 
-The reviewer should reconstruct the evidence.
-
-Formal submission should wait until the public challenge notice defines the submission channel and review procedure.
+```text
+Do not trust the author.
+Reconstruct the graph.
+Compute the cut.
+Challenge the NDC claim.
+Declare the oracle boundary.
+```
 
 ---
 
-## Relationship to A-DAP
+## Current Limitations
 
-GCD-001 does not validate A-DAP as a whole.
+This repository is still in an early public technical stage.
 
-GCD-001 tests a specific public reconstruction claim.
+Known limitations:
 
-If the claim survives external reconstruction, it gains evidentiary weight.
+- external disjoint reconstruction is pending;
+- no Acceptance Committee has been appointed;
+- no public bounty is active;
+- no formal submission channel is open;
+- synthetic examples are controlled demonstrations;
+- GCD-001 has not yet been independently accepted as R1, R2, or R3;
+- NDC is a structural metric, not a complete governance theory;
+- A-DAP verifies evidence structure, not decision truth.
 
-If the claim fails, the protocol improves.
+These limitations are part of the protocol’s honest boundary.
 
-If the specification is ambiguous, the specification becomes more precise.
+---
 
-The strongest result for A-DAP is not automatic confirmation.
+## Public Disclosure Standard
 
-The strongest result is a process where confirmation, falsification, and ambiguity are all admissible outcomes.
+Any future public review summary should disclose:
+
+- number of submissions received;
+- number of administratively valid submissions;
+- number of accepted R1 outcomes;
+- number of accepted R2 outcomes;
+- number of accepted R3 outcomes;
+- committee members;
+- unresolved ambiguities;
+- specification changes triggered by review.
+
+No result should be described as full validation of A-DAP.
+
+---
+
+## Empty Challenge Clause
+
+If no valid external reconstruction is submitted, the challenge does not validate GCD-001.
+
+Silence is not confirmation.
+
+An empty challenge means only:
+
+```text
+No qualifying external reconstruction was submitted during the review period.
+```
+
+Further outreach, workshop review, expert review, or independent audit may still be required.
+
+---
+
+## Project Direction
+
+The immediate goal is not commercialization.
+
+The immediate goal is adversarial reconstruction.
+
+Priority sequence:
+
+1. complete public reconstruction materials;
+2. invite external reviewers;
+3. obtain R1, R2, or R3 outcomes;
+4. correct the specification based on adversarial findings;
+5. only then discuss institutional deployment.
+
+The protocol gains legitimacy by surviving independent reconstruction pressure, not by author assertion.
 
 ---
 
 ## Final Principle
 
-GCD-001 is not yet an independently reviewed case.
+A-DAP is not a claim that AI decisions become automatically trustworthy.
 
-It is a public reconstruction package prepared for independent adversarial review.
+A-DAP is a claim that decision evidence can be structured so that third parties can reconstruct what was committed, when it was committed, under which declared custody structure, and where the oracle boundary begins.
 
-It does not prove decision truth.
-
-It does not ask for trust.
-
-It asks for reconstruction.
+```text
+Do not trust the author.
+Reconstruct the evidence.
+```
