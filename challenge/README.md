@@ -25,12 +25,13 @@ The public challenge currently includes:
 - attack template
 - manual verification instructions
 - tampered examples
+- one-command synthetic verifier
 
-The synthetic case is manually verifiable.
+The synthetic case is now automatically verifiable with a one-command Python verifier.
 
 The tampered examples show how changes to inputs, outputs, envelope references, and custody declarations can alter the evidence state.
 
-The next step is to add a one-command verifier.
+The verifier validates the original synthetic case and detects the documented tampering examples.
 
 ## Challenge structure
 
@@ -48,6 +49,7 @@ challenge/
     custody.json
     expected-verdict.json
     run.md
+    verify_synthetic_case.py
     tampered/
       README.md
       input-risk-score-modified.json
