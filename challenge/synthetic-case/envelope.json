@@ -1,0 +1,16 @@
+{
+  "case_id": "synthetic-001",
+  "protocol": "A-DAP",
+  "challenge_version": "0.2",
+  "decision_type": "synthetic_approval",
+  "input_file": "input.json",
+  "output_file": "output.json",
+  "claim": "The decision can be reconstructed from the input and output files.",
+  "tamper_detection_scope": [
+    "input.json",
+    "output.json",
+    "envelope.json"
+  ],
+  "declared_ndc": 1,
+  "note": "This synthetic envelope is intentionally minimal and exists for public reconstruction testing."
+}
