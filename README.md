@@ -1,134 +1,132 @@
-# A-DAP: Protocolo de Responsabilização de Decisões Auditáveis
+# A-DAP: Verifiability Architecture for Auditable Decisions
 
-A-DAP é um protocolo arquitetônico para tornar as evidências de decisão da IA reconstruíveis de forma independente, falsificáveis e verificáveis externamente.
+A-DAP — Auditable Decision Accountability Protocol — is an architectural protocol for making AI decision evidence independently reconstructible, falsifiable, and externally verifiable.
 
-Este repositório é o principal ponto de acesso público para o trabalho técnico do A-DAP.
+This repository is the main public technical access point for the A-DAP / NDC work.
 
-Não exige que os leitores confiem no autor.
+It does not ask readers to trust the author.
 
-O teste pede que eles examinem as evidências, reconstruam o processo de custódia da decisão e testem se uma adulteração pode permanecer indetectável.
-
----
-
-## Tese principal
-
-A governança da IA não pode se basear apenas em explicações, registros, capturas de tela ou documentação posterior.
-
-Para sistemas de IA de alto impacto, a questão central não é apenas:
-
-“Por que o sistema tomou essa decisão?”
-
-A questão mais difícil é:
-
-“Será que uma terceira parte independente consegue reconstruir e verificar as evidências existentes no momento em que a decisão foi tomada?”
-
-A-DAP aborda esse problema por meio de uma arquitetura de custódia de decisões.
-
-O protocolo separa:
-
-- entrada de decisão
-- resultado da decisão
-- envelope de decisão
-- processo de custódia
-- evidência de verificação
-- veredicto esperado
-- tentativas de falsificação
-- fronteiras de oráculo
-
-O objetivo não é provar que a decisão foi correta.
-
-O objetivo é tornar as evidências da decisão reconstruíveis de forma independente e estruturalmente difíceis de alterar sem serem detectadas.
+It asks readers to inspect the evidence, reconstruct the decision-custody process, and test whether an alteration could remain undetected.
 
 ---
 
-## O que o A-DAP afirma
+## Main Thesis
 
-O A-DAP não afirma que a adulteração seja impossível.
+AI governance cannot rely only on explanations, logs, screenshots, dashboards, or after-the-fact documentation.
 
-O A-DAP afirma que adulterações não detectadas devem ter um custo estrutural mensurável.
+For high-impact AI systems, the central question is not only:
 
-O A-DAP não substitui responsabilidade legal, revisão institucional ou autoridade regulatória.
+> “Why did the system make this decision?”
 
-Ele fornece uma camada de verificabilidade que pode apoiá-las.
+The harder question is:
 
-O A-DAP não requer a abertura do modelo interno.
+> “Can an independent third party reconstruct and verify the evidence that existed at the moment the decision was made?”
 
-Ele se concentra no conjunto de evidências que envolve uma decisão.
+A-DAP addresses this problem through a decision-custody architecture.
+
+The protocol separates:
+
+- decision input
+- decision output
+- decision envelope
+- custody process
+- verification evidence
+- expected verdict
+- oracle boundaries
+
+The goal is not to prove that a decision was correct.
+
+The goal is to make decision evidence independently reconstructible and structurally difficult to alter without detection.
 
 ---
 
-## Fronteira de Oráculo
+## What A-DAP Claims
 
-O A-DAP não afirma tornar decisões de IA totalmente trustless.
+A-DAP does not claim that tampering is impossible.
 
-Seu núcleo verificável se aplica aos registros de decisão, não à verdade da decisão.
+A-DAP claims that undetected tampering should have a measurable structural cost.
 
-Isso significa que o A-DAP pode verificar de forma independente artefatos como:
+A-DAP does not replace legal accountability, institutional review, or regulatory authority.
 
-- envelopes canônicos de decisão
+It provides a verifiability layer that can support them.
+
+A-DAP does not require opening the internal model.
+
+It focuses on the evidence surrounding a decision.
+
+---
+
+## Oracle Boundary
+
+A-DAP does not claim to make AI decisions fully trustless.
+
+Its verifiable core applies to decision records, not to decision truth.
+
+This means A-DAP can independently verify artifacts such as:
+
+- canonical decision envelopes
 - hashes
-- assinaturas
-- âncoras de timestamp
-- integridade de cadeia de hashes
-- hashes de entrada
-- hashes de política
-- compromissos publicados externamente
-- reconstrução determinística do registro
+- signatures
+- timestamp anchors
+- hash-chain integrity
+- input hashes
+- policy hashes
+- externally published commitments
+- deterministic record reconstruction
 
-No entanto, o A-DAP não prova, por si só:
+However, A-DAP does not prove by itself:
 
-- que a entrada era verdadeira no mundo real
-- que o modelo realmente executou a decisão
-- que o estado do modelo era real
-- que a identidade declarada do agente era institucionalmente válida
-- que a política era juridicamente válida ou estava em vigor
-- que a explicação reflete causalidade interna real
-- que a decisão era correta, justa ou legítima
+- that the input was true in the real world
+- that the model actually executed the decision
+- that the model state was real
+- that the declared agent identity was institutionally valid
+- that the policy was legally valid or in force
+- that the explanation reflects real internal causality
+- that the decision was correct, fair, or legitimate
 
-Essas afirmações permanecem dependentes de oráculos, salvo quando apoiadas separadamente por evidência externa.
+These claims remain oracle-bound unless separately supported by external evidence.
 
-Essa distinção está formalizada na nota:
+In summary:
 
-[GCD-001 Oracle Boundary Note](./oracle-boundary.md)
+A-DAP makes decision records independently reconstructible as records.
 
-Em resumo:
+It separates what can be cryptographically verified from what remains dependent on external oracles.
 
-O A-DAP torna registros de decisão reconstruíveis de forma independente enquanto registros.
+The correct claim is not that A-DAP proves decision truth.
 
-Ele separa o que pode ser verificado criptograficamente daquilo que continua dependente de oráculos externos.
-
-A afirmação correta não é que o A-DAP prova a verdade da decisão.
-
-A afirmação correta é que o A-DAP prova o que foi comprometido sobre uma decisão, quando foi comprometido, por qual chave criptográfica e se esse compromisso foi alterado depois do fato.
+The correct claim is that A-DAP proves what was committed about a decision, when it was committed, by which cryptographic key, and whether that commitment was altered after the fact.
 
 ---
 
-## Notas Técnicas Centrais
+## Current Public Challenge
 
-Este repositório atualmente inclui três notas técnicas centrais que definem o escopo, os limites e o caminho de reconstrução do A-DAP:
+The repository includes the **A-DAP Reconstruction Challenge — GCD-001**.
 
-- [GCD-001 Oracle Boundary Note](./oracle-boundary.md)  
-  Define o que o A-DAP consegue reconstruir de forma independente e o que permanece dependente de oráculos por desenho.
+The challenge invites independent reviewers to reconstruct the GCD-001 decision-custody graph, compute or challenge the claimed Network Dependency Coefficient (NDC), and classify the result under one of three admissible outcomes:
 
-- [GCD-001 Oracle Boundary Note — Short Version](./oracle-boundary-short.md)  
-  Fornece uma versão curta em inglês para revisores externos.
+- **R1 — Reproduction**
+- **R2 — Falsification**
+- **R3 — Structural Ambiguity**
 
-- [GCD-001 Reconstruction Specification](./gcd-001-reconstruction-spec.md)  
-  Define como um verificador externo deve reconstruir o grafo de custódia de decisão, calcular ou desafiar o NDC alegado e distinguir reconstrução independente de simples execução de scripts fornecidos pelo autor.
+This challenge is not designed to prove that A-DAP is correct.
 
-Juntos, esses documentos estabelecem uma distinção crítica:
+It is designed to make the GCD-001 claim independently reconstructible, falsifiable, or correctable.
 
-O A-DAP não prova a verdade da decisão.
+Key files:
 
-O A-DAP torna registros de decisão reconstruíveis de forma independente enquanto registros.
+- [`gcd-001-reconstruction-challenge.md`](gcd-001-reconstruction-challenge.md)  
+  Defines the public reconstruction challenge, eligible outcomes, prize structure, acceptance mechanism, author non-voting rule, and submission requirements.
 
-Ele separa o que pode ser verificado criptograficamente daquilo que permanece dependente de oráculos externos.
+- [`gcd-001-reconstruction-spec.md`](gcd-001-reconstruction-spec.md)  
+  Defines how an external verifier should reconstruct the GCD-001 decision-custody graph, compute or challenge the claimed NDC, and distinguish independent reconstruction from simple execution of author-provided scripts.
 
-O padrão correto de revisão é:
+---
+
+## Core Reconstruction Principle
 
 ```text
-Não confie no autor.
-Reconstrua o grafo.
-Calcule o corte.
-Desafie o NDC.
-Declare a fronteira de oráculo.
+Do not trust the author.
+Reconstruct the graph.
+Compute the cut.
+Challenge the NDC claim.
+Declare the oracle boundary.
