@@ -1,0 +1,8 @@
+{
+  "case_id": "synthetic-001",
+  "decision_context": "Synthetic public challenge case for A-DAP reconstruction.",
+  "input_claim": "Approve low-risk request",
+  "risk_score": 0.82,
+  "threshold": 0.50,
+  "tampering_note": "This file modifies the original risk_score from 0.12 to 0.82. The original decision should no longer remain approved under the declared threshold."
+}
