@@ -1,88 +1,44 @@
-# A-DAP Public Challenge Roadmap
+# A-DAP Public Challenge
 
-This roadmap tracks the evolution of the A-DAP Public Challenge from a public scaffold into an executable, reproducible, and adversarially testable verification case.
+This repository does not ask you to trust A-DAP.
 
-## v0.1 — Public challenge scaffold
+It asks you to test whether A-DAP evidence can be independently reconstructed, and whether tampering can remain undetected.
 
-Status: completed
+## Challenge objective
 
-Included:
+A valid public challenge has two possible paths:
+
+1. Reconstruct the registered decision independently.
+2. Modify the decision, envelope, custody trail, or claimed NDC without being detected by the verifier.
+
+Both outcomes are useful.
+
+A-DAP does not claim that tampering is impossible. It claims that undetected tampering has a measurable structural cost.
+
+## Current status
+
+The public challenge currently includes:
 
 - public challenge README
-- synthetic challenge README
+- roadmap
+- synthetic challenge case
 - attack template
-
-Purpose:
-
-- define the public falsification frame
-- invite reconstruction attempts
-- invite tampering attempts
-- separate public testing from authorial self-attestation
-
-## v0.2 — Executable synthetic case
-
-Status: completed
-
-Included:
-
-- minimal decision input
-- minimal decision output
-- decision envelope
-- custody trail
-- expected verifier result
 - manual verification instructions
 
-Files:
+The synthetic case is manually verifiable.
 
-- `challenge/synthetic-case/input.json`
-- `challenge/synthetic-case/output.json`
-- `challenge/synthetic-case/envelope.json`
-- `challenge/synthetic-case/custody.json`
-- `challenge/synthetic-case/expected-verdict.json`
-- `challenge/synthetic-case/run.md`
+The next step is to add tampering examples and then a one-command verifier.
 
-Success condition:
+## How to participate
 
-A third party can inspect the case, reconstruct the decision manually, and confirm that the expected verdict is consistent with the declared input, output, envelope, and custody trail.
+Clone the repository, inspect the challenge case, and try to break the claim.
 
-Current limitation:
+If you can reconstruct the evidence, document your result.
 
-This version is manually verifiable, but not yet a full one-command automated verifier.
+If you can falsify or modify the case without detection, open an issue explaining your method.
 
-## v0.3 — Tampering examples
+## Principle
 
-Status: pending
+Do not trust the author.
 
-To include:
-
-- modified input example
-- modified output example
-- modified envelope example
-- modified custody trail example
-- expected verifier failures
-
-Purpose:
-
-- show how small modifications affect the evidence state
-- make tamper detection understandable to third parties
-- prepare the ground for automated verification
-
-Success condition:
-
-A third party can compare the original synthetic case with tampered examples and understand why the expected verdict should fail.
-
-## v0.4 — One-command synthetic verifier
-
-Status: pending
-
-To include:
-
-- verification script
-- deterministic reconstruction logic
-- expected pass/fail output
-- clear command instructions
-
-Target command:
-
-```bash
-python verify_synthetic_case.py
+Reconstruct the evidence, or falsify it without detection.
