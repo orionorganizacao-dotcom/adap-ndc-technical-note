@@ -1,6 +1,6 @@
 # A-DAP — Auditable Decision Accountability Protocol
 
-A-DAP is a minimal architecture for making high-impact automated decisions reconstructible, contestable, and externally verifiable.
+A-DAP is a minimal architecture for making high-impact automated decisions reconstructible, contestable, and externally testable against pre-committed evidence.
 
 Its central claim is narrow:
 
@@ -111,9 +111,9 @@ A later explanation should be testable against the envelope.
 
 ## Commit Before Act
 
-A-DAP follows a commit-before-act principle:
+A-DAP follows a commit-before-act principle.
 
-The system should commit to the decision state before the decision becomes operationally effective.
+For high-impact decisions, the target architecture is commit-before-act: the relevant decision state should be committed before the decision becomes operationally effective, unless a documented emergency or latency exception applies.
 
 This does not mean that every internal detail must be publicly disclosed.
 
@@ -203,7 +203,7 @@ That anchoring alone proves the decision was truthful at origin.
 
 This distinction matters for NDC.
 
-For retrospective rewriting, an independent anchor adds a genuinely disjoint custody point.
+For retrospective rewriting, an independent anchor adds a genuinely disjoint custody point only for that attack path.
 
 For origin-time fabrication, content-blind anchoring remains limited unless additional mechanisms exist, such as independent input-source attestation, model-version registries, threshold registries, witnessed execution, or trusted execution evidence.
 
@@ -289,6 +289,8 @@ But that explanation may not reveal:
 
 A-DAP does not replace a denial notice.
 
+It addresses the evidentiary gap that remains when legal review rights exist but the review process still depends on operator-controlled explanations, logs, or automated re-evaluation.
+
 It allows the notice to be tested against a committed decision envelope.
 
 ---
@@ -322,7 +324,7 @@ A-DAP can prove that:
 - a decision envelope existed at or before a given time
 - the presented envelope matches or does not match its prior commitment
 - a later record has or has not been altered
-- a decision was committed under a specific recorded state
+- a presented decision envelope matches a specific recorded state committed earlier
 - a verification procedure can reconstruct the committed object
 
 A-DAP does not prove that:
