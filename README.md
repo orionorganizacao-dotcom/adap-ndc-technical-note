@@ -20,6 +20,24 @@ A high-impact decision should leave behind a pre-action evidentiary object that 
 
 ---
 
+## Executive Summary
+
+A-DAP — Auditable Decision Accountability Protocol — is a contestability architecture for high-impact automated decisions.
+
+It requires decisions to be committed before or at the moment of action through reconstructible decision envelopes, making later alteration of the committed record detectable.
+
+A-DAP does not prove that a decision was true, fair, or correct.
+
+It does not eliminate all trust in the operator.
+
+Its claim is narrower and testable:
+
+when an affected party, auditor, regulator, or court later contests a decision, there should be a pre-committed evidentiary object to reconstruct and examine.
+
+A-DAP turns automated decisions from post-hoc explanations into contestable records.
+
+---
+
 ## Core Problem
 
 Many automated systems produce decisions that affect people, institutions, rights, access, credit, employment, benefits, medical triage, insurance, moderation, or public services.
