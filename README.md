@@ -2,6 +2,10 @@
 
 **A-DAP — Auditable Decision Accountability Protocol** — is a structural approach for making high-stakes automated decisions externally reconstructible, independently challengeable, and resistant to post-hoc manipulation.
 
+In this repository, “accountability” is used in a narrow evidentiary sense: the ability to reconstruct and challenge the decision path.
+
+It does not mean that the protocol, by itself, creates legal, institutional, or moral responsibility.
+
 This repository is the **public technical home of A-DAP**.
 
 It does not ask readers to trust the author, the model, the log, or the institution operating the system.
