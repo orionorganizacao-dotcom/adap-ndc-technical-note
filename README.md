@@ -24,25 +24,15 @@ A-DAP turns automated decisions from post-hoc explanations into contestable reco
 
 ## Executive Summary
 
-A-DAP — Auditable Decision Accountability Protocol — proposes that high-impact automated decisions be committed before or at the moment of action through reconstructible decision envelopes.
+A-DAP proposes that high-impact automated decisions be committed before or at the moment of action through reconstructible decision envelopes.
 
-A decision envelope is not a truth oracle.
+A decision envelope is a pre-committed evidentiary object that can later be reconstructed, examined, and compared against explanations, notices, logs, or operator claims.
 
-It is a pre-committed evidentiary object that can later be reconstructed, examined, and compared against explanations, notices, logs, or operator claims.
+A-DAP uses canonicalization, cryptographic commitments, timestamps, signatures, and optional independent anchoring to strengthen temporal integrity.
 
-A-DAP uses cryptographic commitments, canonicalization, timestamps, signatures, and optional independent anchoring to strengthen temporal integrity.
+Its defensible claim is narrow:
 
-But cryptography does not prove truth.
-
-A content-blind anchor can make retrospective rewriting detectable, but it cannot prove that the operator told the truth when the envelope was created.
-
-Therefore, A-DAP’s defensible claim is not:
-
-“the system proves the decision was correct.”
-
-The defensible claim is:
-
-“the system preserves a contestable record of what was committed at decision time.”
+the system preserves a contestable record of what was committed at decision time.
 
 This project favors claims that survive adversarial review over claims that sound stronger but collapse under scrutiny.
 
@@ -64,15 +54,11 @@ After the decision, the affected party may receive:
 
 But these artifacts often do not prove what actually existed at the moment of decision.
 
-They may describe the decision.
-
-They may summarize the decision.
-
-They may justify the decision.
+They may describe, summarize, or justify the decision.
 
 But they do not necessarily make the decision reconstructible.
 
-A-DAP addresses this gap.
+A-DAP is designed to address this gap.
 
 ---
 
@@ -205,67 +191,33 @@ A-DAP treats NDC as an architectural property, not a marketing claim.
 
 ## Disjoint Anchoring for Contestability
 
-A-DAP distinguishes between decision explanation, temporal integrity, and decision verifiability.
-
 The repository includes an architectural note on disjoint anchoring for contestability:
 
 [`architecture/disjoint-anchoring-for-contestability.md`](architecture/disjoint-anchoring-for-contestability.md)
 
-This note clarifies a critical boundary:
+The note clarifies a critical boundary:
 
-Content-blind independent anchoring can make retrospective rewriting detectable, but it does not prove that the operator truthfully described the decision at the moment the envelope was created.
-
-In other words:
-
-A-DAP with disjoint anchoring strengthens temporal contestability.
-
-It does not, by itself, eliminate origin-time trust in the operator.
-
-The correct claim is narrow:
-
-A decision envelope, once canonically hashed and anchored outside the operator’s exclusive custody, cannot later be altered without detection.
-
-The incorrect claim would be broader:
-
-That anchoring alone proves the decision was truthful at origin.
-
-This distinction matters for NDC.
+content-blind independent anchoring can make retrospective rewriting detectable, but it does not prove that the operator truthfully described the decision at the moment the envelope was created.
 
 For retrospective rewriting, an independent anchor adds a genuinely disjoint custody point only for that attack path.
 
 For origin-time fabrication, content-blind anchoring remains limited unless additional mechanisms exist, such as independent input-source attestation, model-version registries, threshold registries, witnessed execution, or trusted execution evidence.
 
-This preserves the central boundary of A-DAP:
-
-A-DAP does not make every decision true.
-
-A-DAP does not guarantee detection.
-
-A-DAP makes later alteration of the committed decision record detectable.
-
 ---
 
 ## Contestability, Not Detection
 
-A-DAP is not primarily a faster detection mechanism.
-
-It does not guarantee that someone will inspect a decision immediately.
+A-DAP does not guarantee that someone will inspect a decision immediately.
 
 It does not guarantee that an auditor, court, regulator, or affected party will act at the right time.
 
-The defensible claim is narrower:
+Its claim is narrower:
 
-A-DAP enables contemporaneous contestability.
+the evidentiary object needed to contest the decision should exist when the decision is challenged.
 
-That means the evidentiary object needed to contest the decision exists when the decision is challenged.
+A-DAP does not guarantee contemporaneous detection.
 
-The claim is not:
-
-A-DAP guarantees contemporaneous detection.
-
-The claim is:
-
-A-DAP makes the decision reconstructible and contestable from a committed record.
+It enables contemporaneous contestability.
 
 ---
 
@@ -315,6 +267,10 @@ But that explanation may not reveal:
 - whether the later explanation matches the committed decision state
 - whether the record was reconstructed after the fact
 
+This section is not a legal claim that A-DAP satisfies any specific credit regulation.
+
+It identifies a technical evidentiary gap beneath existing review and notice mechanisms.
+
 A-DAP does not replace a denial notice.
 
 It addresses the evidentiary gap that remains when legal review rights exist but the review process still depends on operator-controlled explanations, logs, or automated re-evaluation.
@@ -351,9 +307,9 @@ A-DAP can prove that:
 
 - a decision envelope existed at or before a given time
 - the presented envelope matches or does not match its prior commitment
-- a later record has or has not been altered
+- a presented record differs or does not differ from its prior commitment
 - a presented decision envelope matches a specific recorded state committed earlier
-- a verification procedure can reconstruct the committed object
+- a verification procedure can reconstruct the committed envelope, if the required envelope data is available
 
 A-DAP does not prove that:
 
