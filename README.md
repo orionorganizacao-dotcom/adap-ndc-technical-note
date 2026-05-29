@@ -1,6 +1,10 @@
 # A-DAP — Auditable Decision Accountability Protocol
 
-A-DAP is a contestability architecture for high-impact automated decisions.
+A-DAP is a contestability layer for high-impact automated decisions affecting people.
+
+It should not be read as a competing cryptographic audit-trail standard.
+
+Its focus is narrower: whether the person affected by an automated decision can later reconstruct and challenge that specific decision against independently verifiable evidence.
 
 Its core claim is intentionally narrow:
 
@@ -42,6 +46,7 @@ A-DAP therefore focuses on the evidentiary layer beneath governance:
 - Under which custody assumptions?
 - Can a third party later reconstruct the decision record?
 - Can alteration be detected without relying solely on the same system that produced the decision?
+- Can the affected person later challenge the specific decision against independently verifiable evidence?
 
 A-DAP is designed for domains where automated decisions may affect rights, access, treatment, ranking, eligibility, enforcement, safety, or institutional outcomes.
 
@@ -116,7 +121,8 @@ A-DAP is a structure for separating:
 - explanation;
 - verification;
 - custody;
-- reconstruction.
+- reconstruction;
+- affected-party challenge.
 
 The goal is to prevent the same system from silently producing a decision, rewriting the record, generating the explanation, and validating itself.
 
@@ -129,6 +135,8 @@ A-DAP does not prove that a decision was correct.
 A-DAP does not prove that a decision was fair.
 
 A-DAP does not prove that a model was unbiased.
+
+A-DAP does not prove that an input was truthful.
 
 A-DAP does not eliminate institutional trust.
 
@@ -148,27 +156,41 @@ a committed, reconstructible decision record that can later be tested against cl
 
 ---
 
-## Relationship to Existing Cryptographic Audit-Trail Work
+## Relationship to Existing Provenance and Audit-Trail Standards
 
-A-DAP does not claim novelty over cryptographic primitives such as digital signatures, hash chains, timestamping, Merkle trees, transparency logs, or tamper-evident audit trails.
+A-DAP does not claim novelty over cryptographic primitives or audit-trail infrastructure such as digital signatures, hash chains, timestamping, Merkle trees, transparency logs, external anchoring, completeness proofs, evidence packs, or tamper-evident records.
 
-Those mechanisms are established public tools.
+Those mechanisms are established tools and are already being developed in serious provenance and audit-trail ecosystems.
 
-A-DAP uses them to address a narrower architectural problem: how high-impact automated decisions can be born as contestable evidentiary objects, with decision, record, explanation, and verification separated enough that later alteration becomes detectable under defined custody assumptions.
+A-DAP should not be read as a replacement for VCP, VAP, LAP, transparency logs, timestamping systems, or cryptographic audit-trail standards.
+
+Those systems address important infrastructure questions around integrity, completeness, ordering, provenance, anchoring, evidence packaging, and third-party verification.
+
+A-DAP focuses on a narrower contestability question:
+
+when an automated decision affects a person, what evidentiary structure must exist so that the affected party, an auditor, a regulator, or a court can later challenge that specific decision without relying only on the same system that produced it?
 
 Its contribution is not the invention of cryptographic audit trails.
 
-Its contribution is the contestability framing, the separation requirements, and the analysis of how many structurally distinct compromises would be required to falsify a decision record without detection.
+Its contribution is the affected-party contestability framing, the separation requirements for decision challenge, and NDC as a diagnostic measure of trust-domain capture.
 
-In this sense, A-DAP should be read as complementary to existing audit-trail, transparency-log, timestamping, and tamper-evidence work.
+In this sense, A-DAP is best understood as a contestability layer that may complement existing provenance and audit-trail standards.
 
-Where those systems often focus on whether a record was altered, A-DAP focuses on a related but narrower question:
+Where provenance systems often focus on whether a record is intact, complete, anchored, and verifiable by a third party, A-DAP asks an additional question:
 
-can an affected party, auditor, regulator, or court later contest a specific automated decision against a pre-committed evidentiary object without depending solely on the same system that produced the decision?
+is the evidence usable by the person affected by the decision to contest that decision?
 
-A-DAP is therefore not a replacement for cryptographic audit infrastructure.
+A-DAP is therefore not a rival to provenance infrastructure.
 
-It is an architectural contestability layer that can use such infrastructure when the custody assumptions, independence requirements, and verification boundaries are explicit.
+It is a proposed layer, profile, or contribution focused on affected-party challenge and capture diagnostics.
+
+A related conceptual note is available in [`architecture/cryptographic-habeas-data.md`](architecture/cryptographic-habeas-data.md).
+
+That note frames affected-party contestability as an analogical extension of habeas data for automated decisions.
+
+It should not be read as a claim that cryptography proves fairness, truth, legality, or justice.
+
+Its narrower function is to fix the contestable decision object so that later review, challenge, or dispute does not depend only on a mutable or unilateral record.
 
 ---
 
@@ -226,13 +248,16 @@ It may include:
 - signature;
 - custody metadata;
 - reconstruction instructions;
-- verification artifacts.
+- verification artifacts;
+- affected-party access or disclosure rules.
 
 The envelope should not be confused with a mere log entry.
 
 A log says something happened.
 
 A decision envelope should allow a later verifier to test whether the record still corresponds to the committed decision state.
+
+It should also help define what the affected person can access in order to contest the decision.
 
 ---
 
@@ -292,6 +317,22 @@ The question is not only whether the record is cryptographically valid.
 The question is also whether the verifier is sufficiently independent from the generator.
 
 If verification depends on the same compromised envelope, the apparent proof may collapse into self-attestation.
+
+---
+
+### Affected-Party Contestability
+
+Affected-party contestability means that the person affected by a decision can access or invoke enough stable evidence to challenge that specific decision.
+
+This is not the same as regulator audit.
+
+It is not the same as internal compliance.
+
+It is not the same as professional supervision.
+
+It is not the same as a general public transparency claim.
+
+Affected-party contestability asks whether the person who suffered the decision can contest the decision object itself, rather than only contesting a later explanation.
 
 ---
 
@@ -404,6 +445,7 @@ A simplified A-DAP architecture contains:
 6. External or independent verification
 7. Reconstruction procedure
 8. Contestation interface
+9. Affected-party access or challenge path
 
 The exact implementation may vary.
 
@@ -458,6 +500,10 @@ A simplified decision envelope may look like this:
     "verifier": "independent-verifier-or-path",
     "timestamp_authority": "external-or-declared"
   },
+  "affected_party": {
+    "access_model": "declared-disclosure-or-challenge-path",
+    "receipt": "decision-receipt-or-reference"
+  },
   "reconstruction": {
     "method": "documented-verification-procedure",
     "artifacts": [
@@ -472,7 +518,7 @@ A simplified decision envelope may look like this:
 
 This is only illustrative.
 
-A real implementation must define canonicalization, custody assumptions, artifact availability, privacy boundaries, redaction rules, and verification procedures.
+A real implementation must define canonicalization, custody assumptions, artifact availability, privacy boundaries, redaction rules, privilege constraints, disclosure models, and verification procedures.
 
 ---
 
@@ -563,6 +609,12 @@ They do not by themselves create institutional accountability.
 
 The strongest verification path is one that does not depend solely on the same system that produced the decision.
 
+### 8. The affected party is a contesting actor
+
+The person affected by a decision should not be treated only as the subject of a record.
+
+They should be able to become an actor in the contestation process.
+
 ---
 
 ## Example Use Cases
@@ -617,6 +669,8 @@ This repository may include:
 │   ├── input-provenance-boundary.md
 │   ├── commit-latency-tradeoff.md
 │   ├── signer-custody-boundary.md
+│   ├── cryptographic-habeas-data.md
+│   ├── vap-lap-gap-analysis.md
 │   └── omega-plus-plus-reconstructible-verdicts.md
 ├── challenge/
 │   └── gcd-001/
@@ -636,23 +690,40 @@ The exact structure may evolve.
 
 The conceptual boundary should remain stable:
 
-A-DAP is about contestable decision records, not about claiming that any single implementation proves correctness, fairness, or accountability.
+A-DAP is about affected-party contestability of decision records, not about claiming that any single implementation proves correctness, fairness, truth, legality, or accountability.
 
 ---
 
 ## Current Status
 
-A-DAP is a developing architecture and research protocol.
+A-DAP is a developing research architecture and contestability proposal.
 
 It should be treated as experimental.
+
+The broad framing of A-DAP as a general cryptographic audit-trail or provenance framework should be retired.
+
+Existing provenance ecosystems already address many infrastructure questions around signatures, anchoring, completeness, evidence packs, third-party verification, and domain profiles.
+
+The strongest current role for A-DAP is narrower:
+
+- affected-party contestability for high-impact automated decisions;
+- NDC as a diagnostic measure of trust-domain capture;
+- decision-envelope design for challenge, review, or dispute;
+- possible compatibility with existing provenance and audit-trail standards.
+
+The repository also includes a conceptual note on Cryptographic Habeas Data.
+
+This note should be understood as a rights-oriented framing of affected-party contestability, not as a claim that cryptography can decide the legal or factual merits of a dispute.
+
+See [`architecture/cryptographic-habeas-data.md`](architecture/cryptographic-habeas-data.md).
 
 Some parts may be implemented as reference prototypes.
 
 Some parts may remain conceptual or under adversarial review.
 
-The repository should not be read as a mature compliance product.
+The repository should not be read as a mature compliance product or as a rival audit-trail standard.
 
-It should be read as a technical and governance research artifact focused on the evidentiary foundations of automated decision contestability.
+It should be read as a technical and governance research artifact focused on the evidentiary conditions under which a person affected by an automated decision can later contest that decision.
 
 ---
 
@@ -670,6 +741,7 @@ A reviewer should begin by asking:
 8. What is the NDC under those assumptions?
 9. Where does the Envelope Bottleneck appear?
 10. What would need to be compromised to falsify the record without detection?
+11. Can the affected person access enough stable evidence to challenge the decision?
 
 A-DAP is strongest when these questions can be answered explicitly.
 
@@ -691,6 +763,7 @@ For any proposed A-DAP implementation, ask:
 - Are timestamps external or merely internal?
 - Is the verifier independent from the generator?
 - Can the record be reconstructed by a third party?
+- Can the affected party access a stable decision object?
 - What happens if the operator is compromised?
 - What happens if the signer is compromised?
 - What happens if the verifier is compromised?
@@ -732,7 +805,7 @@ It cannot prevent every form of collusion.
 
 Its purpose is narrower:
 
-to make it harder to alter, rewrite, or justify high-impact automated decisions after the fact without leaving detectable evidence under defined assumptions.
+to make it harder to alter, rewrite, or justify high-impact automated decisions after the fact without leaving detectable evidence under defined assumptions, and to help the affected person contest a fixed decision object rather than a mutable narrative.
 
 ---
 
@@ -754,6 +827,14 @@ Open questions include:
 - How should verification windows be measured and disclosed?
 - How should signer-custody collapse be detected before deployment?
 - How should omission-at-origin risk be measured separately from alteration risk?
+- How can affected-party contestability be implemented on top of existing provenance standards?
+- When is third-party verification insufficient for affected-party challenge?
+- What evidence must be accessible to the affected person without violating privacy, privilege, or security constraints?
+- How can NDC complement existing anchoring, completeness, and evidence-pack mechanisms?
+- Should A-DAP be developed as a standalone framework, a domain profile, or a contribution to existing provenance ecosystems?
+- How can affected-party contestability be framed without implying that cryptographic records prove fairness, truth, legality, or justice?
+- What minimum decision object should an affected person be able to access in order to contest an automated decision?
+- How should Cryptographic Habeas Data relate to classical habeas data, data protection rights, and automated decision review rights?
 
 ---
 
@@ -782,7 +863,8 @@ Especially welcome:
 - cases where the architecture accidentally becomes self-attesting;
 - cases where input provenance assumptions are unstated;
 - cases where records can be omitted before commitment or anchoring;
-- cases where signer, custody, and verifier collapse into one trust domain.
+- cases where signer, custody, and verifier collapse into one trust domain;
+- cases where affected-party access is claimed but not actually usable for contestation.
 
 A-DAP should become stronger by being made harder to defend casually.
 
@@ -807,7 +889,7 @@ It is not legal advice.
 
 It is not a certified compliance framework.
 
-It is not a guarantee of correctness, fairness, safety, or legality.
+It is not a guarantee of correctness, fairness, safety, truth, or legality.
 
 Use of A-DAP concepts, prototypes, or documentation should be accompanied by independent legal, technical, and institutional review.
 
