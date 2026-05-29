@@ -10,6 +10,8 @@ It formalizes a gap: the difference between structural verifiability and exercis
 
 The purpose of EXP-003 is to show that NDC alone is not an operational security measure unless the probability of actual reconstruction is accounted for.
 
+---
+
 ## 1. Core Claim
 
 Structural NDC measures the number of independent verification paths available in the architecture.
@@ -23,6 +25,8 @@ Therefore:
 NDC is an upper bound.
 
 Effective NDC is the expected number of verification constraints the attacker actually faces.
+
+---
 
 ## 2. Why the Naive Formula Fails
 
@@ -52,9 +56,11 @@ Example:
 
 The naive formula can still produce a comforting number because it multiplies by structure.
 
-But the real attacker does not face “3” constraints.
+But the real attacker does not face 3 constraints.
 
 The attacker faces almost none.
+
+---
 
 ## 3. Correct Object: Expected Binding Verification Constraints
 
@@ -65,7 +71,7 @@ For each independent verification path i:
 
 Then:
 
-NDC_eff = Σ(e_i × d_i)
+NDC_eff = sum(e_i × d_i)
 
 Interpretation:
 
@@ -79,11 +85,13 @@ NDC_eff is operational.
 
 Both are expressed in expected verification constraints, not merely in detection probability.
 
+---
+
 ## 4. Why Not Use Pure Detection Probability?
 
 Another possible formulation is:
 
-P_detection = 1 - Π(1 - e_i × d_i)
+P_detection = 1 - product(1 - e_i × d_i)
 
 This is valid as a detection probability.
 
@@ -98,7 +106,9 @@ EXP-003 needs a measure that can compare:
 - what the architecture claims structurally, and
 - what the attacker faces operationally.
 
-For that reason, Σ(e_i × d_i) is the cleaner object.
+For that reason, sum(e_i × d_i) is the cleaner object.
+
+---
 
 ## 5. Exercise Debt
 
@@ -128,6 +138,8 @@ Operationally, the attacker faces only 0.012 expected constraints.
 
 That gap is the overclaim.
 
+---
+
 ## 6. Case Tests
 
 ### Case 1 — Diffuse Harm
@@ -143,18 +155,22 @@ Scenario:
 Assumptions:
 
 - NDC = 3
-- e_1 = 0.001
-- e_2 = 0.001
-- e_3 = 0.001
-- d_1 = 0.9
-- d_2 = 0.9
-- d_3 = 0.9
+- e_1 = 0.004
+- e_2 = 0.004
+- e_3 = 0.004
+- d_1 = 1.0
+- d_2 = 1.0
+- d_3 = 1.0
 
 Calculation:
 
-NDC_eff = 0.001 × 0.9 + 0.001 × 0.9 + 0.001 × 0.9
+NDC_eff = 0.004 + 0.004 + 0.004
 
-NDC_eff = 0.0027
+NDC_eff = 0.012
+
+Exercise Debt = 3 - 0.012
+
+Exercise Debt = 2.988
 
 Result:
 
@@ -165,6 +181,8 @@ The operational reality provides almost no exercised verification.
 Conclusion:
 
 Structural NDC can dramatically overstate real-world contestability when incentives to reconstruct are weak.
+
+---
 
 ### Case 2 — High-Stakes Individual Harm
 
@@ -195,6 +213,8 @@ Conclusion:
 
 A lower structural NDC may outperform a higher structural NDC if the lower-NDC case is actually exercised.
 
+---
+
 ### Case 3 — Operator-Mediated False Multiplicity
 
 Scenario:
@@ -207,7 +227,7 @@ Incorrect calculation:
 
 NDC = 5
 
-NDC_eff = Σ(e_i × d_i) across five apparent paths
+NDC_eff = sum(e_i × d_i) across five apparent paths
 
 This is wrong.
 
@@ -226,7 +246,7 @@ Correct approach:
 - Apparent paths: 5
 - Collapsed independent paths: 1
 - NDC = 1
-- Then calculate NDC_eff using the exercised probability of that one independent path.
+- Then calculate NDC_eff using the exercise probability of that one independent path.
 
 Conclusion:
 
@@ -235,6 +255,8 @@ EXP-003 is not a substitute for conservative dependency collapse.
 It is a second filter applied after structural collapse.
 
 Order matters.
+
+---
 
 ### Case 4 — Strong Protocol, Weak Exercise
 
@@ -260,6 +282,8 @@ Cryptographic strength does not solve the behavioral problem.
 
 A protocol can be technically strong and operationally weak if nobody exercises the verification right.
 
+---
+
 ## 7. Methodological Rule
 
 EXP-003 must never be used before dependency collapse.
@@ -274,6 +298,8 @@ The correct pipeline is:
 6. Report Exercise Debt.
 
 This prevents EXP-003 from laundering false independence into apparent operational security.
+
+---
 
 ## 8. Open Crack 1 — Correlated Exercise
 
@@ -299,7 +325,7 @@ A single common cause may suppress all verification paths at once.
 
 Therefore:
 
-NDC_eff = Σ(e_i × d_i)
+NDC_eff = sum(e_i × d_i)
 
 should be treated as an optimistic upper bound when exercise is correlated.
 
@@ -308,6 +334,8 @@ A more realistic future model may need a common-cause adjustment or correlated e
 EXP-003 does not solve that here.
 
 It only exposes the problem.
+
+---
 
 ## 9. Open Crack 2 — e_i Is Not Cryptographic
 
@@ -350,6 +378,8 @@ The key contribution is that NDC without e_i silently assumes exercise.
 
 That assumption is false.
 
+---
+
 ## 10. Contribution
 
 EXP-003 formalizes a missing layer in contestability architecture.
@@ -371,6 +401,8 @@ But neither automatically improves e_i.
 
 That makes exercise probability a first-class governance problem.
 
+---
+
 ## 11. Relation to A-DAP
 
 A-DAP creates reconstructible decision envelopes.
@@ -387,6 +419,8 @@ But latent evidence is not the same as exercised accountability.
 
 EXP-003 preserves that distinction.
 
+---
+
 ## 12. Safe Claim
 
 The safe claim is:
@@ -398,6 +432,8 @@ NDC can describe independent verification structure.
 EXP-003 shows that operational contestability also depends on whether independent verification paths are actually exercised.
 
 Therefore, effective contestability requires both architecture and exercise.
+
+---
 
 ## 13. Unsafe Claim
 
@@ -412,6 +448,8 @@ Multiple paths do not guarantee exercise.
 No exercise means low operational constraint.
 
 Low operational constraint means high Exercise Debt.
+
+---
 
 ## 14. Summary
 
