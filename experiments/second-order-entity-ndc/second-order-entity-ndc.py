@@ -129,19 +129,6 @@ def build_scenario_a() -> nx.DiGraph:
     Scenario A:
     Second-Order Entity without independent record custody.
 
-    The fused path is linear:
-
-        generation
-        operator_affective_state
-        inference_engine
-        justification_channel
-        self_record
-        external_auditor
-
-    Because there is only one custody path between generation and audit,
-    compromising one intermediate custody vertex is sufficient to blind
-    the external auditor.
-
     Expected result:
         NDC = 1
     """
@@ -164,27 +151,6 @@ def build_scenario_b() -> nx.DiGraph:
     """
     Scenario B:
     Second-Order Entity with a genuinely disjoint A-DAP custody envelope.
-
-    Path 1 is the fused cognitive/self-recording path:
-
-        generation
-        operator_affective_state
-        inference_engine
-        justification_channel
-        self_record
-        external_auditor
-
-    Path 2 is an independent custody path:
-
-        generation
-        raw_input_capture
-        decision_envelope
-        signed_timestamped_record
-        external_auditor
-
-    Because two disjoint custody paths connect generation to external audit,
-    compromising one intermediate custody vertex is no longer sufficient to
-    blind the auditor.
 
     Expected result:
         NDC = 2
@@ -216,31 +182,6 @@ def build_scenario_c() -> nx.DiGraph:
     Scenario C:
     Second-Order Entity with a pseudo-independent custody envelope
     contaminated by the shared material control vector.
-
-    This scenario models a system where an A-DAP-like record exists, but the
-    custody path is not genuinely disjoint because it is still mediated by
-    the same operator_affective_state/control vector.
-
-    The fused cognitive/self-recording path is:
-
-        generation
-        operator_affective_state
-        inference_engine
-        justification_channel
-        self_record
-        external_auditor
-
-    The pseudo-independent custody path is:
-
-        generation
-        operator_affective_state
-        raw_input_capture
-        decision_envelope
-        signed_timestamped_record
-        external_auditor
-
-    Because both paths pass through operator_affective_state, that shared
-    vector becomes a single custody bottleneck.
 
     Expected result:
         NDC = 1
