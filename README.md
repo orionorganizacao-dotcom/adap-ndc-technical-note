@@ -14,6 +14,8 @@ It does not prove that the original decision was true.
 
 It does not prove that the decision was fair.
 
+It does not prove that the committed scope was complete.
+
 It does not eliminate trust in the operator at origin.
 
 It does not guarantee detection.
@@ -44,6 +46,8 @@ A-DAP therefore focuses on the evidentiary layer beneath governance:
 - When was it committed?
 - By whom or by what system?
 - Under which custody assumptions?
+- What was included in the envelope?
+- Who decided what was included in the envelope?
 - Can a third party later reconstruct the decision record?
 - Can alteration be detected without relying solely on the same system that produced the decision?
 - Can the affected person later challenge the specific decision against independently verifiable evidence?
@@ -82,6 +86,7 @@ But those artifacts may be:
 - controlled by the same operator;
 - produced by the same model or pipeline;
 - disconnected from the actual decision state;
+- scoped by the operator itself;
 - impossible to independently reconstruct.
 
 In such systems, the affected party may receive an explanation without receiving evidence.
@@ -94,9 +99,15 @@ That is the distinction A-DAP is built around:
 
 **transparency is not contestability.**
 
+**record integrity is not scope completeness.**
+
 A system may explain itself while still leaving no independent way to test whether the explanation corresponds to the decision that was actually made.
 
-A-DAP addresses this by requiring decisions to be committed as evidentiary objects before or at the moment of action.
+A system may also produce a cryptographically valid envelope while omitting decisive variables, hidden criteria, upstream signals, or contextual conditions.
+
+A-DAP addresses part of this problem by requiring decisions to be committed as evidentiary objects before or at the moment of action.
+
+It does not, by itself, prove that the committed scope was complete.
 
 ---
 
@@ -122,9 +133,10 @@ A-DAP is a structure for separating:
 - verification;
 - custody;
 - reconstruction;
-- affected-party challenge.
+- affected-party challenge;
+- scope declaration.
 
-The goal is to prevent the same system from silently producing a decision, rewriting the record, generating the explanation, and validating itself.
+The goal is to prevent the same system from silently producing a decision, rewriting the record, generating the explanation, defining the scope, and validating itself.
 
 ---
 
@@ -137,6 +149,12 @@ A-DAP does not prove that a decision was fair.
 A-DAP does not prove that a model was unbiased.
 
 A-DAP does not prove that an input was truthful.
+
+A-DAP does not prove that all relevant variables were included.
+
+A-DAP does not prove that all relevant criteria were disclosed.
+
+A-DAP does not prove that the committed scope matched the real decision scope.
 
 A-DAP does not eliminate institutional trust.
 
@@ -153,6 +171,8 @@ A-DAP does not create legal accountability by itself.
 A-DAP produces a more limited but important object:
 
 a committed, reconstructible decision record that can later be tested against claims, explanations, logs, notices, or regulatory obligations.
+
+That object may still be incomplete if the operator controlled what entered the envelope.
 
 ---
 
@@ -176,13 +196,16 @@ Its contribution is the affected-party contestability framing, the separation re
 
 In this sense, A-DAP is best understood as a contestability layer that may complement existing provenance and audit-trail standards.
 
-Where provenance systems often focus on whether a record is intact, complete, anchored, and verifiable by a third party, A-DAP asks an additional question:
+Where provenance systems often focus on whether a record is intact, complete, anchored, and verifiable by a third party, A-DAP asks additional questions:
 
-is the evidence usable by the person affected by the decision to contest that decision?
+- is the evidence usable by the person affected by the decision to contest that decision?
+- who controlled what entered the decision envelope?
+- can the affected person challenge omitted scope?
+- does the envelope fix the decision object or only the operator’s selected view of it?
 
 A-DAP is therefore not a rival to provenance infrastructure.
 
-It is a proposed layer, profile, or contribution focused on affected-party challenge and capture diagnostics.
+It is a proposed layer, profile, or contribution focused on affected-party challenge, capture diagnostics, and scope awareness.
 
 A related conceptual note is available in [`architecture/cryptographic-habeas-data.md`](architecture/cryptographic-habeas-data.md).
 
@@ -218,7 +241,7 @@ The value of the metric is not that it always produces high scores.
 
 The value is that it can reveal when verification is not structurally independent enough to deserve evidentiary weight.
 
-This distinction matters because a cryptographic audit trail can show that a record remained intact while still leaving unresolved whether the verifier, custody path, or evidentiary envelope was structurally independent from the system being evaluated.
+This distinction matters because a cryptographic audit trail can show that a record remained intact while still leaving unresolved whether the verifier, custody path, evidentiary envelope, or envelope scope was structurally independent from the system being evaluated.
 
 NDC is meant to make that dependency visible.
 
@@ -226,7 +249,20 @@ It is therefore better understood as a capture diagnostic than as a certificatio
 
 A low NDC is not an embarrassment to hide.
 
-It is a warning that the architecture may still be asking the same envelope to generate, preserve, and validate its own evidence.
+It is a warning that the architecture may still be asking the same envelope to generate, scope, preserve, and validate its own evidence.
+
+NDC should not be computed only for post-commit alteration.
+
+It should also be considered separately for:
+
+- omission before commitment;
+- scope capture;
+- signer-custody collapse;
+- verifier capture;
+- input provenance failure;
+- post-commit alteration.
+
+A single global NDC score may hide the weakest path.
 
 ---
 
@@ -249,7 +285,8 @@ It may include:
 - custody metadata;
 - reconstruction instructions;
 - verification artifacts;
-- affected-party access or disclosure rules.
+- affected-party access or disclosure rules;
+- scope declaration.
 
 The envelope should not be confused with a mere log entry.
 
@@ -258,6 +295,10 @@ A log says something happened.
 A decision envelope should allow a later verifier to test whether the record still corresponds to the committed decision state.
 
 It should also help define what the affected person can access in order to contest the decision.
+
+However, a decision envelope only fixes what was included in it.
+
+It does not, by itself, prove that all relevant variables, criteria, upstream signals, hidden rules, or contextual conditions were included.
 
 ---
 
@@ -279,6 +320,8 @@ The decision is no longer only explained after the fact.
 
 It is born with a committed record.
 
+That record still depends on the scope rules that determine what must be committed.
+
 ---
 
 ### Reconstruction
@@ -294,7 +337,8 @@ Depending on the implementation, reconstruction may involve:
 - checking custody metadata;
 - replaying deterministic parts of the decision process;
 - comparing the decision envelope against external artifacts;
-- identifying whether verification depends on the same pipeline that produced the decision.
+- identifying whether verification depends on the same pipeline that produced the decision;
+- checking whether the declared envelope scope satisfies required scope rules.
 
 Reconstruction does not necessarily mean reproducing the model’s internal reasoning.
 
@@ -304,6 +348,10 @@ The goal is not to open the black box.
 
 The goal is to preserve enough committed evidence that the decision can be contested.
 
+Reconstruction verifies the relationship between committed elements.
+
+It does not automatically prove that all relevant elements were committed.
+
 ---
 
 ### External Verification
@@ -312,9 +360,11 @@ A-DAP distinguishes between internal self-checking and external verification.
 
 A system that generates a decision, stores the record, explains the decision, and verifies the record by itself remains structurally weak.
 
+A system that also defines what enters the envelope without independent scope review remains vulnerable to scope capture.
+
 The question is not only whether the record is cryptographically valid.
 
-The question is also whether the verifier is sufficiently independent from the generator.
+The question is also whether the verifier is sufficiently independent from the generator, and whether the committed scope was independently defined or reviewable.
 
 If verification depends on the same compromised envelope, the apparent proof may collapse into self-attestation.
 
@@ -334,6 +384,10 @@ It is not the same as a general public transparency claim.
 
 Affected-party contestability asks whether the person who suffered the decision can contest the decision object itself, rather than only contesting a later explanation.
 
+It also asks whether the person can challenge the adequacy of the committed scope.
+
+If the operator alone decides what fields matter, then the affected person may receive a valid receipt for an incomplete decision object.
+
 ---
 
 ## The Envelope Bottleneck
@@ -347,16 +401,55 @@ For example:
 - the system generates the decision;
 - the same system records the evidence;
 - the same system explains the decision;
+- the same system defines the envelope scope;
 - the same system validates the record;
 - the same custody path preserves all artifacts.
 
-In that case, compromising the envelope may be enough to make a false record appear valid.
+In that case, compromising or capturing the envelope may be enough to make a false, incomplete, or selectively scoped record appear valid.
 
 This is why A-DAP focuses on separation.
 
 The goal is not merely to add stronger logs.
 
-The goal is to reduce the number of cases where one compromised component can control decision, record, explanation, and verification simultaneously.
+The goal is to reduce the number of cases where one compromised component can control decision, record, explanation, scope, and verification simultaneously.
+
+---
+
+## Scope Completeness Boundary
+
+A-DAP can fix a decision object.
+
+It cannot, by itself, prove that the decision object contains every variable, criterion, upstream signal, rule, model state, or contextual condition that should have been included.
+
+This is the scope-completeness boundary.
+
+A cryptographically valid envelope may still be evidentially incomplete if the operator controls what enters the envelope.
+
+Integrity and completeness are different properties.
+
+Integrity asks whether the committed object changed.
+
+Completeness asks whether the committed object included what mattered.
+
+A valid receipt may prove:
+
+- this was the decision object emitted;
+- this was the declared policy reference;
+- this was the input hash included;
+- this was the explanation hash fixed;
+- this was the output committed.
+
+But it may not prove:
+
+- all relevant variables were included;
+- all criteria were disclosed;
+- all upstream signals were represented;
+- all model features were committed;
+- no hidden rule influenced the decision;
+- no omitted variable changed the result;
+- the declared scope matched the real decision scope.
+
+See [`architecture/scope-completeness-boundary.md`](architecture/scope-completeness-boundary.md).
 
 ---
 
@@ -368,7 +461,7 @@ It estimates how many structurally distinct compromises would be required to fal
 
 NDC is assumption-dependent.
 
-It depends on architecture, custody, verifier independence, and what the analysis counts as a distinct compromise.
+It depends on architecture, custody, verifier independence, scope control, and what the analysis counts as a distinct compromise.
 
 A simplified intuition:
 
@@ -380,6 +473,8 @@ A simplified intuition:
 The purpose of NDC is not to make every architecture look strong.
 
 The purpose is to reveal where the architecture is weak.
+
+An architecture may have higher NDC for post-commit alteration and still have NDC = 1 for scope capture if the operator alone controls what enters the envelope.
 
 ---
 
@@ -399,11 +494,13 @@ A log can be generated after the fact.
 
 A log can record that an event occurred without proving that the recorded event corresponds to the actual decision state.
 
+A log can also omit the variables or upstream signals that mattered.
+
 A-DAP does not reject logs.
 
 It treats logs as insufficient by themselves.
 
-A log becomes more evidentiary when it is connected to pre-commitment, independent verification, custody separation, and reconstructible artifacts.
+A log becomes more evidentiary when it is connected to pre-commitment, independent verification, custody separation, reconstructible artifacts, and scope rules.
 
 ---
 
@@ -431,6 +528,10 @@ An explanation should be testable against a committed decision record.
 
 Without such a record, explanation risks becoming self-justification.
 
+But even a committed explanation hash only fixes which explanation was given.
+
+It does not prove the explanation was true, complete, adequate, or legally sufficient.
+
 ---
 
 ## Architecture Overview
@@ -439,13 +540,14 @@ A simplified A-DAP architecture contains:
 
 1. Decision generation
 2. Decision envelope creation
-3. Pre-action or at-action commitment
-4. Cryptographic binding
-5. Custody separation
-6. External or independent verification
-7. Reconstruction procedure
-8. Contestation interface
-9. Affected-party access or challenge path
+3. Scope declaration
+4. Pre-action or at-action commitment
+5. Cryptographic binding
+6. Custody separation
+7. External or independent verification
+8. Reconstruction procedure
+9. Contestation interface
+10. Affected-party access or challenge path
 
 The exact implementation may vary.
 
@@ -476,7 +578,9 @@ The specific tools are less important than the separation properties.
 
 A weak implementation can use strong cryptography and still collapse if the same actor controls everything.
 
-A stronger implementation makes falsification without detection require multiple structurally distinct compromises.
+A weak implementation can also use strong cryptography and still fail if the same actor controls the committed scope.
+
+A stronger implementation makes falsification, omission, or scope capture without detection require multiple structurally distinct compromises.
 
 ---
 
@@ -495,6 +599,20 @@ A simplified decision envelope may look like this:
   "timestamp": "2026-05-28T12:00:00Z",
   "commitment_hash": "sha256:...",
   "signature": "ed25519:...",
+  "scope": {
+    "scope_schema": "eligibility-decision-scope-v1",
+    "included_fields": [
+      "income",
+      "age",
+      "application_date",
+      "risk_flag"
+    ],
+    "withheld_but_committed_fields": [
+      "fraud_signal_hash",
+      "internal_risk_score_hash"
+    ],
+    "excluded_fields_policy": "documented-scope-policy-v1"
+  },
   "custody": {
     "operator": "system-operator",
     "verifier": "independent-verifier-or-path",
@@ -510,6 +628,7 @@ A simplified decision envelope may look like this:
       "input-reference",
       "output-reference",
       "policy-reference",
+      "scope-reference",
       "verification-script-or-spec"
     ]
   }
@@ -518,13 +637,13 @@ A simplified decision envelope may look like this:
 
 This is only illustrative.
 
-A real implementation must define canonicalization, custody assumptions, artifact availability, privacy boundaries, redaction rules, privilege constraints, disclosure models, and verification procedures.
+A real implementation must define canonicalization, custody assumptions, artifact availability, privacy boundaries, redaction rules, privilege constraints, disclosure models, scope rules, and verification procedures.
 
 ---
 
 ## Threat Model
 
-A-DAP assumes that some actors may have incentives to alter, suppress, reinterpret, or selectively disclose decision records.
+A-DAP assumes that some actors may have incentives to alter, suppress, reinterpret, narrowly scope, or selectively disclose decision records.
 
 Possible threats include:
 
@@ -538,13 +657,19 @@ Possible threats include:
 - custody-chain weakness;
 - operator self-attestation;
 - collusion between components;
-- reconstruction failure due to missing artifacts.
+- reconstruction failure due to missing artifacts;
+- incomplete decision-envelope scope;
+- operator-controlled field selection;
+- hidden upstream variables;
+- omitted decisive criteria;
+- parallel ledgers or parallel scopes.
 
-A-DAP also declares three structural boundaries that should not be hidden as ordinary implementation bugs:
+A-DAP also declares four structural boundaries that should not be hidden as ordinary implementation bugs:
 
 - input provenance boundary;
 - verification window boundary;
-- signer, custody, and verification boundary.
+- signer, custody, and verification boundary;
+- scope completeness boundary.
 
 These boundaries define where A-DAP can preserve evidentiary integrity and where additional assumptions are required.
 
@@ -553,12 +678,15 @@ See:
 - [`architecture/input-provenance-boundary.md`](architecture/input-provenance-boundary.md)
 - [`architecture/commit-latency-tradeoff.md`](architecture/commit-latency-tradeoff.md)
 - [`architecture/signer-custody-boundary.md`](architecture/signer-custody-boundary.md)
+- [`architecture/scope-completeness-boundary.md`](architecture/scope-completeness-boundary.md)
 
 A-DAP does not fully solve:
 
 - total collusion among all relevant parties;
 - hardware-level compromise outside declared assumptions;
 - false input data that was already false at origin;
+- incomplete decision-envelope scope;
+- operator-controlled field selection;
 - key compromise outside declared custody controls;
 - signer-custody collapse;
 - omission at origin before a record exists;
@@ -581,7 +709,7 @@ The goal is to make decisions contestable.
 
 ### 2. Separation over self-attestation
 
-A system should not be the sole generator, recorder, explainer, and verifier of its own decision.
+A system should not be the sole generator, recorder, explainer, scoper, and verifier of its own decision.
 
 ### 3. Evidence before explanation
 
@@ -605,6 +733,8 @@ Digital signatures, hashes, timestamps, and Merkle trees can strengthen evidence
 
 They do not by themselves create institutional accountability.
 
+They also do not decide what the envelope should have contained.
+
 ### 7. Verification must survive outside the generator
 
 The strongest verification path is one that does not depend solely on the same system that produced the decision.
@@ -614,6 +744,12 @@ The strongest verification path is one that does not depend solely on the same s
 The person affected by a decision should not be treated only as the subject of a record.
 
 They should be able to become an actor in the contestation process.
+
+### 9. Scope must be declared
+
+A decision receipt should not silently rely on operator-defined scope.
+
+The architecture should declare what the envelope includes, what it withholds, what it excludes, and who can challenge omitted scope.
 
 ---
 
@@ -625,11 +761,15 @@ A citizen is denied access to a benefit by an automated eligibility system.
 
 A-DAP would require the decision to have been committed with reconstructible evidence, so that a later reviewer can test the decision against the committed record rather than relying only on a narrative explanation.
 
+However, the receipt would still need scope rules defining which variables, criteria, upstream signals, policy versions, and overrides must be included or committed.
+
 ### Healthcare
 
 A triage system prioritizes or deprioritizes a patient.
 
 A-DAP would preserve the relevant decision envelope so that the clinical, technical, and institutional basis of the decision can later be examined.
+
+But it would not prove that all relevant clinical context was included unless scope requirements were defined and independently reviewable.
 
 ### Courts and Legal Automation
 
@@ -637,17 +777,23 @@ A judicial or administrative AI system assists with classification, prioritizati
 
 A-DAP would help separate the decision-support record from later explanations and allow independent reconstruction of what the system committed at the time.
 
+The architecture would still need safeguards against omitted criteria, hidden policy rules, or incomplete disclosure of decision-support inputs.
+
 ### Elections and Political Systems
 
 An automated moderation or classification system affects political content.
 
 A-DAP would help preserve contestable evidence of the decision path, policy reference, and output commitment.
 
+It would not, by itself, prove that the policy scope or relevant context was complete.
+
 ### Finance and Eligibility
 
 A model denies credit, insurance, or access to a service.
 
 A-DAP would allow later contestation against a committed decision object rather than relying only on internal logs or generated explanations.
+
+The affected person may still need a way to challenge whether decisive variables or hidden scores were omitted from the envelope.
 
 ---
 
@@ -669,6 +815,7 @@ This repository may include:
 │   ├── input-provenance-boundary.md
 │   ├── commit-latency-tradeoff.md
 │   ├── signer-custody-boundary.md
+│   ├── scope-completeness-boundary.md
 │   ├── cryptographic-habeas-data.md
 │   ├── vap-lap-gap-analysis.md
 │   └── omega-plus-plus-reconstructible-verdicts.md
@@ -700,7 +847,7 @@ The exact structure may evolve.
 
 The conceptual boundary should remain stable:
 
-A-DAP is about affected-party contestability of decision records, not about claiming that any single implementation proves correctness, fairness, truth, legality, or accountability.
+A-DAP is about affected-party contestability of decision records, not about claiming that any single implementation proves correctness, fairness, truth, legality, scope completeness, or accountability.
 
 ---
 
@@ -719,6 +866,7 @@ The strongest current role for A-DAP is narrower:
 - affected-party contestability for high-impact automated decisions;
 - NDC as a diagnostic measure of trust-domain capture;
 - decision-envelope design for challenge, review, or dispute;
+- scope-completeness boundary declaration;
 - possible compatibility with existing provenance and audit-trail standards.
 
 The repository also includes a conceptual note on Cryptographic Habeas Data.
@@ -733,7 +881,7 @@ See [`examples/decision-receipt-poc/`](examples/decision-receipt-poc/).
 
 This PoC demonstrates a narrow claim: an affected person can hold a verifiable decision object emitted at the moment of a simulated automated decision.
 
-It does not prove fairness, legality, truth, input correctness, or institutional legitimacy.
+It does not prove fairness, legality, truth, input correctness, scope completeness, or institutional legitimacy.
 
 Its purpose is to test the minimum contestability object: a citizen-held receipt that can expose non-issuance, split-view reconstruction, and the limit case of a structurally valid receipt for a bad decision.
 
@@ -756,13 +904,15 @@ A reviewer should begin by asking:
 3. When is the commitment created?
 4. Who controls the commitment path?
 5. Who controls the verifier?
-6. Can the decision be reconstructed without relying solely on the generator?
-7. What assumptions are required?
-8. What is the NDC under those assumptions?
-9. Where does the Envelope Bottleneck appear?
-10. What would need to be compromised to falsify the record without detection?
-11. Can the affected person access enough stable evidence to challenge the decision?
-12. Does the minimal decision receipt PoC demonstrate the claimed boundary, or does it only show a happy path?
+6. Who decides what enters the decision envelope?
+7. Can the decision be reconstructed without relying solely on the generator?
+8. What assumptions are required?
+9. What is the NDC under those assumptions?
+10. Where does the Envelope Bottleneck appear?
+11. What would need to be compromised to falsify the record without detection?
+12. Can the affected person access enough stable evidence to challenge the decision?
+13. Does the minimal decision receipt PoC demonstrate the claimed boundary, or does it only show a happy path?
+14. Does the receipt fix the decision object, or only the operator’s selected view of the decision?
 
 Reviewers can inspect the minimal PoC at [`examples/decision-receipt-poc/`](examples/decision-receipt-poc/).
 
@@ -774,6 +924,10 @@ It is weakest when the system says:
 
 “Trust us. We logged it.”
 
+It is also weak when the system says:
+
+“Trust us. We included everything relevant.”
+
 ---
 
 ## Minimal Verification Questions
@@ -782,6 +936,10 @@ For any proposed A-DAP implementation, ask:
 
 - Is the decision committed before or at the moment of action?
 - Are inputs, outputs, policies, and model references bound to the record?
+- Who decides what enters the decision envelope?
+- Are all relevant variables, criteria, upstream signals, and policy references included or committed?
+- Can the operator omit decisive fields while still producing a structurally valid receipt?
+- Is scope completeness verified independently from the operator?
 - Are artifacts canonicalized?
 - Are hashes computed deterministically?
 - Are signatures verifiable independently?
@@ -795,8 +953,10 @@ For any proposed A-DAP implementation, ask:
 - What happens if the custody path is compromised?
 - Can unfavorable records be omitted before commitment?
 - Can unfavorable records be omitted before anchoring?
+- Can decisive fields be omitted before envelope creation?
 - Does NDC collapse to 1?
 - If NDC collapses to 1, what component caused the collapse?
+- Is NDC computed separately for alteration, omission, and scope capture?
 
 ---
 
@@ -808,11 +968,17 @@ Its contestability operates downstream of the point of commitment.
 
 A-DAP does not prove that an input was truthful.
 
-It does not eliminate verification windows in asynchronous or batched systems.
+A-DAP does not prove that the decision envelope included every variable, criterion, upstream signal, or contextual condition that should have been included.
 
-It does not create independent evidentiary value when signer, custody, and verifier collapse into the same trust domain.
+It fixes the committed object.
 
-It does not solve all problems in AI governance.
+It does not, by itself, prove that the committed scope was complete.
+
+A-DAP does not eliminate verification windows in asynchronous or batched systems.
+
+A-DAP does not create independent evidentiary value when signer, custody, and verifier collapse into the same trust domain.
+
+A-DAP does not solve all problems in AI governance.
 
 It does not determine whether a decision should have been made.
 
@@ -831,6 +997,10 @@ It cannot prevent every form of collusion.
 Its purpose is narrower:
 
 to make it harder to alter, rewrite, or justify high-impact automated decisions after the fact without leaving detectable evidence under defined assumptions, and to help the affected person contest a fixed decision object rather than a mutable narrative.
+
+That fixed object still depends on scope rules.
+
+If the operator alone controls what enters the envelope, the receipt may preserve an incomplete view.
 
 ---
 
@@ -863,6 +1033,11 @@ Open questions include:
 - What is the minimum executable proof of affected-party contestability?
 - Does a citizen-held receipt provide a meaningful independence boundary, or is external anchoring required?
 - How should a decision receipt PoC distinguish fixation of the contestable object from proof of fairness, legality, truth, or correctness?
+- How should A-DAP distinguish record integrity from scope completeness?
+- Who should decide which variables, criteria, and upstream signals must be included in a decision envelope?
+- Can affected-party contestability exist if the operator controls the envelope scope?
+- How can scope completeness be verified without exposing unnecessary sensitive data?
+- Should NDC be computed separately for post-commit alteration, omission, and scope capture?
 
 ---
 
@@ -892,7 +1067,9 @@ Especially welcome:
 - cases where input provenance assumptions are unstated;
 - cases where records can be omitted before commitment or anchoring;
 - cases where signer, custody, and verifier collapse into one trust domain;
-- cases where affected-party access is claimed but not actually usable for contestation.
+- cases where affected-party access is claimed but not actually usable for contestation;
+- cases where a receipt verifies but decisive fields were omitted;
+- cases where scope completeness is asserted only by the operator.
 
 A-DAP should become stronger by being made harder to defend casually.
 
@@ -917,7 +1094,7 @@ It is not legal advice.
 
 It is not a certified compliance framework.
 
-It is not a guarantee of correctness, fairness, safety, truth, or legality.
+It is not a guarantee of correctness, fairness, safety, truth, legality, or scope completeness.
 
 Use of A-DAP concepts, prototypes, or documentation should be accompanied by independent legal, technical, and institutional review.
 
