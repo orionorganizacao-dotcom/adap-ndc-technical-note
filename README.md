@@ -4,7 +4,7 @@ A-DAP is a contestability architecture for high-impact automated decisions.
 
 Its core claim is intentionally narrow:
 
-A-DAP makes later alteration of committed decision records detectable under defined custody assumptions.
+A-DAP can make later alteration of committed decision records detectable under defined custody assumptions.
 
 It does not prove that the original decision was true.
 
@@ -18,7 +18,7 @@ Its value is stricter:
 
 high-impact automated decisions should be born with a reconstructible evidentiary object, so that affected parties, auditors, regulators, or courts can later contest the specific decision against a pre-committed record.
 
-A-DAP turns automated decisions from post-hoc explanations into contestable records.
+A-DAP is designed to turn automated decisions from post-hoc explanations into contestable records.
 
 ## Executive Summary
 
@@ -454,7 +454,7 @@ It proves whether the presented envelope matches the committed record.
 
 ## Repository Structure
 
-Suggested structure:
+Intended structure:
 
 ```text
 .
