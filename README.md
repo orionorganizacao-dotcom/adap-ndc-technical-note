@@ -494,11 +494,28 @@ Possible threats include:
 - collusion between components;
 - reconstruction failure due to missing artifacts.
 
+A-DAP also declares three structural boundaries that should not be hidden as ordinary implementation bugs:
+
+- input provenance boundary;
+- verification window boundary;
+- signer, custody, and verification boundary.
+
+These boundaries define where A-DAP can preserve evidentiary integrity and where additional assumptions are required.
+
+See:
+
+- [`architecture/input-provenance-boundary.md`](architecture/input-provenance-boundary.md)
+- [`architecture/commit-latency-tradeoff.md`](architecture/commit-latency-tradeoff.md)
+- [`architecture/signer-custody-boundary.md`](architecture/signer-custody-boundary.md)
+
 A-DAP does not fully solve:
 
 - total collusion among all relevant parties;
 - hardware-level compromise outside declared assumptions;
 - false input data that was already false at origin;
+- key compromise outside declared custody controls;
+- signer-custody collapse;
+- omission at origin before a record exists;
 - bad policy choices;
 - biased training data;
 - illegitimate institutional authority;
@@ -597,7 +614,9 @@ This repository may include:
 ├── architecture/
 │   ├── envelope-bottleneck.md
 │   ├── automated-ndc-v2.md
+│   ├── input-provenance-boundary.md
 │   ├── commit-latency-tradeoff.md
+│   ├── signer-custody-boundary.md
 │   └── omega-plus-plus-reconstructible-verdicts.md
 ├── challenge/
 │   └── gcd-001/
@@ -673,8 +692,11 @@ For any proposed A-DAP implementation, ask:
 - Is the verifier independent from the generator?
 - Can the record be reconstructed by a third party?
 - What happens if the operator is compromised?
+- What happens if the signer is compromised?
 - What happens if the verifier is compromised?
 - What happens if the custody path is compromised?
+- Can unfavorable records be omitted before commitment?
+- Can unfavorable records be omitted before anchoring?
 - Does NDC collapse to 1?
 - If NDC collapses to 1, what component caused the collapse?
 
@@ -683,6 +705,14 @@ For any proposed A-DAP implementation, ask:
 ## Limitations
 
 A-DAP is intentionally limited.
+
+Its contestability operates downstream of the point of commitment.
+
+A-DAP does not prove that an input was truthful.
+
+It does not eliminate verification windows in asynchronous or batched systems.
+
+It does not create independent evidentiary value when signer, custody, and verifier collapse into the same trust domain.
 
 It does not solve all problems in AI governance.
 
@@ -720,6 +750,10 @@ Open questions include:
 - How should systems handle non-deterministic model behavior?
 - How can A-DAP avoid becoming another self-attesting compliance artifact?
 - What forms of external review are sufficient to prevent verifier capture?
+- How should input provenance boundaries be declared?
+- How should verification windows be measured and disclosed?
+- How should signer-custody collapse be detected before deployment?
+- How should omission-at-origin risk be measured separately from alteration risk?
 
 ---
 
@@ -745,7 +779,10 @@ Especially welcome:
 - cases where A-DAP fails;
 - cases where NDC collapses to 1;
 - cases where a proposed verifier is not truly independent;
-- cases where the architecture accidentally becomes self-attesting.
+- cases where the architecture accidentally becomes self-attesting;
+- cases where input provenance assumptions are unstated;
+- cases where records can be omitted before commitment or anchoring;
+- cases where signer, custody, and verifier collapse into one trust domain.
 
 A-DAP should become stronger by being made harder to defend casually.
 
