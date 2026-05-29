@@ -4,7 +4,7 @@ A-DAP is a contestability architecture for high-impact automated decisions.
 
 Its core claim is intentionally narrow:
 
-A-DAP can make later alteration of committed decision records detectable under defined custody assumptions.
+A-DAP makes later alteration of committed decision records detectable under defined custody assumptions.
 
 It does not prove that the original decision was true.
 
@@ -18,7 +18,9 @@ Its value is stricter:
 
 high-impact automated decisions should be born with a reconstructible evidentiary object, so that affected parties, auditors, regulators, or courts can later contest the specific decision against a pre-committed record.
 
-A-DAP is designed to turn automated decisions from post-hoc explanations into contestable records.
+A-DAP turns automated decisions from post-hoc explanations into contestable records.
+
+---
 
 ## Executive Summary
 
@@ -26,528 +28,751 @@ A-DAP proposes that high-impact automated decisions be committed before or at th
 
 A decision envelope is a pre-committed evidentiary object that can later be reconstructed, examined, and compared against explanations, notices, logs, or operator claims.
 
-A-DAP uses canonicalization, cryptographic commitments, timestamps, signatures, and optional independent anchoring to strengthen temporal integrity.
+A-DAP can use established cryptographic and procedural tools — such as hashing, digital signatures, timestamping, custody separation, and independent verification — to reduce the ability to alter decision records without detection under stated assumptions.
 
-Its defensible claim is narrow:
+The protocol does not claim that cryptography alone creates accountability.
 
-the system preserves a contestable record of what was committed at decision time.
+It claims that accountability requires contestable evidence.
 
-This project favors claims that survive adversarial review over claims that sound stronger but collapse under scrutiny.
+A-DAP therefore focuses on the evidentiary layer beneath governance:
+
+- What was committed?
+- When was it committed?
+- By whom or by what system?
+- Under which custody assumptions?
+- Can a third party later reconstruct the decision record?
+- Can alteration be detected without relying solely on the same system that produced the decision?
+
+A-DAP is designed for domains where automated decisions may affect rights, access, treatment, ranking, eligibility, enforcement, safety, or institutional outcomes.
+
+Examples include:
+
+- public-sector AI systems;
+- medical triage and clinical decision support;
+- judicial or administrative automation;
+- credit, insurance, and eligibility decisions;
+- election-related AI systems;
+- high-impact moderation or enforcement systems;
+- safety-critical autonomous workflows.
+
+A-DAP does not replace regulation, institutional accountability, audit authority, or judicial review.
+
+It provides a technical and architectural foundation that can make later contestation possible.
+
+---
 
 ## Core Problem
 
-Many automated systems produce decisions that affect people, institutions, rights, access, credit, employment, benefits, medical triage, insurance, moderation, or public services.
+Many automated systems produce decisions first and explanations later.
 
-After the decision, the affected party may receive:
+This creates a structural weakness.
 
-- an explanation
-- a score
-- a reason code
-- a denial notice
-- a log excerpt
-- a review response
-- a post-hoc justification
+After a decision has already affected someone, the system may generate a plausible explanation, expose a log, or produce a summary of what supposedly happened.
 
-But these artifacts often do not prove what actually existed at the moment of decision.
+But those artifacts may be:
 
-They may describe, summarize, or justify the decision.
+- incomplete;
+- mutable;
+- generated after the fact;
+- controlled by the same operator;
+- produced by the same model or pipeline;
+- disconnected from the actual decision state;
+- impossible to independently reconstruct.
 
-But they do not necessarily make the decision reconstructible.
+In such systems, the affected party may receive an explanation without receiving evidence.
 
-A-DAP is designed to address this gap.
+That is the distinction A-DAP is built around:
 
-## Explanation Is Not Verification
+**explanation is not verification.**
 
-A-DAP distinguishes between explanation and verification.
+**logging is not proof.**
 
-Explanation asks:
+**transparency is not contestability.**
 
-```text
-Why does the operator say this decision happened?
+A system may explain itself while still leaving no independent way to test whether the explanation corresponds to the decision that was actually made.
+
+A-DAP addresses this by requiring decisions to be committed as evidentiary objects before or at the moment of action.
+
+---
+
+## What A-DAP Is
+
+A-DAP is an architectural protocol for making automated decisions contestable.
+
+It defines how a decision record should be created, committed, preserved, and later reconstructed under explicit assumptions.
+
+A-DAP is not a single product.
+
+It is not a model.
+
+It is not a compliance checklist.
+
+It is not a claim that cryptography automatically creates justice.
+
+A-DAP is a structure for separating:
+
+- decision;
+- record;
+- explanation;
+- verification;
+- custody;
+- reconstruction.
+
+The goal is to prevent the same system from silently producing a decision, rewriting the record, generating the explanation, and validating itself.
+
+---
+
+## What A-DAP Is Not
+
+A-DAP does not prove that a decision was correct.
+
+A-DAP does not prove that a decision was fair.
+
+A-DAP does not prove that a model was unbiased.
+
+A-DAP does not eliminate institutional trust.
+
+A-DAP does not remove the need for human review.
+
+A-DAP does not guarantee that all tampering will be detected.
+
+A-DAP does not solve full collusion between all parties in the custody chain.
+
+A-DAP does not turn a bad policy into a good policy.
+
+A-DAP does not create legal accountability by itself.
+
+A-DAP produces a more limited but important object:
+
+a committed, reconstructible decision record that can later be tested against claims, explanations, logs, notices, or regulatory obligations.
+
+---
+
+## Relationship to Existing Cryptographic Audit-Trail Work
+
+A-DAP does not claim novelty over cryptographic primitives such as digital signatures, hash chains, timestamping, Merkle trees, transparency logs, or tamper-evident audit trails.
+
+Those mechanisms are established public tools.
+
+A-DAP uses them to address a narrower architectural problem: how high-impact automated decisions can be born as contestable evidentiary objects, with decision, record, explanation, and verification separated enough that later alteration becomes detectable under defined custody assumptions.
+
+Its contribution is not the invention of cryptographic audit trails.
+
+Its contribution is the contestability framing, the separation requirements, and the analysis of how many structurally distinct compromises would be required to falsify a decision record without detection.
+
+In this sense, A-DAP should be read as complementary to existing audit-trail, transparency-log, timestamping, and tamper-evidence work.
+
+Where those systems often focus on whether a record was altered, A-DAP focuses on a related but narrower question:
+
+can an affected party, auditor, regulator, or court later contest a specific automated decision against a pre-committed evidentiary object without depending solely on the same system that produced the decision?
+
+A-DAP is therefore not a replacement for cryptographic audit infrastructure.
+
+It is an architectural contestability layer that can use such infrastructure when the custody assumptions, independence requirements, and verification boundaries are explicit.
+
+---
+
+## NDC as a Capture Diagnostic, Not a Robustness Claim
+
+A-DAP uses NDC as a diagnostic measure, not as a guarantee of robustness.
+
+NDC asks how many structurally distinct compromises would be required to falsify a decision record without detection under a given architecture and threat model.
+
+A high NDC may indicate stronger separation between decision, record, explanation, and verification.
+
+But the most important result is often NDC = 1.
+
+NDC = 1 means that a single compromised envelope, verifier, operator, or custody path may be sufficient to make a false record appear valid.
+
+This is not a failure of the metric.
+
+It is the metric exposing capture.
+
+In this sense, NDC does not certify that A-DAP is strong.
+
+It helps identify when A-DAP, or any audit-trail architecture, has collapsed back into self-attestation.
+
+The value of the metric is not that it always produces high scores.
+
+The value is that it can reveal when verification is not structurally independent enough to deserve evidentiary weight.
+
+This distinction matters because a cryptographic audit trail can show that a record remained intact while still leaving unresolved whether the verifier, custody path, or evidentiary envelope was structurally independent from the system being evaluated.
+
+NDC is meant to make that dependency visible.
+
+It is therefore better understood as a capture diagnostic than as a certification score.
+
+A low NDC is not an embarrassment to hide.
+
+It is a warning that the architecture may still be asking the same envelope to generate, preserve, and validate its own evidence.
+
+---
+
+## Core Concepts
+
+### Decision Envelope
+
+A decision envelope is the evidentiary object created around a decision.
+
+It may include:
+
+- decision identifier;
+- input references or committed input hashes;
+- model or system reference;
+- policy or rule reference;
+- output reference;
+- timestamp;
+- operator or system identity;
+- signature;
+- custody metadata;
+- reconstruction instructions;
+- verification artifacts.
+
+The envelope should not be confused with a mere log entry.
+
+A log says something happened.
+
+A decision envelope should allow a later verifier to test whether the record still corresponds to the committed decision state.
+
+---
+
+### Commit-Before-Act
+
+A-DAP favors commit-before-act whenever possible.
+
+This means that the relevant decision state is committed before the decision is executed or externally relied upon.
+
+The purpose is to reduce the gap between action and evidence.
+
+If the record is created only after the decision is challenged, the system may be documenting a story rather than preserving evidence.
+
+Commit-before-act does not solve every problem.
+
+But it changes the evidentiary posture.
+
+The decision is no longer only explained after the fact.
+
+It is born with a committed record.
+
+---
+
+### Reconstruction
+
+Reconstruction means that a later verifier can examine whether the decision record corresponds to the committed evidence.
+
+Depending on the implementation, reconstruction may involve:
+
+- checking hashes;
+- verifying digital signatures;
+- validating timestamps;
+- comparing committed inputs and outputs;
+- checking custody metadata;
+- replaying deterministic parts of the decision process;
+- comparing the decision envelope against external artifacts;
+- identifying whether verification depends on the same pipeline that produced the decision.
+
+Reconstruction does not necessarily mean reproducing the model’s internal reasoning.
+
+A-DAP is model-agnostic.
+
+The goal is not to open the black box.
+
+The goal is to preserve enough committed evidence that the decision can be contested.
+
+---
+
+### External Verification
+
+A-DAP distinguishes between internal self-checking and external verification.
+
+A system that generates a decision, stores the record, explains the decision, and verifies the record by itself remains structurally weak.
+
+The question is not only whether the record is cryptographically valid.
+
+The question is also whether the verifier is sufficiently independent from the generator.
+
+If verification depends on the same compromised envelope, the apparent proof may collapse into self-attestation.
+
+---
+
+## The Envelope Bottleneck
+
+A central risk in A-DAP analysis is the Envelope Bottleneck.
+
+The Envelope Bottleneck occurs when the same evidentiary envelope controls too much of the trust path.
+
+For example:
+
+- the system generates the decision;
+- the same system records the evidence;
+- the same system explains the decision;
+- the same system validates the record;
+- the same custody path preserves all artifacts.
+
+In that case, compromising the envelope may be enough to make a false record appear valid.
+
+This is why A-DAP focuses on separation.
+
+The goal is not merely to add stronger logs.
+
+The goal is to reduce the number of cases where one compromised component can control decision, record, explanation, and verification simultaneously.
+
+---
+
+## Number of Distinct Compromises — NDC
+
+NDC stands for Number of Distinct Compromises.
+
+It estimates how many structurally distinct compromises would be required to falsify a decision record without detection under a stated architecture and threat model.
+
+NDC is assumption-dependent.
+
+It depends on architecture, custody, verifier independence, and what the analysis counts as a distinct compromise.
+
+A simplified intuition:
+
+- NDC = 1 means one compromise may be enough to falsify the record without detection.
+- Higher NDC may indicate that multiple structurally distinct components would need to fail or collude.
+- NDC is useful when it exposes hidden self-attestation.
+- NDC is dangerous if presented as a certification score without clear assumptions.
+
+The purpose of NDC is not to make every architecture look strong.
+
+The purpose is to reveal where the architecture is weak.
+
+---
+
+## Why Logs Are Not Enough
+
+Logs are useful.
+
+But logs are often controlled by the same system or organization whose decision is being questioned.
+
+A log can be incomplete.
+
+A log can be overwritten.
+
+A log can be selectively disclosed.
+
+A log can be generated after the fact.
+
+A log can record that an event occurred without proving that the recorded event corresponds to the actual decision state.
+
+A-DAP does not reject logs.
+
+It treats logs as insufficient by themselves.
+
+A log becomes more evidentiary when it is connected to pre-commitment, independent verification, custody separation, and reconstructible artifacts.
+
+---
+
+## Why Explanations Are Not Enough
+
+Explanations are useful for understanding.
+
+But explanations are not the same as evidence.
+
+An explanation may be generated after the fact.
+
+An explanation may be persuasive but false.
+
+An explanation may be optimized for user acceptance.
+
+An explanation may omit relevant inputs.
+
+An explanation may be produced by the same system whose decision is being challenged.
+
+A-DAP does not reject explanations.
+
+It places explanations in the correct evidentiary position.
+
+An explanation should be testable against a committed decision record.
+
+Without such a record, explanation risks becoming self-justification.
+
+---
+
+## Architecture Overview
+
+A simplified A-DAP architecture contains:
+
+1. Decision generation
+2. Decision envelope creation
+3. Pre-action or at-action commitment
+4. Cryptographic binding
+5. Custody separation
+6. External or independent verification
+7. Reconstruction procedure
+8. Contestation interface
+
+The exact implementation may vary.
+
+A minimal implementation may use:
+
+- canonical JSON;
+- SHA-256 hashing;
+- Ed25519 signatures;
+- RFC 3161 timestamping;
+- Merkle aggregation;
+- deterministic verification scripts;
+- public challenge datasets;
+- independent third-party reconstruction.
+
+The specific tools are less important than the separation properties.
+
+A weak implementation can use strong cryptography and still collapse if the same actor controls everything.
+
+A stronger implementation makes falsification without detection require multiple structurally distinct compromises.
+
+---
+
+## Minimal Decision Envelope Example
+
+A simplified decision envelope may look like this:
+
+```json
+{
+  "decision_id": "decision-0001",
+  "subject_ref": "subject-hash-or-reference",
+  "input_hash": "sha256:...",
+  "policy_ref": "policy-v1.2.0",
+  "model_ref": "model-or-system-version",
+  "output_hash": "sha256:...",
+  "timestamp": "2026-05-28T12:00:00Z",
+  "commitment_hash": "sha256:...",
+  "signature": "ed25519:...",
+  "custody": {
+    "operator": "system-operator",
+    "verifier": "independent-verifier-or-path",
+    "timestamp_authority": "external-or-declared"
+  },
+  "reconstruction": {
+    "method": "documented-verification-procedure",
+    "artifacts": [
+      "input-reference",
+      "output-reference",
+      "policy-reference",
+      "verification-script-or-spec"
+    ]
+  }
+}
 ```
 
-Verification asks:
+This is only illustrative.
 
-```text
-Can an authorized reviewer reconstruct the committed decision state and test whether the later account matches it?
-```
+A real implementation must define canonicalization, custody assumptions, artifact availability, privacy boundaries, redaction rules, and verification procedures.
 
-This distinction matters because a post-hoc explanation can be plausible without being independently testable.
-
-A-DAP is designed to make the decision itself an object of verification, not merely an object of explanation.
-
-## Core Architecture
-
-A-DAP separates the decision process into distinct evidentiary layers.
-
-At minimum, an A-DAP decision flow should include:
-
-- a decision envelope
-- deterministic canonicalization
-- cryptographic commitment
-- pre-action or at-action timestamping
-- verification procedure
-- contestability path
-
-The architecture is not based on trusting the system’s later narrative.
-
-It is based on preserving the state required to reconstruct the decision.
-
-## Decision Envelope
-
-A decision envelope is a structured record containing the minimum information needed to reconstruct a decision.
-
-Depending on the domain, it may include:
-
-- decision identifier
-- input commitments
-- relevant policy version
-- model or rule version
-- threshold state
-- decision output
-- decision timestamp
-- justification reference
-- hash of the canonical envelope
-- signature or commitment metadata
-- external anchoring receipt, if available
-
-The envelope should be generated before or at the moment of action.
-
-A later explanation should be testable against the envelope.
-
-## Commit Before Act
-
-A-DAP follows a commit-before-act principle.
-
-For high-impact decisions, the target architecture is commit-before-act: the relevant decision state should be committed before the decision becomes operationally effective, unless a documented emergency or latency exception applies.
-
-This does not mean that every internal detail must be publicly disclosed.
-
-It means the relevant decision state must be preserved in a form that can later be reconstructed by an authorized reviewer.
-
-Without commit-before-act, the record can become a post-hoc artifact.
-
-With commit-before-act, the decision leaves a pre-action evidentiary trace.
-
-## Cryptography Is Not Truth
-
-A-DAP uses cryptographic tools such as hashing, signatures, timestamps, and anchoring.
-
-But cryptography has a boundary.
-
-Cryptography can prove that a record existed at a certain time.
-
-Cryptography can prove that a record was not later altered.
-
-Cryptography can prove that a signature matches a key.
-
-Cryptography cannot prove that the original record was truthful.
-
-This distinction is central to A-DAP.
-
-A hash can preserve a lie.
-
-A timestamp can date a false claim.
-
-A signature can authenticate an untrue envelope.
-
-Therefore, cryptographic integrity must not be confused with decision truth.
-
-## NDC — Non-Delegated Custody
-
-NDC refers to the degree to which verification does not depend on a single actor’s exclusive custody or narrative.
-
-The goal is not to eliminate trust completely.
-
-The goal is to reduce single-point custody over the evidentiary record.
-
-A system with low NDC may depend entirely on the operator’s own logs, explanations, and claims.
-
-A system with stronger NDC introduces independent commitments, external anchors, reproducible verification, or disjoint custody points.
-
-However, NDC must not be inflated.
-
-An external timestamp does not automatically prove the truth of the content.
-
-A content-blind anchor does not witness the decision itself.
-
-A verifier controlled by the same operator does not create full independence.
-
-A-DAP treats NDC as an architectural property, not a marketing claim.
-
-## Disjoint Anchoring for Contestability
-
-The repository includes an architectural note on disjoint anchoring for contestability:
-
-```text
-architecture/disjoint-anchoring-for-contestability.md
-```
-
-The note clarifies a critical boundary:
-
-content-blind independent anchoring can make retrospective rewriting detectable, but it does not prove that the operator truthfully described the decision at the moment the envelope was created.
-
-For retrospective rewriting, an independent anchor adds a genuinely disjoint custody point only for that attack path.
-
-For origin-time fabrication, content-blind anchoring remains limited unless additional mechanisms exist, such as independent input-source attestation, model-version registries, threshold registries, witnessed execution, or trusted execution evidence.
-
-## Contestability, Not Detection
-
-A-DAP does not guarantee that someone will inspect a decision immediately.
-
-It does not guarantee that an auditor, court, regulator, or affected party will act at the right time.
-
-Its claim is narrower:
-
-the evidentiary object needed to contest the decision should exist when the decision is challenged.
-
-A-DAP does not guarantee contemporaneous detection.
-
-It enables contemporaneous contestability.
-
-## Legal Review Is Not the Same as Reconstructibility
-
-Legal systems may provide rights to review or contest automated decisions.
-
-But a right to review does not automatically create a reconstructible decision record.
-
-A person may have a formal right to ask for review while still depending on:
-
-- the operator’s explanation
-- internal logs
-- generic reason codes
-- summaries
-- automated review
-- post-hoc narratives
-
-A-DAP does not replace legal rights.
-
-It supplies a technical evidentiary substrate beneath them.
-
-The goal is to make review testable.
-
-## Credit as a Contestability Domain
-
-Credit is a strong domain for A-DAP because decisions are individual, consequential, and often legally contestable.
-
-A credit applicant may receive a denial reason such as:
-
-- insufficient credit history
-- high debt-to-income ratio
-- recent delinquency
-- low score
-- income not verified
-- policy criteria not met
-
-But that explanation may not reveal:
-
-- which model version was active
-- which threshold was used
-- which input values were considered
-- which data source supplied each input
-- which policy layer overrode the score
-- whether the later explanation matches the committed decision state
-- whether the record was reconstructed after the fact
-
-This section is not a legal claim that A-DAP satisfies any specific credit regulation.
-
-It identifies a technical evidentiary gap beneath existing review and notice mechanisms.
-
-A-DAP does not replace a denial notice.
-
-It addresses the evidentiary gap that remains when legal review rights exist but the review process still depends on operator-controlled explanations, logs, or automated re-evaluation.
-
-It allows the notice to be tested against a committed decision envelope.
-
-## Epic Sepsis Case Role
-
-The Epic Sepsis case should not be presented as proof that A-DAP uniquely detects model failure.
-
-The failure was detected by retrospective external validation.
-
-Its value is pedagogical.
-
-It illustrates the gap between later performance validation and contemporaneous decision verifiability.
-
-A-DAP would not eliminate trust in the operator at envelope creation.
-
-It would constrain retrospective rewriting by committing the relevant input state, model version, threshold state, and decision envelope before action.
-
-Therefore:
-
-Epic Sepsis is an illustration of the temporal verifiability gap.
-
-It is not a proof of exclusive detectability.
-
-## Governance of Indistinction
-
-A-DAP also helps analyze hybrid human-machine systems where decision formation, justification, and record custody may become structurally indistinguishable.
-
-This is the Governance of Indistinction problem.
-
-The risk is not hybrid intelligence itself.
-
-The risk appears when cognition, justification, and audit records depend on the same material control vector.
-
-In that case, the system may not merely become hard to explain.
-
-It may become hard to separate into independently verifiable custody domains.
-
-The relevant architectural question is:
-
-```text
-Does an external auditor have a materially disjoint record path, or only the system’s own narrative about itself?
-```
-
-This distinction matters because a hybrid decision can remain contestable if the record custody layer is genuinely independent.
-
-But if the same fused process decides, justifies, and records the decision, later audit may collapse into self-attestation.
-
-## Second-Order Entity NDC Experiment
-
-The repository includes an executable experiment testing this narrower claim:
-
-```text
-experiments/second-order-entity-ndc/second-order-entity-ndc.py
-```
-
-The experiment models three custody graphs for a hypothetical hybrid human-machine decision system.
-
-It tests whether hybrid intelligence collapses to NDC=1 merely because human and machine participate in the same decision.
-
-The more precise tested claim is:
-
-```text
-human-machine fusion without independent record custody can collapse to NDC = 1
-```
-
-The experiment includes three scenarios:
-
-```text
-A. No independent record custody
-   Expected result: NDC = 1
-
-B. Genuine disjoint A-DAP custody envelope
-   Expected result: NDC = 2
-
-C. Pseudo-independent custody envelope contaminated by shared vector
-   Expected result: NDC = 1
-```
-
-This is important because it avoids the overclaim that hybrid intelligence is automatically ungovernable.
-
-The experiment instead tests a narrower architectural point:
-
-external verifiability in hybrid intelligence depends on materially disjoint record custody.
-
-A merely separate-looking record path is not enough.
-
-If that path is still mediated by the same shared control vector, the custody structure may collapse back to NDC=1.
-
-## What A-DAP Proves
-
-A-DAP can prove that:
-
-- a decision envelope existed at or before a given time
-- the presented envelope matches or does not match its prior commitment
-- a presented record differs or does not differ from its prior commitment
-- a presented decision envelope matches a specific recorded state committed earlier
-- a verification procedure can reconstruct the committed envelope, if the required envelope data is available
-
-A-DAP does not prove that:
-
-- the decision was correct
-- the model was fair
-- the operator was truthful at origin
-- the inputs were accurate
-- the policy was legitimate
-- the decision should have been made
-- every falsification attempt will be detected
-
-This distinction is essential.
-
-A-DAP is a verifiability architecture.
-
-It is not a truth oracle.
+---
 
 ## Threat Model
 
-A-DAP is designed to resist some attacks but not all attacks.
+A-DAP assumes that some actors may have incentives to alter, suppress, reinterpret, or selectively disclose decision records.
 
-### Retrospective rewriting
+Possible threats include:
 
-The operator changes the decision record after the fact.
+- post-hoc modification of records;
+- deletion of unfavorable decisions;
+- selective disclosure of logs;
+- replacement of inputs or outputs;
+- misleading explanations;
+- verifier capture;
+- timestamp manipulation;
+- custody-chain weakness;
+- operator self-attestation;
+- collusion between components;
+- reconstruction failure due to missing artifacts.
 
-A-DAP can help detect this if the original envelope hash was committed or anchored before alteration.
+A-DAP does not fully solve:
 
-### Post-hoc narrative adjustment
+- total collusion among all relevant parties;
+- hardware-level compromise outside declared assumptions;
+- false input data that was already false at origin;
+- bad policy choices;
+- biased training data;
+- illegitimate institutional authority;
+- legal accountability without enforcement.
 
-The operator provides a later explanation that does not match the committed decision state.
+A-DAP is an evidentiary architecture, not a complete governance system.
 
-A-DAP can help test the explanation against the envelope.
+---
 
-### Log alteration
+## Design Principles
 
-The operator modifies logs after challenge, audit, litigation, or regulatory review begins.
+### 1. Contestability before persuasion
 
-A-DAP can help detect mismatch if the original decision commitment survives outside the altered log chain.
+The goal is not to make explanations more persuasive.
 
-### Origin-time fabrication
+The goal is to make decisions contestable.
 
-The operator creates a false envelope at the moment of decision.
+### 2. Separation over self-attestation
 
-Basic A-DAP with content-blind anchoring does not solve this.
+A system should not be the sole generator, recorder, explainer, and verifier of its own decision.
 
-Additional origin-attestation mechanisms are required.
+### 3. Evidence before explanation
 
-### Captured anchor
+Explanations should be checked against committed evidence.
 
-The anchoring authority colludes with the operator or allows retroactive manipulation.
+### 4. Explicit custody assumptions
 
-A-DAP’s independence is weakened.
+Every verification claim depends on custody assumptions.
 
-Mitigation may require multiple anchors, public audit trails, independent timestamping, or regulator-supervised anchoring.
+Those assumptions should be stated, not hidden.
 
-## Future Layer: Origin Attestation
+### 5. Low NDC is information
 
-Origin-time fabrication requires stronger mechanisms than content-blind anchoring.
+A low NDC reveals capture or weak separation.
 
-Possible future layers include:
+It should not be hidden.
 
-- independent input-source attestation
-- external model-version registry
-- threshold registry
-- policy registry
-- witnessed execution
-- trusted execution evidence
-- regulator-controlled sampling
-- auditor-controlled replay
-- cryptographic commitments from upstream data sources
-- split custody over decision components
-- secure execution environments
-- independent data provenance commitments
+### 6. Cryptography is necessary but not sufficient
 
-These mechanisms increase assurance.
+Digital signatures, hashes, timestamps, and Merkle trees can strengthen evidence.
 
-They also increase cost, complexity, privacy exposure, regulatory burden, and trade-secret risk.
+They do not by themselves create institutional accountability.
 
-Therefore, they should not be silently implied by the basic A-DAP claim.
+### 7. Verification must survive outside the generator
 
-They are future or optional layers.
+The strongest verification path is one that does not depend solely on the same system that produced the decision.
 
-## Minimal Verification Flow
+---
 
-A minimal verification flow may look like this:
+## Example Use Cases
 
-1. Retrieve the decision envelope.
-2. Canonicalize the envelope using the defined schema.
-3. Compute the envelope hash.
-4. Compare the computed hash with the stored commitment.
-5. Compare the commitment with any external anchoring receipt.
-6. Verify timestamp and signature metadata where applicable.
-7. Reconstruct the decision state from the envelope.
-8. Compare the reconstructed state against later explanations, notices, or claims.
+### Public Administration
 
-This process does not prove that the original envelope was truthful.
+A citizen is denied access to a benefit by an automated eligibility system.
 
-It proves whether the presented envelope matches the committed record.
+A-DAP would require the decision to have been committed with reconstructible evidence, so that a later reviewer can test the decision against the committed record rather than relying only on a narrative explanation.
+
+### Healthcare
+
+A triage system prioritizes or deprioritizes a patient.
+
+A-DAP would preserve the relevant decision envelope so that the clinical, technical, and institutional basis of the decision can later be examined.
+
+### Courts and Legal Automation
+
+A judicial or administrative AI system assists with classification, prioritization, drafting, or recommendation.
+
+A-DAP would help separate the decision-support record from later explanations and allow independent reconstruction of what the system committed at the time.
+
+### Elections and Political Systems
+
+An automated moderation or classification system affects political content.
+
+A-DAP would help preserve contestable evidence of the decision path, policy reference, and output commitment.
+
+### Finance and Eligibility
+
+A model denies credit, insurance, or access to a service.
+
+A-DAP would allow later contestation against a committed decision object rather than relying only on internal logs or generated explanations.
+
+---
 
 ## Repository Structure
 
-Intended structure:
+This repository may include:
 
 ```text
 .
 ├── README.md
+├── THREAT_MODEL.md
+├── CONTRIBUTING.md
+├── NOTICE.md
+├── RELEASE_NOTES.md
+├── QUICKSTART.md
 ├── architecture/
-│   ├── disjoint-anchoring-for-contestability.md
 │   ├── envelope-bottleneck.md
 │   ├── automated-ndc-v2.md
 │   └── omega-plus-plus-reconstructible-verdicts.md
 ├── challenge/
 │   └── gcd-001/
-├── experiments/
-│   └── second-order-entity-ndc/
 │       ├── README.md
-│       ├── second-order-entity-ndc.py
-│       └── results/
-│           └── output.txt
+│       ├── reconstruction-challenge.md
+│       ├── reconstruction-spec.md
+│       ├── submission-template.md
+│       └── reviewer-guidelines.md
 ├── proofs/
 │   └── README.md
 ├── solver/
 │   └── README.md
-├── THREAT_MODEL.md
-├── CONTRIBUTING.md
-├── QUICKSTART.md
-├── NOTICE.md
-└── RELEASE_NOTES.md
+└── examples/
 ```
 
-## Running the Second-Order Entity Experiment
+The exact structure may evolve.
 
-To run the experiment:
+The conceptual boundary should remain stable:
 
-```bash
-python experiments/second-order-entity-ndc/second-order-entity-ndc.py
-```
+A-DAP is about contestable decision records, not about claiming that any single implementation proves correctness, fairness, or accountability.
 
-To save the real output:
+---
 
-```bash
-mkdir -p experiments/second-order-entity-ndc/results
-python experiments/second-order-entity-ndc/second-order-entity-ndc.py > experiments/second-order-entity-ndc/results/output.txt
-```
+## Current Status
 
-The output should be committed to the repository only after the script has actually been executed.
+A-DAP is a developing architecture and research protocol.
 
-This matters because A-DAP should not merely claim that a construction exists.
+It should be treated as experimental.
 
-It should preserve the executable construction and the executed result.
+Some parts may be implemented as reference prototypes.
 
-## Integrity Rule
+Some parts may remain conceptual or under adversarial review.
 
-Until the graph, script, and real solver output are present in the repository, strong language such as:
+The repository should not be read as a mature compliance product.
+
+It should be read as a technical and governance research artifact focused on the evidentiary foundations of automated decision contestability.
+
+---
+
+## Quickstart for Reviewers
+
+A reviewer should begin by asking:
+
+1. What decision is being committed?
+2. What artifacts are included in the decision envelope?
+3. When is the commitment created?
+4. Who controls the commitment path?
+5. Who controls the verifier?
+6. Can the decision be reconstructed without relying solely on the generator?
+7. What assumptions are required?
+8. What is the NDC under those assumptions?
+9. Where does the Envelope Bottleneck appear?
+10. What would need to be compromised to falsify the record without detection?
+
+A-DAP is strongest when these questions can be answered explicitly.
+
+It is weakest when the system says:
+
+“Trust us. We logged it.”
+
+---
+
+## Minimal Verification Questions
+
+For any proposed A-DAP implementation, ask:
+
+- Is the decision committed before or at the moment of action?
+- Are inputs, outputs, policies, and model references bound to the record?
+- Are artifacts canonicalized?
+- Are hashes computed deterministically?
+- Are signatures verifiable independently?
+- Are timestamps external or merely internal?
+- Is the verifier independent from the generator?
+- Can the record be reconstructed by a third party?
+- What happens if the operator is compromised?
+- What happens if the verifier is compromised?
+- What happens if the custody path is compromised?
+- Does NDC collapse to 1?
+- If NDC collapses to 1, what component caused the collapse?
+
+---
+
+## Limitations
+
+A-DAP is intentionally limited.
+
+It does not solve all problems in AI governance.
+
+It does not determine whether a decision should have been made.
+
+It does not replace law, ethics, institutional review, safety engineering, or democratic accountability.
+
+It cannot make an illegitimate institution legitimate.
+
+It cannot make a false input true.
+
+It cannot make an unfair policy fair.
+
+It cannot guarantee that all relevant evidence will always be available.
+
+It cannot prevent every form of collusion.
+
+Its purpose is narrower:
+
+to make it harder to alter, rewrite, or justify high-impact automated decisions after the fact without leaving detectable evidence under defined assumptions.
+
+---
+
+## Research Questions
+
+Open questions include:
+
+- How should NDC be formally computed across different system architectures?
+- How should custody assumptions be represented?
+- How should privacy-preserving decision envelopes be designed?
+- How can affected parties verify records without exposing sensitive data?
+- How should A-DAP interact with legal discovery, administrative review, and regulatory audits?
+- How can independent verification be made practical without excessive operational burden?
+- How should multimodal inputs be committed and reconstructed?
+- How should systems handle non-deterministic model behavior?
+- How can A-DAP avoid becoming another self-attesting compliance artifact?
+- What forms of external review are sufficient to prevent verifier capture?
+
+---
+
+## Contribution Guidelines
+
+Contributions are welcome when they improve clarity, falsifiability, implementation quality, or adversarial robustness.
+
+Useful contributions include:
+
+- threat-model critiques;
+- examples of NDC collapse;
+- reconstruction challenges;
+- verifier improvements;
+- canonicalization tests;
+- custody-analysis diagrams;
+- legal or regulatory mapping;
+- privacy-preserving envelope designs;
+- negative results;
+- adversarial reviews.
+
+Especially welcome:
+
+- cases where A-DAP fails;
+- cases where NDC collapses to 1;
+- cases where a proposed verifier is not truly independent;
+- cases where the architecture accidentally becomes self-attesting.
+
+A-DAP should become stronger by being made harder to defend casually.
+
+---
+
+## Citation
+
+Suggested citation:
 
 ```text
-Hybrid intelligence without independent record custody is the final black box by construction.
+Santos, Ezio v.s. A-DAP — Auditable Decision Accountability Protocol. 
+A contestability architecture for high-impact automated decisions.
 ```
 
-should not be used as a formal claim.
+---
 
-Before the executable experiment and output are committed, use the weaker formulation:
+## Notice
 
-```text
-Hybrid intelligence without independent record custody risks becoming the final black box.
-```
+A-DAP is a research and architectural proposal.
 
-After the experiment is committed and reproducible, the stronger formulation may be used with a reference to the experiment.
+It is not legal advice.
 
-## Project Status
+It is not a certified compliance framework.
 
-This repository is experimental.
+It is not a guarantee of correctness, fairness, safety, or legality.
 
-It is intended to support adversarial review, technical critique, and falsifiable refinement of A-DAP’s claims.
+Use of A-DAP concepts, prototypes, or documentation should be accompanied by independent legal, technical, and institutional review.
 
-The project does not claim to solve accountability.
+---
 
-It claims to provide a reconstructible evidentiary substrate for contestability.
+## License
 
-Accountability still requires institutions, authority, procedure, law, enforcement, and judgment.
+Add the applicable repository license here.
 
-A-DAP does not replace those mechanisms.
+If no license is provided, all rights are reserved by default.
 
-It gives them a more testable record to work with.
+---
 
-## Minimal Conclusion
+## Core Sentence
 
-A-DAP is not a truth oracle.
+A high-impact automated decision should not merely be explained after the fact.
 
-A-DAP is not a fairness guarantee.
-
-A-DAP is not a complete accountability system.
-
-A-DAP is a contestability architecture.
-
-Its core contribution is narrow:
-
-high-impact automated decisions should be committed as reconstructible evidentiary objects before they become post-hoc narratives.
+It should be born contestable.
