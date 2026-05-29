@@ -24,7 +24,7 @@ Its value is stricter:
 
 high-impact automated decisions should be born with a reconstructible evidentiary object, so that affected parties, auditors, regulators, or courts can later contest the specific decision against a pre-committed record.
 
-A-DAP turns automated decisions from post-hoc explanations into contestable records.
+A-DAP helps turn automated decisions from post-hoc explanations into contestable records under declared assumptions.
 
 ---
 
@@ -63,6 +63,8 @@ Examples include:
 - election-related AI systems;
 - high-impact moderation or enforcement systems;
 - safety-critical autonomous workflows.
+
+Each domain requires its own scope rules, disclosure constraints, custody model, and legal review.
 
 A-DAP does not replace regulation, institutional accountability, audit authority, or judicial review.
 
@@ -580,7 +582,7 @@ A weak implementation can use strong cryptography and still collapse if the same
 
 A weak implementation can also use strong cryptography and still fail if the same actor controls the committed scope.
 
-A stronger implementation makes falsification, omission, or scope capture without detection require multiple structurally distinct compromises.
+A stronger implementation should aim to make falsification, omission, or scope capture without detection require multiple structurally distinct compromises.
 
 ---
 
