@@ -407,6 +407,18 @@ A simplified A-DAP architecture contains:
 
 The exact implementation may vary.
 
+For latency-sensitive systems, A-DAP does not assume a single commit model.
+
+Strong synchronous commit-before-act may be appropriate for slower, high-impact decisions where contestability matters and latency costs are small relative to the harm of non-contestable decisions.
+
+Low-latency systems may require weaker or different commitment patterns, such as append-only ordering, batched Merkle commitments, pre-commitment of policies or execution envelopes, asynchronous materialization, or periodic external anchoring.
+
+These variants do not provide the same evidentiary strength by default.
+
+They change the trust structure and may lower NDC.
+
+See [`architecture/commit-latency-tradeoff.md`](architecture/commit-latency-tradeoff.md) for the latency, commit-strength, and NDC trade-off analysis.
+
 A minimal implementation may use:
 
 - canonical JSON;
@@ -585,6 +597,7 @@ This repository may include:
 ├── architecture/
 │   ├── envelope-bottleneck.md
 │   ├── automated-ndc-v2.md
+│   ├── commit-latency-tradeoff.md
 │   └── omega-plus-plus-reconstructible-verdicts.md
 ├── challenge/
 │   └── gcd-001/
