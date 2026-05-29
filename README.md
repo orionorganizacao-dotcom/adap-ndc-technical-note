@@ -209,6 +209,16 @@ A-DAP is therefore not a rival to provenance infrastructure.
 
 It is a proposed layer, profile, or contribution focused on affected-party challenge, capture diagnostics, and scope awareness.
 
+A-DAP also treats independent verification as a topology rather than a label attached to a single trusted entity.
+
+See [`architecture/independent-verification-topology.md`](architecture/independent-verification-topology.md).
+
+That note argues that verification is stronger when reconstruction can occur outside the generator through materially control-disjoint paths.
+
+It should not be read as a claim that adding more nominal verifiers automatically increases independence.
+
+Multiple verifiers that depend on the same envelope, custody path, API, signer, or operator-defined scope may still collapse into the same trust domain.
+
 A related conceptual note is available in [`architecture/cryptographic-habeas-data.md`](architecture/cryptographic-habeas-data.md).
 
 That note frames affected-party contestability as an analogical extension of habeas data for automated decisions.
@@ -366,9 +376,21 @@ A system that also defines what enters the envelope without independent scope re
 
 The question is not only whether the record is cryptographically valid.
 
-The question is also whether the verifier is sufficiently independent from the generator, and whether the committed scope was independently defined or reviewable.
+The question is also whether verification can leave the generator’s exclusive control.
+
+A-DAP should not treat the “independent verifier” as a single magically trusted entity.
+
+Independence is not a label attached to a verifier.
+
+It is a topology of reconstruction outside the generator.
+
+Verification paths only become meaningfully stronger when they are materially control-disjoint.
+
+Multiple verifiers that depend on the same envelope, same custody store, same signing path, same API, or same operator-defined scope may still represent one trust path with several copies.
 
 If verification depends on the same compromised envelope, the apparent proof may collapse into self-attestation.
+
+See [`architecture/independent-verification-topology.md`](architecture/independent-verification-topology.md).
 
 ---
 
@@ -414,6 +436,12 @@ This is why A-DAP focuses on separation.
 The goal is not merely to add stronger logs.
 
 The goal is to reduce the number of cases where one compromised component can control decision, record, explanation, scope, and verification simultaneously.
+
+This also applies to nominally independent verifiers.
+
+A verifier that reconstructs only through the same envelope may be organizationally external but evidentially dependent.
+
+A-DAP therefore treats verifier independence as a structural property of the reconstruction topology, not merely as an institutional role.
 
 ---
 
@@ -681,6 +709,8 @@ See:
 - [`architecture/commit-latency-tradeoff.md`](architecture/commit-latency-tradeoff.md)
 - [`architecture/signer-custody-boundary.md`](architecture/signer-custody-boundary.md)
 - [`architecture/scope-completeness-boundary.md`](architecture/scope-completeness-boundary.md)
+- [`architecture/independent-verification-topology.md`](architecture/independent-verification-topology.md)
+- [`architecture/example-verification-topology.md`](architecture/example-verification-topology.md)
 
 A-DAP does not fully solve:
 
@@ -740,6 +770,14 @@ They also do not decide what the envelope should have contained.
 ### 7. Verification must survive outside the generator
 
 The strongest verification path is one that does not depend solely on the same system that produced the decision.
+
+### 7.1 Independence is topology, not label
+
+A verifier is not independent merely because it is external.
+
+Verification becomes stronger when reconstruction paths are materially control-disjoint and can be executed outside the generator.
+
+Multiple verifiers that share the same envelope, signer, custody path, API, or operator-defined scope may still collapse into one trust path.
 
 ### 8. The affected party is a contesting actor
 
@@ -818,6 +856,8 @@ This repository may include:
 │   ├── commit-latency-tradeoff.md
 │   ├── signer-custody-boundary.md
 │   ├── scope-completeness-boundary.md
+│   ├── independent-verification-topology.md
+│   ├── example-verification-topology.md
 │   ├── cryptographic-habeas-data.md
 │   ├── vap-lap-gap-analysis.md
 │   └── omega-plus-plus-reconstructible-verdicts.md
@@ -849,7 +889,7 @@ The exact structure may evolve.
 
 The conceptual boundary should remain stable:
 
-A-DAP is about affected-party contestability of decision records, not about claiming that any single implementation proves correctness, fairness, truth, legality, scope completeness, or accountability.
+A-DAP is about affected-party contestability of decision records, not about claiming that any single implementation proves correctness, fairness, truth, legality, scope completeness, verifier independence, or accountability.
 
 ---
 
@@ -869,6 +909,7 @@ The strongest current role for A-DAP is narrower:
 - NDC as a diagnostic measure of trust-domain capture;
 - decision-envelope design for challenge, review, or dispute;
 - scope-completeness boundary declaration;
+- independent verification topology;
 - possible compatibility with existing provenance and audit-trail standards.
 
 The repository also includes a conceptual note on Cryptographic Habeas Data.
@@ -886,6 +927,18 @@ This PoC demonstrates a narrow claim: an affected person can hold a verifiable d
 It does not prove fairness, legality, truth, input correctness, scope completeness, or institutional legitimacy.
 
 Its purpose is to test the minimum contestability object: a citizen-held receipt that can expose non-issuance, split-view reconstruction, and the limit case of a structurally valid receipt for a bad decision.
+
+The current PoC demonstrates the minimum contestability object: a citizen-held decision receipt emitted in a simulated decision flow.
+
+It proves that a decision record can leave the generator’s exclusive control.
+
+It does not yet prove that the record is hard to falsify.
+
+Full NDC computation, control-disjoint verification topology, external anchoring, threshold custody, scope validation, independent verifier distribution, and real-world detection incentives remain unimplemented research targets.
+
+Under conservative assumptions, A-DAP v0 should be treated as an externalization baseline, not as a hardened evidentiary architecture.
+
+See [`architecture/example-verification-topology.md`](architecture/example-verification-topology.md).
 
 Some parts may be implemented as reference prototypes.
 
@@ -915,6 +968,7 @@ A reviewer should begin by asking:
 12. Can the affected person access enough stable evidence to challenge the decision?
 13. Does the minimal decision receipt PoC demonstrate the claimed boundary, or does it only show a happy path?
 14. Does the receipt fix the decision object, or only the operator’s selected view of the decision?
+15. Are verifier paths materially control-disjoint, or are they several copies of the same trust path?
 
 Reviewers can inspect the minimal PoC at [`examples/decision-receipt-poc/`](examples/decision-receipt-poc/).
 
@@ -929,6 +983,12 @@ It is weakest when the system says:
 It is also weak when the system says:
 
 “Trust us. We included everything relevant.”
+
+It is also weak when the system says:
+
+“Trust us. The verifier is independent.”
+
+without showing how the verifier reconstructs outside the generator’s control.
 
 ---
 
@@ -947,6 +1007,10 @@ For any proposed A-DAP implementation, ask:
 - Are signatures verifiable independently?
 - Are timestamps external or merely internal?
 - Is the verifier independent from the generator?
+- Is verifier independence organizational, technical, custodial, economic, or merely declared?
+- Can verification be executed outside the generator’s exclusive control?
+- Do multiple verifier paths share the same envelope, signer, custody store, API, or operator-defined scope?
+- Are verifier paths materially control-disjoint?
 - Can the record be reconstructed by a third party?
 - Can the affected party access a stable decision object?
 - What happens if the operator is compromised?
@@ -1004,6 +1068,12 @@ That fixed object still depends on scope rules.
 
 If the operator alone controls what enters the envelope, the receipt may preserve an incomplete view.
 
+The current v0 PoC should not be interpreted as evidence that the record is hard to falsify.
+
+It shows that the record can be externalized.
+
+It does not yet show that falsification requires multiple materially distinct compromises.
+
 ---
 
 ## Research Questions
@@ -1040,6 +1110,11 @@ Open questions include:
 - Can affected-party contestability exist if the operator controls the envelope scope?
 - How can scope completeness be verified without exposing unnecessary sensitive data?
 - Should NDC be computed separately for post-commit alteration, omission, and scope capture?
+- How should A-DAP model independent verification as a topology rather than a single trusted entity?
+- When do multiple verifiers increase NDC, and when are they merely redundant copies of the same trust path?
+- What makes two verification paths materially control-disjoint?
+- How should affected-party contestability work when individual harms are too diffuse to create strong adversarial incentives?
+- How can reproducible verification code be paired with sufficient artifacts so that external reconstruction is meaningful rather than cosmetic?
 
 ---
 
@@ -1065,6 +1140,8 @@ Especially welcome:
 - cases where A-DAP fails;
 - cases where NDC collapses to 1;
 - cases where a proposed verifier is not truly independent;
+- cases where multiple verifiers share the same material control vector;
+- cases where verifier independence is only organizational, not evidential;
 - cases where the architecture accidentally becomes self-attesting;
 - cases where input provenance assumptions are unstated;
 - cases where records can be omitted before commitment or anchoring;
@@ -1096,7 +1173,7 @@ It is not legal advice.
 
 It is not a certified compliance framework.
 
-It is not a guarantee of correctness, fairness, safety, truth, legality, or scope completeness.
+It is not a guarantee of correctness, fairness, safety, truth, legality, scope completeness, verifier independence, or accountability.
 
 Use of A-DAP concepts, prototypes, or documentation should be accompanied by independent legal, technical, and institutional review.
 
