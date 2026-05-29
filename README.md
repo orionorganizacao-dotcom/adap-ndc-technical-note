@@ -844,6 +844,7 @@ This repository may include:
 ```text
 .
 ├── README.md
+├── ROADMAP.md
 ├── THREAT_MODEL.md
 ├── CONTRIBUTING.md
 ├── NOTICE.md
@@ -940,6 +941,12 @@ Under conservative assumptions, A-DAP v0 should be treated as an externalization
 
 See [`architecture/example-verification-topology.md`](architecture/example-verification-topology.md).
 
+The transition from A-DAP v0 to A-DAP v1 is defined in [`ROADMAP.md`](ROADMAP.md).
+
+A-DAP v0 externalizes the record.
+
+A-DAP v1 should begin hardening the record.
+
 Some parts may be implemented as reference prototypes.
 
 Some parts may remain conceptual or under adversarial review.
@@ -973,6 +980,8 @@ A reviewer should begin by asking:
 Reviewers can inspect the minimal PoC at [`examples/decision-receipt-poc/`](examples/decision-receipt-poc/).
 
 The PoC intentionally includes adversarial scenarios for non-issuance, split-view receipts, and structurally valid bad decisions.
+
+Reviewers can inspect the v0 to v1 transition plan at [`ROADMAP.md`](ROADMAP.md).
 
 A-DAP is strongest when these questions can be answered explicitly.
 
@@ -1115,6 +1124,7 @@ Open questions include:
 - What makes two verification paths materially control-disjoint?
 - How should affected-party contestability work when individual harms are too diffuse to create strong adversarial incentives?
 - How can reproducible verification code be paired with sufficient artifacts so that external reconstruction is meaningful rather than cosmetic?
+- How should A-DAP v1 move from record externalization toward record hardening without overstating current capabilities?
 
 ---
 
