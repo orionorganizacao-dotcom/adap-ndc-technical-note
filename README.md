@@ -354,6 +354,34 @@ They should not become a new authority layer that validates itself.
 
 ---
 
+## Adoption Capture Risk
+
+A-DAP also documents a non-technical adoption risk: formal implementation without substantive contestability.
+
+A powerful operator may adopt visible A-DAP artifacts such as envelopes, hashes, signatures, Merkle roots, timestamps, receipts, dashboards, and verifiers, while still preserving control over:
+
+- what enters the envelope,
+- what remains outside the envelope,
+- how the receipt is delivered,
+- who controls the verification interface,
+- and whether verification is actually exercised.
+
+This creates a risk of compliance theater.
+
+The operator may appear to adopt A-DAP while preserving the same control structure that A-DAP is meant to expose.
+
+This risk is documented in:
+
+`architecture/adoption-capture-risk.md`
+
+The safe claim is:
+
+A-DAP adoption is meaningful only when paired with independent scope review, conservative dependency-collapse analysis, externalizable reconstruction, and realistic exercise-risk assessment.
+
+Formal adoption alone does not prove accountability.
+
+---
+
 ## Challenge Package: GCD-001
 
 This repository includes the `challenge/gcd-001/` package.
@@ -507,6 +535,7 @@ Typical repository structure:
 ├── RELEASE_NOTES.md
 ├── ADAP-EXP-003.md
 ├── architecture/
+│   ├── adoption-capture-risk.md
 │   ├── envelope-bottleneck.md
 │   ├── automated-ndc-v2.md
 │   └── omega-plus-plus-reconstructible-verdicts.md
@@ -521,3 +550,238 @@ Typical repository structure:
 │   └── README.md
 └── solver/
     └── README.md
+```
+
+The exact structure may evolve.
+
+The important distinction is conceptual:
+
+- architecture explains the theory,
+- challenge tests reconstruction,
+- proofs separate evidentiary categories,
+- solver contains experimental tooling,
+- and threat model defines limits.
+
+---
+
+## Quickstart for Reviewers
+
+For a five-minute review:
+
+1. Read the core claim at the top of this README.
+2. Check what A-DAP explicitly does not claim.
+3. Read `THREAT_MODEL.md`.
+4. Inspect `architecture/envelope-bottleneck.md`.
+5. Inspect `ADAP-EXP-003.md`.
+6. Inspect `architecture/adoption-capture-risk.md`.
+7. Run or review the reconstruction challenge in `challenge/gcd-001/`.
+8. Try to identify where trust is still concentrated.
+
+The best review is adversarial.
+
+Do not ask only whether the protocol works.
+
+Ask where it silently asks to be trusted.
+
+---
+
+## Design Discipline
+
+A-DAP follows several design rules:
+
+### 1. Do not overclaim
+
+If the protocol only detects inconsistency, say that.
+
+Do not call inconsistency detection “truth.”
+
+### 2. Separate proof from explanation
+
+A convincing explanation is not a proof.
+
+A proof constrains what can be changed later.
+
+### 3. Collapse false independence
+
+Multiple artifacts do not matter if they depend on the same authority.
+
+### 4. Commit before challenge
+
+The evidentiary object must exist before the operator knows which decision will be contested.
+
+### 5. Make verification externalizable
+
+A verifier outside the original decision system should be able to reconstruct the relevant commitment under defined assumptions.
+
+### 6. Declare assumptions
+
+A-DAP is only meaningful when custody, canonicalization, timestamping, and verification assumptions are explicit.
+
+### 7. Treat non-exercise as a real weakness
+
+A verification path that nobody uses may still be latent evidence.
+
+But latent evidence is not the same as exercised contestability.
+
+### 8. Treat adoption capture as a first-class risk
+
+A-DAP should not be evaluated only by whether an operator formally adopts its artifacts.
+
+It should also be evaluated by whether the deployment preserves independent scope review, external reconstruction, dependency separation, and realistic exercise of verification.
+
+---
+
+## Example Safe Use
+
+A public agency uses an automated eligibility system.
+
+At the moment of decision, the system creates a decision envelope committing to:
+
+- applicant record hash,
+- rule version,
+- model version,
+- output,
+- threshold,
+- timestamp evidence,
+- and reconstruction instructions.
+
+Later, the applicant challenges the denial.
+
+An auditor reconstructs the envelope and discovers that the explanation sent to the applicant does not match the committed decision state.
+
+A-DAP does not decide the legal remedy.
+
+But it gives the auditor a concrete inconsistency to examine.
+
+---
+
+## Example Unsafe Use
+
+A company says:
+
+“Our AI decisions are accountable because we use A-DAP.”
+
+This is not a valid claim.
+
+A-DAP does not guarantee accountability.
+
+A safer statement would be:
+
+“Our system generates reconstructible decision envelopes designed to make later alteration or inconsistency detectable under stated assumptions.”
+
+That statement is narrower and more defensible.
+
+---
+
+## Current Maturity
+
+This repository should be read as an evolving technical note, protocol architecture, and adversarial review surface.
+
+Some parts are conceptual.
+
+Some parts are experimental.
+
+Some parts are challenge-oriented.
+
+Some parts are intended for adversarial review.
+
+The project is not presented as a finished compliance product.
+
+It is a structured attempt to formalize and test the conditions under which automated decisions can become externally contestable.
+
+---
+
+## Open Problems
+
+A-DAP leaves several important problems open:
+
+- How should exercise probability be measured in real institutions?
+- How should correlated non-exercise be modeled?
+- How should privacy-preserving reconstruction work in sensitive domains?
+- How should timestamp authority failure be handled?
+- How should courts or regulators treat partial reconstruction?
+- How should dependency collapse be standardized?
+- How should reconstruction cost be reduced for affected parties?
+- How should A-DAP interact with sector-specific legal duties?
+- How should false positives and false negatives in reconstruction be reported?
+- How should external reviewers be incentivized to actually verify?
+- How should independent envelope scope be defined and enforced?
+- How should adoption capture be detected before it becomes compliance theater?
+
+These are not minor implementation details.
+
+They are part of the accountability problem.
+
+---
+
+## Contribution Guidelines
+
+Contributions are welcome if they improve clarity, testability, threat modeling, or adversarial review.
+
+Especially useful contributions include:
+
+- attacks on the protocol,
+- dependency-collapse examples,
+- reconstruction failures,
+- false-independence cases,
+- adoption-capture scenarios,
+- envelope-scope critiques,
+- canonicalization edge cases,
+- timestamping critiques,
+- privacy-preserving envelope designs,
+- legal interpretation notes,
+- and empirical evidence about whether verification paths are actually exercised.
+
+Please do not contribute language that inflates the protocol beyond what it can prove.
+
+Related file:
+
+`CONTRIBUTING.md`
+
+---
+
+## Citation and Attribution
+
+If referencing A-DAP, cite it as a protocol architecture for reconstructible decision evidence and contestability.
+
+Do not describe it as a complete accountability solution.
+
+Related file:
+
+`NOTICE.md`
+
+Suggested short description:
+
+A-DAP is a protocol architecture for creating reconstructible evidentiary records around high-impact automated decisions, so that later alteration or inconsistency can be detected under stated assumptions.
+
+---
+
+## Release Notes
+
+See:
+
+`RELEASE_NOTES.md`
+
+Release notes should document not only features, but also narrowed claims, removed overclaims, known weaknesses, and adversarial findings.
+
+In this project, reducing a false claim is progress.
+
+---
+
+## Final Position
+
+A-DAP is based on a narrow but important claim:
+
+Automated decisions should not depend only on post-hoc explanation.
+
+They should produce reconstructible evidence.
+
+But reconstructible evidence is not truth.
+
+Structural contestability is not exercised accountability.
+
+And formal adoption is not substantive contestability.
+
+A-DAP helps create the object that later accountability may need.
+
+It does not replace the institutions that must use it.
