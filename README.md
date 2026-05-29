@@ -684,6 +684,16 @@ This repository may include:
 ├── solver/
 │   └── README.md
 └── examples/
+    ├── gcd-001.md
+    └── decision-receipt-poc/
+        ├── README.md
+        ├── generate_receipt.py
+        ├── verify_receipt.py
+        ├── run_all_scenarios.py
+        └── scenarios/
+            ├── non_issuance.py
+            ├── split_view.py
+            └── perfect_bad_decision.py
 ```
 
 The exact structure may evolve.
@@ -717,6 +727,16 @@ This note should be understood as a rights-oriented framing of affected-party co
 
 See [`architecture/cryptographic-habeas-data.md`](architecture/cryptographic-habeas-data.md).
 
+The repository also includes a minimal executable proof of concept for affected-party decision receipts.
+
+See [`examples/decision-receipt-poc/`](examples/decision-receipt-poc/).
+
+This PoC demonstrates a narrow claim: an affected person can hold a verifiable decision object emitted at the moment of a simulated automated decision.
+
+It does not prove fairness, legality, truth, input correctness, or institutional legitimacy.
+
+Its purpose is to test the minimum contestability object: a citizen-held receipt that can expose non-issuance, split-view reconstruction, and the limit case of a structurally valid receipt for a bad decision.
+
 Some parts may be implemented as reference prototypes.
 
 Some parts may remain conceptual or under adversarial review.
@@ -742,6 +762,11 @@ A reviewer should begin by asking:
 9. Where does the Envelope Bottleneck appear?
 10. What would need to be compromised to falsify the record without detection?
 11. Can the affected person access enough stable evidence to challenge the decision?
+12. Does the minimal decision receipt PoC demonstrate the claimed boundary, or does it only show a happy path?
+
+Reviewers can inspect the minimal PoC at [`examples/decision-receipt-poc/`](examples/decision-receipt-poc/).
+
+The PoC intentionally includes adversarial scenarios for non-issuance, split-view receipts, and structurally valid bad decisions.
 
 A-DAP is strongest when these questions can be answered explicitly.
 
@@ -835,6 +860,9 @@ Open questions include:
 - How can affected-party contestability be framed without implying that cryptographic records prove fairness, truth, legality, or justice?
 - What minimum decision object should an affected person be able to access in order to contest an automated decision?
 - How should Cryptographic Habeas Data relate to classical habeas data, data protection rights, and automated decision review rights?
+- What is the minimum executable proof of affected-party contestability?
+- Does a citizen-held receipt provide a meaningful independence boundary, or is external anchoring required?
+- How should a decision receipt PoC distinguish fixation of the contestable object from proof of fairness, legality, truth, or correctness?
 
 ---
 
