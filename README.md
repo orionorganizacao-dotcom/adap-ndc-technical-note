@@ -419,6 +419,14 @@ A-DAP verification should be exercisable by non-technical people without turning
 
 The interface may help translate deterministic checks into human-readable language, but the evidentiary force must come from independent reproducibility, not from the validator’s status.
 
+A hosted or client-side interface may reduce friction, but local execution is not independent verification by itself.
+
+Client-side verification can help exercise the verification path, but it does not automatically increase NDC.
+
+NDC depends on independent custody and verification paths after dependency collapse, including whether timestamp evidence, anchors, schemas, public keys, and proof availability are reachable outside the operator’s control.
+
+Do not confuse local execution with independent verification.
+
 ---
 
 ## Challenge Package: GCD-001
@@ -676,6 +684,12 @@ A-DAP verification should not depend on trusting a validator’s report.
 
 The validator should produce reproducible verification output that another party can independently run, inspect, compare, and challenge.
 
+### 10. Do not confuse client-side execution with independence
+
+Client-side verification can reduce friction and help people exercise verification.
+
+But local execution does not, by itself, create independent custody, external anchoring, or higher NDC.
+
 ---
 
 ## Example Safe Use
@@ -755,6 +769,7 @@ A-DAP leaves several important problems open:
 - How should independent envelope scope be defined and enforced?
 - How should adoption capture be detected before it becomes compliance theater?
 - How should verification be made exercisable without turning the validator into a new authority?
+- How should client-side verification reduce friction without being mistaken for independent custody?
 
 These are not minor implementation details.
 
@@ -776,6 +791,8 @@ Especially useful contributions include:
 - envelope-scope critiques,
 - exercisable-verification interface designs,
 - validator-capture critiques,
+- client-side verification critiques,
+- verifier supply-chain critiques,
 - canonicalization edge cases,
 - timestamping critiques,
 - privacy-preserving envelope designs,
@@ -832,7 +849,9 @@ Structural contestability is not exercised accountability.
 
 Formal adoption is not substantive contestability.
 
-And validator output is not authority.
+Validator output is not authority.
+
+And client-side execution is not independent verification by itself.
 
 A-DAP helps create the object that later accountability may need.
 
