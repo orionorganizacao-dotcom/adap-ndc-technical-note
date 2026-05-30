@@ -540,6 +540,39 @@ Third-party verification should not be counted as independent until its funding,
 
 ---
 
+## Challenge Package: GCD-003
+
+This repository also includes the `challenge/gcd-003-internal-integrity-sensor/` package.
+
+GCD-003 tests whether an internal integrity sensor increases NDC or collapses into the operator’s control domain under conservative dependency analysis.
+
+Its purpose is not to prove that all sensors are useless.
+
+Its purpose is narrower:
+
+to test when an integrity sensor is merely another operator-controlled artifact, and when it may survive as a materially independent verification path.
+
+Related files:
+
+- `challenge/gcd-003-internal-integrity-sensor/README.md`
+- `challenge/gcd-003-internal-integrity-sensor/experiment-spec.md`
+- `challenge/gcd-003-internal-integrity-sensor/custody-graph.json`
+- `challenge/gcd-003-internal-integrity-sensor/expected-findings.md`
+- `challenge/gcd-003-internal-integrity-sensor/submission-template.md`
+- `challenge/gcd-003-internal-integrity-sensor/reviewer-guidelines.md`
+
+The safe claim is:
+
+GCD-003 extends A-DAP’s dependency-collapse method to internal integrity sensors.
+
+It asks whether the sensor is truly an independent constraint or merely another operator-controlled artifact.
+
+An internal sensor should not be counted as independent unless its observation boundary, key custody, anchoring path, receipt availability, and verification access are materially disjoint from the operator being verified.
+
+Internal measurement is not independent verification by default.
+
+---
+
 ## Proofs, Claims, Timestamps, and Audits
 
 This repository distinguishes between four things that are often confused:
@@ -685,7 +718,14 @@ Typical repository structure:
 │   │   ├── reconstruction-spec.md
 │   │   ├── submission-template.md
 │   │   └── reviewer-guidelines.md
-│   └── gcd-002-verifier-funding/
+│   ├── gcd-002-verifier-funding/
+│   │   ├── README.md
+│   │   ├── experiment-spec.md
+│   │   ├── custody-graph.json
+│   │   ├── expected-findings.md
+│   │   ├── submission-template.md
+│   │   └── reviewer-guidelines.md
+│   └── gcd-003-internal-integrity-sensor/
 │       ├── README.md
 │       ├── experiment-spec.md
 │       ├── custody-graph.json
@@ -725,7 +765,8 @@ For a five-minute review:
 9. Inspect `architecture/ip-priority-and-authorized-execution.md`.
 10. Run or review the reconstruction challenge in `challenge/gcd-001/`.
 11. Run or review the verifier-funding challenge in `challenge/gcd-002-verifier-funding/`.
-12. Try to identify where trust is still concentrated.
+12. Run or review the internal-integrity-sensor challenge in `challenge/gcd-003-internal-integrity-sensor/`.
+13. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -815,6 +856,16 @@ Historical process evidence is complementary to temporal priority, not superior 
 
 Even an anchored process chain does not eliminate independent convergence.
 
+### 14. Do not confuse internal measurement with independent verification
+
+An internal integrity sensor does not increase NDC merely because it monitors the system from inside.
+
+A sensor is independent only if its observation boundary, key custody, anchoring path, receipt availability, and verification access are materially disjoint from the operator being verified.
+
+A protected sensor may sign what it observes.
+
+That does not prove the observed input was true, complete, or unmanipulated before observation.
+
 ---
 
 ## Example Safe Use
@@ -900,6 +951,9 @@ A-DAP leaves several important problems open:
 - How should temporal priority evidence be used without overstating authorship or plagiarism claims?
 - How should historical process evidence be anchored over time without becoming self-reported narrative?
 - How should anchored process chains be evaluated when another party claims independent convergence?
+- How should internal integrity sensors be modeled when their observation boundary is operator-controlled?
+- How should post-observation integrity claims be separated from input-truth claims?
+- How should affected-party receipt possession be distinguished from non-exclusive receipt access?
 
 These are not minor implementation details.
 
@@ -923,6 +977,9 @@ Especially useful contributions include:
 - authorization-token custody critiques,
 - historical-process evidence critiques,
 - anchored-process chain critiques,
+- internal-integrity sensor collapse examples,
+- observation-boundary critiques,
+- sensor-key custody critiques,
 - envelope-scope critiques,
 - exercisable-verification interface designs,
 - validator-capture critiques,
@@ -995,6 +1052,8 @@ Temporal priority is not plagiarism proof.
 Historical process evidence is not proof of origin by itself.
 
 A self-reported history is not proof.
+
+Internal measurement is not independent verification by default.
 
 A-DAP helps create the object that later accountability may need.
 
