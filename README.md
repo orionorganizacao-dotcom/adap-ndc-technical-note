@@ -382,6 +382,45 @@ Formal adoption alone does not prove accountability.
 
 ---
 
+## Exercisable Verification Interface
+
+A-DAP also distinguishes between validator authority and reproducible verification.
+
+A verification interface should not become a new authority that asks affected parties, auditors, regulators, or courts to trust its report.
+
+Instead, it should produce reproducible verification output:
+
+- the receipt analyzed,
+- the tool version used,
+- the input hash,
+- the declared schema,
+- the deterministic checks performed,
+- the fields present or missing,
+- the dependencies detected,
+- and the method required for another party to reproduce the same result.
+
+This distinction matters because a validator that merely issues reports can recreate the same trust problem A-DAP is designed to avoid.
+
+The goal is not:
+
+“Trust the validator.”
+
+The goal is:
+
+“Run the same open procedure over the same receipt and obtain the same result.”
+
+This design is documented in:
+
+`architecture/exercisable-verification-interface.md`
+
+The safe claim is:
+
+A-DAP verification should be exercisable by non-technical people without turning the interface into an attestation authority.
+
+The interface may help translate deterministic checks into human-readable language, but the evidentiary force must come from independent reproducibility, not from the validator’s status.
+
+---
+
 ## Challenge Package: GCD-001
 
 This repository includes the `challenge/gcd-001/` package.
@@ -536,6 +575,7 @@ Typical repository structure:
 ├── ADAP-EXP-003.md
 ├── architecture/
 │   ├── adoption-capture-risk.md
+│   ├── exercisable-verification-interface.md
 │   ├── envelope-bottleneck.md
 │   ├── automated-ndc-v2.md
 │   └── omega-plus-plus-reconstructible-verdicts.md
@@ -574,8 +614,9 @@ For a five-minute review:
 4. Inspect `architecture/envelope-bottleneck.md`.
 5. Inspect `ADAP-EXP-003.md`.
 6. Inspect `architecture/adoption-capture-risk.md`.
-7. Run or review the reconstruction challenge in `challenge/gcd-001/`.
-8. Try to identify where trust is still concentrated.
+7. Inspect `architecture/exercisable-verification-interface.md`.
+8. Run or review the reconstruction challenge in `challenge/gcd-001/`.
+9. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -628,6 +669,12 @@ But latent evidence is not the same as exercised contestability.
 A-DAP should not be evaluated only by whether an operator formally adopts its artifacts.
 
 It should also be evaluated by whether the deployment preserves independent scope review, external reconstruction, dependency separation, and realistic exercise of verification.
+
+### 9. Do not turn the validator into an authority
+
+A-DAP verification should not depend on trusting a validator’s report.
+
+The validator should produce reproducible verification output that another party can independently run, inspect, compare, and challenge.
 
 ---
 
@@ -707,6 +754,7 @@ A-DAP leaves several important problems open:
 - How should external reviewers be incentivized to actually verify?
 - How should independent envelope scope be defined and enforced?
 - How should adoption capture be detected before it becomes compliance theater?
+- How should verification be made exercisable without turning the validator into a new authority?
 
 These are not minor implementation details.
 
@@ -726,6 +774,8 @@ Especially useful contributions include:
 - false-independence cases,
 - adoption-capture scenarios,
 - envelope-scope critiques,
+- exercisable-verification interface designs,
+- validator-capture critiques,
 - canonicalization edge cases,
 - timestamping critiques,
 - privacy-preserving envelope designs,
@@ -780,7 +830,9 @@ But reconstructible evidence is not truth.
 
 Structural contestability is not exercised accountability.
 
-And formal adoption is not substantive contestability.
+Formal adoption is not substantive contestability.
+
+And validator output is not authority.
 
 A-DAP helps create the object that later accountability may need.
 
