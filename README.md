@@ -470,13 +470,20 @@ This risk is documented in:
 The defensible uses are narrower:
 
 - temporal priority evidence: showing that a specific artifact existed in a specific form no later than a specific date;
+- historical process evidence: showing that material development steps were externally anchored over time;
 - externally authorized execution evidence: showing that a specific execution presented a valid authorization token issued by a materially disjoint authority for a declared version, scope, deployment, or time window.
 
 The safe claim is:
 
-A-DAP can support existence-by-date and externally authorized execution evidence under stated custody assumptions.
+A-DAP can support existence-by-date, externally anchored process evidence, and externally authorized execution evidence under stated custody assumptions.
 
-It cannot prove copying, sole authorship, infringement, or authorized execution from output similarity or self-signed receipts.
+Historical process evidence is complementary to temporal priority, not superior to it.
+
+A self-reported history is not proof.
+
+Even an anchored process chain does not eliminate independent convergence.
+
+A-DAP cannot prove copying, sole authorship, infringement, or authorized execution from output similarity, self-reported process narratives, or self-signed receipts.
 
 ---
 
@@ -798,6 +805,16 @@ It does not prove sole authorship, copying, infringement, or lack of independent
 
 Authorized execution also cannot be self-attested by the engine being checked.
 
+### 13. Do not confuse process history with proof of origin
+
+A development history can support provenance analysis only when its material steps were independently anchored over time.
+
+A self-reported history is not proof.
+
+Historical process evidence is complementary to temporal priority, not superior to it.
+
+Even an anchored process chain does not eliminate independent convergence.
+
 ---
 
 ## Example Safe Use
@@ -881,6 +898,8 @@ A-DAP leaves several important problems open:
 - How should verifier funding, access, scope, governance, and revocation dependencies be disclosed and analyzed?
 - How should externally issued authorization tokens be designed without turning the token issuer into a new bottleneck?
 - How should temporal priority evidence be used without overstating authorship or plagiarism claims?
+- How should historical process evidence be anchored over time without becoming self-reported narrative?
+- How should anchored process chains be evaluated when another party claims independent convergence?
 
 These are not minor implementation details.
 
@@ -902,6 +921,8 @@ Especially useful contributions include:
 - verifier-funding capture scenarios,
 - IP-priority and authorized-execution critiques,
 - authorization-token custody critiques,
+- historical-process evidence critiques,
+- anchored-process chain critiques,
 - envelope-scope critiques,
 - exercisable-verification interface designs,
 - validator-capture critiques,
@@ -970,6 +991,10 @@ Client-side execution is not independent verification by itself.
 Third-party verification is not independent verification by default.
 
 Temporal priority is not plagiarism proof.
+
+Historical process evidence is not proof of origin by itself.
+
+A self-reported history is not proof.
 
 A-DAP helps create the object that later accountability may need.
 
