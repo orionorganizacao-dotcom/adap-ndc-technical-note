@@ -429,6 +429,26 @@ Do not confuse local execution with independent verification.
 
 ---
 
+## Verifier Funding Capture
+
+A-DAP also treats verifier funding as a possible control vector.
+
+A third-party verifier is not independent merely because it is organizationally separate.
+
+If the verifier’s funding, access, scope, contract renewal, governance, or survival depends materially on the operator being verified, the verifier may collapse into the same control domain under conservative NDC analysis.
+
+This risk is documented in:
+
+`architecture/verifier-funding-capture.md`
+
+The safe claim is:
+
+Independent verification requires more than a third-party label. It requires disclosure and analysis of the verifier’s funding, access, scope, governance, and revocation dependencies.
+
+Formal third-party verification alone does not prove independence.
+
+---
+
 ## Challenge Package: GCD-001
 
 This repository includes the `challenge/gcd-001/` package.
@@ -584,6 +604,7 @@ Typical repository structure:
 ├── architecture/
 │   ├── adoption-capture-risk.md
 │   ├── exercisable-verification-interface.md
+│   ├── verifier-funding-capture.md
 │   ├── envelope-bottleneck.md
 │   ├── automated-ndc-v2.md
 │   └── omega-plus-plus-reconstructible-verdicts.md
@@ -623,8 +644,9 @@ For a five-minute review:
 5. Inspect `ADAP-EXP-003.md`.
 6. Inspect `architecture/adoption-capture-risk.md`.
 7. Inspect `architecture/exercisable-verification-interface.md`.
-8. Run or review the reconstruction challenge in `challenge/gcd-001/`.
-9. Try to identify where trust is still concentrated.
+8. Inspect `architecture/verifier-funding-capture.md`.
+9. Run or review the reconstruction challenge in `challenge/gcd-001/`.
+10. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -689,6 +711,12 @@ The validator should produce reproducible verification output that another party
 Client-side verification can reduce friction and help people exercise verification.
 
 But local execution does not, by itself, create independent custody, external anchoring, or higher NDC.
+
+### 11. Do not confuse third-party verification with independent verification
+
+A verifier may be legally separate but economically or operationally dependent.
+
+Funding, access, scope, renewal, governance, and revocation dependencies must be included in ecosystem-level NDC analysis.
 
 ---
 
@@ -770,6 +798,7 @@ A-DAP leaves several important problems open:
 - How should adoption capture be detected before it becomes compliance theater?
 - How should verification be made exercisable without turning the validator into a new authority?
 - How should client-side verification reduce friction without being mistaken for independent custody?
+- How should verifier funding, access, scope, governance, and revocation dependencies be disclosed and analyzed?
 
 These are not minor implementation details.
 
@@ -788,6 +817,7 @@ Especially useful contributions include:
 - reconstruction failures,
 - false-independence cases,
 - adoption-capture scenarios,
+- verifier-funding capture scenarios,
 - envelope-scope critiques,
 - exercisable-verification interface designs,
 - validator-capture critiques,
@@ -851,7 +881,9 @@ Formal adoption is not substantive contestability.
 
 Validator output is not authority.
 
-And client-side execution is not independent verification by itself.
+Client-side execution is not independent verification by itself.
+
+And third-party verification is not independent verification by default.
 
 A-DAP helps create the object that later accountability may need.
 
