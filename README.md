@@ -425,6 +425,18 @@ Related file:
 
 architecture/exercisable-verification-interface.md
 
+### Exercisable Citizen Verification
+
+A-DAP only becomes socially useful when reconstruction can be exercised without requiring the affected person to become a cryptographer.
+
+A citizen-facing verification layer should help affected people, advocates, auditors, regulators, lawyers, journalists, and courts understand whether a later explanation matches the committed decision record.
+
+It should make verification usable without turning the interface into a new authority.
+
+Related file:
+
+architecture/exercisable-citizen-verification.md
+
 ### Verifier Funding Capture
 
 A third-party verifier is not independent merely because it is organizationally separate.
@@ -635,12 +647,21 @@ It tests whether the later record is consistent with the earlier commitment.
 ├── architecture/
 │   ├── adoption-capture-risk.md
 │   ├── automated-ndc-v2.md
+│   ├── cryptographic-habeas-data.md
+│   ├── disjoint-anchoring-for-contestability.md
 │   ├── envelope-bottleneck.md
+│   ├── example-verification-topology.md
+│   ├── exercisable-citizen-verification.md
 │   ├── exercisable-verification-interface.md
+│   ├── independent-verification-topology.md
 │   ├── ip-priority-and-authorized-execution.md
-│   ├── non-self-attested-materiality.md
+│   ├── ndc-comparative-positioning.md
 │   ├── ndc-separability-criterion.md
+│   ├── non-self-attested-materiality.md
 │   ├── omega-plus-plus-reconstructible-verdicts.md
+│   ├── scope-completeness-boundary.md
+│   ├── sdk-vs-external-audit-service.md
+│   ├── signer-custody-boundary.md
 │   └── verifier-funding-capture.md
 ├── challenge/
 │   ├── gcd-001/
@@ -673,8 +694,9 @@ For a five-minute review:
 5. Inspect architecture/envelope-bottleneck.md.
 6. Inspect ADAP-EXP-003.md.
 7. Inspect architecture/non-self-attested-materiality.md.
-8. Run or review the reconstruction challenge in challenge/gcd-001/.
-9. Try to identify where trust is still concentrated.
+8. Inspect architecture/exercisable-citizen-verification.md.
+9. Run or review the reconstruction challenge in challenge/gcd-001/.
+10. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -698,6 +720,7 @@ A-DAP follows several design rules:
 - Treat adoption capture as a first-class risk.
 - Do not turn the validator into an authority.
 - Do not confuse client-side execution with independence.
+- Do not confuse citizen-facing usability with independent verification.
 - Do not confuse third-party verification with independent verification.
 - Do not confuse priority evidence with plagiarism proof.
 - Do not confuse process history with proof of origin.
@@ -773,6 +796,7 @@ A-DAP leaves several important problems open:
 - How should independent envelope scope be defined and enforced?
 - How should adoption capture be detected before it becomes compliance theater?
 - How should verification be made exercisable without turning the validator into a new authority?
+- How should citizen-facing verification be made usable without weakening reproducibility?
 - How should verifier funding, access, scope, governance, and revocation dependencies be disclosed and analyzed?
 - How should ZK-Proofs and TEEs be integrated without hiding custody, input, schema, or exercise dependencies?
 - How should materiality models be externally anchored?
@@ -795,6 +819,8 @@ Especially useful contributions include:
 - false-independence cases
 - adoption-capture scenarios
 - verifier-funding capture scenarios
+- citizen-facing verification critiques
+- usability-versus-reproducibility critiques
 - internal-integrity sensor collapse examples
 - materiality-model critiques
 - ZK-Proof and TEE integration critiques
@@ -854,6 +880,8 @@ Formal adoption is not substantive contestability.
 Validator output is not authority.
 
 Client-side execution is not independent verification by itself.
+
+Citizen-facing usability is not independent verification by itself.
 
 Third-party verification is not independent verification by default.
 
