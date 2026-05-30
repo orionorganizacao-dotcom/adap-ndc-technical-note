@@ -385,7 +385,146 @@ This operationalizes the Envelope Bottleneck and NDC reasoning.
 
 ---
 
-## 14. Exercise Reduction
+## 14. Client-Side Verification Is Not Independence
+
+Client-side verification can reduce dependence on an operator-controlled portal at the moment of execution.
+
+This is useful.
+
+It may reduce friction for affected parties and increase the probability that verification is exercised.
+
+In ADAP-EXP-003 terms, client-side execution may help increase e_i.
+
+But client-side execution does not, by itself, increase NDC.
+
+NDC is not a measure of where computation runs.
+
+NDC is a measure of independent custody and verification paths after dependency collapse.
+
+The relevant distinction is:
+
+- custody vectors,
+- verifier distribution vectors,
+- and schema governance vectors.
+
+These should not be collapsed into a single category.
+
+### 14.1 Custody Vectors
+
+Custody vectors affect the decision receipt, timestamp, anchoring, or authoritative proof path.
+
+They can enter the NDC/min-cut analysis directly.
+
+Examples include:
+
+- operator-controlled timestamp evidence,
+- operator-controlled external anchor access,
+- operator-controlled receipt delivery,
+- operator-controlled public key directory,
+- operator-controlled custody log,
+- operator-controlled Merkle root publication,
+- operator-controlled proof availability.
+
+If these vectors are controlled by the same operator whose decision is being contested, apparent verification independence may collapse.
+
+A timestamp or external anchor only improves independence if it is reachable and verifiable outside the operator’s custody.
+
+An external anchor whose only accessible proof passes through the operator’s portal does not meaningfully increase NDC.
+
+It reproduces the Envelope Bottleneck in a new location.
+
+### 14.2 Verifier Distribution Vectors
+
+Verifier distribution vectors concern the code used to perform verification.
+
+They are supply-chain risks.
+
+They do not automatically alter custody of the decision receipt or external anchor, but they can compromise the reliability of the verification process.
+
+Examples include:
+
+- operator-controlled JavaScript bundle,
+- operator-controlled mobile app,
+- unsigned verifier release,
+- non-reproducible build,
+- unverifiable binary,
+- mutable hosted verifier,
+- dependency injection through a controlled web interface.
+
+These risks should be handled through:
+
+- open-source code,
+- signed releases,
+- reproducible builds,
+- subresource integrity where applicable,
+- tool hashes in verification outputs,
+- offline execution where possible,
+- independent mirrors,
+- and multiple independently runnable implementations.
+
+A compromised verifier can produce false local output.
+
+But that is a verifier supply-chain failure, not the same thing as custody independence over the receipt or anchor.
+
+The two risks must be analyzed separately.
+
+### 14.3 Schema Governance Vectors
+
+Schema control is a scope-governance problem.
+
+A schema defines what the envelope is expected to contain.
+
+If the operator controls the schema, it may omit decisive fields while still producing formally valid receipts.
+
+This does not always mean the timestamp or receipt custody has collapsed.
+
+It means the completeness standard may be captured.
+
+Therefore, schema governance should be disclosed separately.
+
+The interface should distinguish between:
+
+- public or regulator-defined schema,
+- independent standards-body schema,
+- civil-society or audit-consortium schema,
+- contractual schema,
+- community-maintained schema,
+- and operator-defined schema.
+
+If a schema is operator-defined, the interface should explicitly warn:
+
+“Warning: this schema was defined by the same operator whose decision is being verified.”
+
+The Scope Inspector must not silently convert an operator-defined schema into an independent completeness standard.
+
+### 14.4 Correct Question
+
+The relevant question is not:
+
+“Does verification run client-side?”
+
+The relevant questions are:
+
+- Is the verification procedure deterministic?
+- Is the source code public?
+- Is the executed artifact reproducibly built from that source?
+- Is the artifact signed or hash-pinned?
+- Can another party run the same tool over the same receipt?
+- Is the timestamp or anchor reachable outside the operator’s custody?
+- Can the result be reproduced without relying on the operator’s portal?
+- Who controls the schema used to assess missing fields?
+
+Client-side execution is useful for usability and exercise.
+
+It is not sufficient for independence.
+
+The evidentiary force comes from reproducibility, independent custody, external anchoring where applicable, and explicit schema governance.
+
+Do not confuse local execution with independent verification.
+
+---
+
+## 15. Exercise Reduction
 
 ADAP-EXP-003 shows that verification paths are not useful operationally unless they are exercised.
 
@@ -403,11 +542,11 @@ The interface increases exercise probability not by creating authority, but by r
 
 ---
 
-## 15. Three User Modes
+## 16. Three User Modes
 
 The same interface should support three modes.
 
-### 15.1 Affected Person Mode
+### 16.1 Affected Person Mode
 
 Goal:
 
@@ -423,7 +562,7 @@ Shows:
 
 Does not show technical details first.
 
-### 15.2 Institutional Reviewer Mode
+### 16.2 Institutional Reviewer Mode
 
 Goal:
 
@@ -439,7 +578,7 @@ Shows:
 - reproduction instructions,
 - limitations.
 
-### 15.3 Technical Reviewer Mode
+### 16.3 Technical Reviewer Mode
 
 Goal:
 
@@ -460,7 +599,7 @@ Shows:
 
 ---
 
-## 16. Output Categories
+## 17. Output Categories
 
 The interface should avoid simple valid or invalid labels.
 
@@ -487,7 +626,7 @@ These are more precise than a single validity label.
 
 ---
 
-## 17. Human Summary Format
+## 18. Human Summary Format
 
 A good summary for a non-technical person might be:
 
@@ -509,7 +648,7 @@ Another person can reproduce this result by running tool version X on receipt ha
 
 ---
 
-## 18. Machine-Readable Output
+## 19. Machine-Readable Output
 
 The interface should also produce a machine-readable result.
 
@@ -528,6 +667,9 @@ Example fields:
 - merkle_status,
 - required_fields_present,
 - required_fields_missing,
+- custody_vectors,
+- verifier_distribution_vectors,
+- schema_governance_vectors,
 - operator_dependencies,
 - external_dependencies,
 - ndc_structural_estimate,
@@ -539,7 +681,7 @@ This allows independent tools to compare outputs.
 
 ---
 
-## 19. Avoiding Validator Capture
+## 20. Avoiding Validator Capture
 
 A verifier can itself become captured.
 
@@ -560,7 +702,7 @@ The reproducible procedure is the evidence layer.
 
 ---
 
-## 20. Institutional Deployment
+## 21. Institutional Deployment
 
 There can be multiple deployments of the interface:
 
@@ -580,7 +722,7 @@ The same receipt should produce the same deterministic output across deployments
 
 ---
 
-## 21. Business Model Without Authority Capture
+## 22. Business Model Without Authority Capture
 
 A service may be built around the interface without becoming the authority.
 
@@ -612,7 +754,7 @@ The business value should be facilitation of reproducibility, not ownership of t
 
 ---
 
-## 22. Safe Claim
+## 23. Safe Claim
 
 A safe claim is:
 
@@ -622,7 +764,7 @@ It does not certify that the decision was correct, fair, lawful, or accountable.
 
 ---
 
-## 23. Unsafe Claim
+## 24. Unsafe Claim
 
 An unsafe claim is:
 
@@ -634,7 +776,7 @@ It recreates the authority problem A-DAP was designed to avoid.
 
 ---
 
-## 24. Relation to A-DAP
+## 25. Relation to A-DAP
 
 A-DAP creates decision envelopes.
 
@@ -648,7 +790,7 @@ It makes verification easier to exercise without turning the interface into a ne
 
 ---
 
-## 25. Summary
+## 26. Summary
 
 A-DAP should not create a validator that people must trust.
 
@@ -661,6 +803,10 @@ The validator does not certify fairness.
 The validator does not replace institutions.
 
 The validator produces reproducible verification output.
+
+Client-side execution can reduce friction.
+
+But local execution is not independent verification by itself.
 
 The core principle is:
 
