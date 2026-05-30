@@ -449,6 +449,37 @@ Formal third-party verification alone does not prove independence.
 
 ---
 
+## IP Priority and Authorized Execution
+
+A-DAP may also support limited intellectual-property-adjacent evidence, but only under narrow claims.
+
+The safe use is not algorithmic plagiarism detection.
+
+A-DAP cannot prove that another system copied an algorithm merely because outputs, behavior, or decision patterns are similar.
+
+Similarity is not origin.
+
+Correlation is not authorship.
+
+A Merkle tree proves integrity of committed data, not authorship of a function.
+
+This risk is documented in:
+
+`architecture/ip-priority-and-authorized-execution.md`
+
+The defensible uses are narrower:
+
+- temporal priority evidence: showing that a specific artifact existed in a specific form no later than a specific date;
+- externally authorized execution evidence: showing that a specific execution presented a valid authorization token issued by a materially disjoint authority for a declared version, scope, deployment, or time window.
+
+The safe claim is:
+
+A-DAP can support existence-by-date and externally authorized execution evidence under stated custody assumptions.
+
+It cannot prove copying, sole authorship, infringement, or authorized execution from output similarity or self-signed receipts.
+
+---
+
 ## Challenge Package: GCD-001
 
 This repository includes the `challenge/gcd-001/` package.
@@ -636,6 +667,7 @@ Typical repository structure:
 │   ├── adoption-capture-risk.md
 │   ├── exercisable-verification-interface.md
 │   ├── verifier-funding-capture.md
+│   ├── ip-priority-and-authorized-execution.md
 │   ├── envelope-bottleneck.md
 │   ├── automated-ndc-v2.md
 │   └── omega-plus-plus-reconstructible-verdicts.md
@@ -683,9 +715,10 @@ For a five-minute review:
 6. Inspect `architecture/adoption-capture-risk.md`.
 7. Inspect `architecture/exercisable-verification-interface.md`.
 8. Inspect `architecture/verifier-funding-capture.md`.
-9. Run or review the reconstruction challenge in `challenge/gcd-001/`.
-10. Run or review the verifier-funding challenge in `challenge/gcd-002-verifier-funding/`.
-11. Try to identify where trust is still concentrated.
+9. Inspect `architecture/ip-priority-and-authorized-execution.md`.
+10. Run or review the reconstruction challenge in `challenge/gcd-001/`.
+11. Run or review the verifier-funding challenge in `challenge/gcd-002-verifier-funding/`.
+12. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -756,6 +789,14 @@ But local execution does not, by itself, create independent custody, external an
 A verifier may be legally separate but economically or operationally dependent.
 
 Funding, access, scope, renewal, governance, and revocation dependencies must be included in ecosystem-level NDC analysis.
+
+### 12. Do not confuse priority evidence with plagiarism proof
+
+A timestamped artifact can support existence-by-date.
+
+It does not prove sole authorship, copying, infringement, or lack of independent invention.
+
+Authorized execution also cannot be self-attested by the engine being checked.
 
 ---
 
@@ -838,6 +879,8 @@ A-DAP leaves several important problems open:
 - How should verification be made exercisable without turning the validator into a new authority?
 - How should client-side verification reduce friction without being mistaken for independent custody?
 - How should verifier funding, access, scope, governance, and revocation dependencies be disclosed and analyzed?
+- How should externally issued authorization tokens be designed without turning the token issuer into a new bottleneck?
+- How should temporal priority evidence be used without overstating authorship or plagiarism claims?
 
 These are not minor implementation details.
 
@@ -857,6 +900,8 @@ Especially useful contributions include:
 - false-independence cases,
 - adoption-capture scenarios,
 - verifier-funding capture scenarios,
+- IP-priority and authorized-execution critiques,
+- authorization-token custody critiques,
 - envelope-scope critiques,
 - exercisable-verification interface designs,
 - validator-capture critiques,
@@ -922,7 +967,9 @@ Validator output is not authority.
 
 Client-side execution is not independent verification by itself.
 
-And third-party verification is not independent verification by default.
+Third-party verification is not independent verification by default.
+
+Temporal priority is not plagiarism proof.
 
 A-DAP helps create the object that later accountability may need.
 
