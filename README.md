@@ -264,6 +264,44 @@ It does not guarantee that verification will be exercised, nor that accountabili
 
 ---
 
+## Structural Independence and Economic Resistance
+
+A-DAP distinguishes structural independence from economic resistance.
+
+Structural independence asks:
+
+“Are the verification paths materially disjoint after dependency collapse?”
+
+Economic resistance asks:
+
+“Is the expected cost of fraud, capture, suppression, or manipulation greater than the expected benefit of keeping the fraud hidden?”
+
+These are related, but they are not the same.
+
+A system is not independent merely because fraud is expensive.
+
+A system is structurally independent only when an attacker must compromise materially separate custody, verification, or accountability paths.
+
+A system is economically resistant when abusing those paths becomes more costly, risky, or exposed than operating within the declared rules.
+
+In A-DAP terms:
+
+- NDC describes structural independence.
+- ADAP-EXP-003 describes whether verification paths are actually exercised.
+- Economic resistance asks whether the cost of defeating those paths exceeds the expected benefit of fraud.
+
+The safe claim is:
+
+A-DAP does not make fraud impossible.
+
+It helps make hidden fraud more structurally exposed, more costly to sustain, and easier to contest under stated assumptions.
+
+Structural independence is the architecture.
+
+Economic resistance is the incentive effect created when that architecture is actually exercised.
+
+---
+
 ## Structural NDC
 
 NDC means Non-Dependency Count.
@@ -910,6 +948,16 @@ But they do not automatically resolve input truth, schema scope, custody, anchor
 
 A-DAP should treat them as components, not as substitutes for dependency analysis.
 
+### 16. Do not confuse structural independence with economic resistance
+
+Structural independence means verification paths are materially disjoint after dependency collapse.
+
+Economic resistance means the expected cost of fraud, capture, suppression, or manipulation exceeds the expected benefit of keeping the fraud hidden.
+
+A-DAP should not claim that fraud is impossible.
+
+It should ask whether hidden fraud becomes more costly, risky, and contestable than compliance.
+
 ---
 
 ## Example Safe Use
@@ -999,6 +1047,8 @@ A-DAP leaves several important problems open:
 - How should post-observation integrity claims be separated from input-truth claims?
 - How should affected-party receipt possession be distinguished from non-exclusive receipt access?
 - How should ZK-Proofs and TEEs be integrated without hiding custody, input, schema, or exercise dependencies?
+- How should the expected cost of fraud be modeled without reducing structural independence to a purely economic calculation?
+- How should legal, reputational, technical, and institutional costs be incorporated into adversarial cost models?
 
 These are not minor implementation details.
 
@@ -1026,6 +1076,8 @@ Especially useful contributions include:
 - observation-boundary critiques,
 - sensor-key custody critiques,
 - ZK-Proof and TEE integration critiques,
+- adversarial cost-model critiques,
+- economic-resistance analysis,
 - envelope-scope critiques,
 - exercisable-verification interface designs,
 - validator-capture critiques,
@@ -1102,6 +1154,8 @@ A self-reported history is not proof.
 Internal measurement is not independent verification by default.
 
 Cryptographic strength is not independent contestability by itself.
+
+Structural independence is not the same as economic resistance.
 
 A-DAP helps create the object that later accountability may need.
 
