@@ -354,6 +354,42 @@ They should not become a new authority layer that validates itself.
 
 ---
 
+## ZK-Proofs and TEEs
+
+A-DAP can work alongside technologies such as Zero-Knowledge Proofs and Trusted Execution Environments.
+
+These technologies address important parts of the trust problem, but they do not eliminate the need for custody, scope, and dependency analysis.
+
+ZK-Proofs can help prove that a computation satisfies a defined statement without revealing all underlying data.
+
+TEEs can help attest that specific code executed in a protected environment.
+
+Both can strengthen verification.
+
+But neither automatically proves:
+
+- that the input was true or complete,
+- that the schema was sufficient,
+- that the circuit or code represented the right policy,
+- that the operator did not control the observation boundary,
+- that the anchor was independently reachable,
+- that verification was actually exercised,
+- or that the verifier was institutionally independent.
+
+In A-DAP terms:
+
+ZK-Proofs and TEEs may reduce what must be trusted inside a decision pipeline.
+
+A-DAP asks where trust still remains.
+
+The safe claim is:
+
+ZK-Proofs and TEEs can be useful components in an A-DAP architecture, but they do not replace dependency-collapse analysis, external reconstruction, custody review, or institutional accountability.
+
+Cryptographic strength does not, by itself, prove independent contestability.
+
+---
+
 ## Adoption Capture Risk
 
 A-DAP also documents a non-technical adoption risk: formal implementation without substantive contestability.
@@ -866,6 +902,14 @@ A protected sensor may sign what it observes.
 
 That does not prove the observed input was true, complete, or unmanipulated before observation.
 
+### 15. Do not confuse cryptographic strength with independent contestability
+
+ZK-Proofs and TEEs can strengthen specific parts of a verification pipeline.
+
+But they do not automatically resolve input truth, schema scope, custody, anchoring, exercise probability, or institutional independence.
+
+A-DAP should treat them as components, not as substitutes for dependency analysis.
+
 ---
 
 ## Example Safe Use
@@ -954,6 +998,7 @@ A-DAP leaves several important problems open:
 - How should internal integrity sensors be modeled when their observation boundary is operator-controlled?
 - How should post-observation integrity claims be separated from input-truth claims?
 - How should affected-party receipt possession be distinguished from non-exclusive receipt access?
+- How should ZK-Proofs and TEEs be integrated without hiding custody, input, schema, or exercise dependencies?
 
 These are not minor implementation details.
 
@@ -980,6 +1025,7 @@ Especially useful contributions include:
 - internal-integrity sensor collapse examples,
 - observation-boundary critiques,
 - sensor-key custody critiques,
+- ZK-Proof and TEE integration critiques,
 - envelope-scope critiques,
 - exercisable-verification interface designs,
 - validator-capture critiques,
@@ -1054,6 +1100,8 @@ Historical process evidence is not proof of origin by itself.
 A self-reported history is not proof.
 
 Internal measurement is not independent verification by default.
+
+Cryptographic strength is not independent contestability by itself.
 
 A-DAP helps create the object that later accountability may need.
 
