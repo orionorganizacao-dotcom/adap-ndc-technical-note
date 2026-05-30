@@ -1,611 +1,1505 @@
-# A-DAP: Auditable Decision Accountability Protocol
+# A-DAP — Auditable Decision Accountability Protocol
 
-A-DAP is an architectural protocol for making AI decision evidence independently reconstructible, falsifiable, and externally verifiable.
+A-DAP is a contestability architecture for high-impact automated decisions.
 
-This repository is the main public technical access point for A-DAP/NDC work.
+Its core claim is intentionally narrow:
 
-It does not ask readers to trust the author.
+A-DAP makes later alteration of committed decision records detectable under defined custody, materiality, and verification assumptions.
 
-It asks them to inspect the evidence, reconstruct the decision-custody process, and test whether undetected alteration has a measurable structural cost.
+It does not prove that the original decision was true.
 
----
+It does not prove that the decision was fair.
 
-## Main Thesis
+It does not eliminate trust in the operator at origin.
 
-AI governance cannot rely only on explanations, logs, screenshots, dashboards, or after-the-fact documentation.
+It does not guarantee detection.
 
-For high-impact AI systems, the central question is not only:
+Its value is stricter:
 
-```text
-Why did the system make this decision?
-```
+High-impact automated decisions should be born with a reconstructible evidentiary object, so that affected parties, auditors, regulators, or courts can later contest the specific decision against a pre-committed record.
 
-The harder question is:
+A-DAP turns automated decisions from post-hoc explanations into contestable records.
 
-```text
-Can an independent third party reconstruct and verify the evidence that existed when the decision was made?
-```
+## Executive Summary
 
-A-DAP addresses this problem through a decision-custody architecture.
+A-DAP proposes that high-impact automated decisions be committed before or at the moment of action through reconstructible decision envelopes.
 
-The protocol separates:
+A decision envelope is a pre-committed evidentiary object that can later be reconstructed, examined, and compared against explanations, notices, logs, or operator claims.
 
-- decision input;
-- decision output;
-- decision envelope;
-- custody graph;
-- verification evidence;
-- expected verdict;
-- oracle boundaries.
+A-DAP uses ordinary cryptographic primitives such as hashing, signatures, timestamping, and reproducible reconstruction rules.
 
-The objective is not to prove that a decision was correct.
+Its goal is not to make automated decisions correct.
 
-The objective is to make the evidence surrounding a decision independently reconstructible and structurally difficult to alter without detection.
+Its goal is to make later inconsistency detectable.
 
----
+The protocol is built around a simple governance failure:
 
-## What A-DAP Claims
+Most automated decision systems can explain themselves after the fact, but cannot prove that the explanation corresponds to the actual decision state that existed at the time of action.
 
-A-DAP does not claim that tampering is impossible.
+A-DAP addresses that failure by separating:
 
-A-DAP claims that undetected tampering should have a measurable structural cost.
+the decision
 
-A-DAP does not replace legal responsibility, institutional review, regulatory authority, or human accountability.
+the record
 
-It provides a verification layer that can support them.
+the explanation
 
-A-DAP does not require opening the internal model.
+the verifier
 
-It focuses on the evidence structure surrounding a decision.
+the authority interpreting the result
 
----
+This separation is the core of the protocol.
 
-## What A-DAP Does Not Claim
+## What A-DAP Is
 
-A-DAP does not prove by itself:
+A-DAP is:
 
-- that the original decision was true;
-- that the original decision was fair;
-- that the original decision was lawful;
-- that the input was true in the real world;
-- that the model actually executed the decision;
-- that the declared model state was real;
-- that the declared agent identity was institutionally valid;
-- that the policy was legally valid or in force;
-- that the explanation reflects real internal causality.
+a protocol for reconstructible decision evidence
 
-These claims remain oracle-bound unless separately supported by external evidence.
+a framework for contesting automated decisions after the fact
 
-A-DAP separates what can be verified cryptographically from what still depends on external institutions, witnesses, systems, or real-world facts.
+a way to bind decision records before they can be rewritten
 
----
+an architecture for separating decision-making from later justification
+
+a method for making tampering, substitution, or unexplained inconsistency detectable under stated assumptions
+
+A-DAP is designed for high-impact domains such as:
+
+credit scoring
+
+insurance
+
+public benefits
+
+hiring
+
+healthcare triage
+
+judicial or administrative decision support
+
+education access
+
+fraud detection
+
+compliance screening
+
+and other automated or semi-automated decision pipelines
+
+## What A-DAP Is Not
+
+A-DAP is not:
+
+a fairness metric
+
+an explainability method
+
+a model audit by itself
+
+a guarantee that a decision was correct
+
+a guarantee that a decision was lawful
+
+a guarantee that a decision was fair
+
+a substitute for courts, regulators, auditors, or institutional review
+
+a complete accountability system by itself
+
+A-DAP does not answer:
+
+“Was the decision right?”
+
+It helps answer:
+
+“Can we reconstruct what the system committed to at the time of decision, and detect whether the later record diverges from that commitment?”
+
+## Why This Exists
+
+Many governance frameworks assume that automated decisions can be reviewed later through logs, explanations, model cards, documentation, or operator statements.
+
+That is not enough.
+
+A log can be incomplete.
+
+An explanation can be generated after the fact.
+
+A model card can describe a system generally without proving what happened in a specific decision.
+
+A database record can be changed.
+
+An operator can summarize a decision without exposing the exact committed state.
+
+The result is a structural accountability gap:
+
+The system decides.
+
+The system records.
+
+The system explains.
+
+And then the system, or its operator, asks to be trusted about all three.
+
+A-DAP exists to break that loop.
 
 ## Core Principle
 
-```text
-Do not trust the author.
-Reconstruct the graph.
-Compute the cut.
-Challenge the NDC claim.
-Declare the oracle boundary.
-```
+A high-impact automated decision should produce a decision envelope at or before the moment of action.
 
----
+That envelope should contain or commit to the minimum information needed to later reconstruct the decision event.
 
-## Key Concepts
+The envelope should be:
 
-### Decision Envelope
+canonicalized
 
-A structured pre-action or action-bound record containing decision-relevant artifacts.
+hashed
 
-A decision envelope may include references to:
+signed or otherwise authenticated
 
-- inputs;
-- outputs;
-- policies;
-- model references;
-- hashes;
-- signatures;
-- timestamps;
-- custody declarations;
-- expected verdicts.
+timestamped where possible
 
-The envelope is not automatically proof of decision truth.
+linked to reconstruction rules
 
-It is a structured object for reconstruction.
+verifiable by a party outside the original decision system
 
----
+The purpose is not transparency for its own sake.
 
-### Custody Graph
+The purpose is contestability.
 
-A graph representing dependency, control, evidence, and alteration paths around a decision claim.
+## The Decision Envelope
 
-The custody graph helps reviewers inspect which parts of the evidence structure would need to be altered to change the claim without detection.
+A decision envelope is the core evidentiary object in A-DAP.
 
----
+A minimal envelope may include commitments to:
 
-### Network Dependency Coefficient — NDC
+decision identifier
 
-NDC is a structural dependency measure computed from the minimum sufficient vertex-cut required to alter a decision-custody graph without detection by the verifier.
+timestamp or timestamp claim
 
-In simplified form:
+policy or model version
 
-```text
-NDC = minimum sufficient vertex-cut for undetected alteration
-```
+input commitment
 
-A higher NDC may indicate that undetected alteration requires compromising more independent parts of the custody structure.
+output commitment
 
-A lower NDC may indicate an evidence bottleneck, weak custody structure, or excessive dependency on a single authority.
+relevant rule or threshold commitment
 
-NDC is not a full governance score.
+operator identity or system identity
 
-It is a structural measure for a specific custody claim.
+canonicalization method
 
----
+hash algorithm
 
-### Oracle Boundary
+signature method
 
-The oracle boundary separates what can be independently reconstructed from the published artifacts from what depends on external truth sources.
+reconstruction instructions
 
-A-DAP may help verify:
+custody assumptions
 
-- canonical envelopes;
-- hashes;
-- signatures;
-- timestamp anchors;
-- hash-chain integrity;
-- policy hashes;
-- custody declarations;
-- graph declarations;
-- externally published commitments;
-- deterministic reconstruction paths.
+materiality assumptions
 
-A-DAP does not by itself verify:
+verification metadata
 
-- real-world truth;
-- fairness;
-- legality;
-- legitimacy;
-- institutional authority;
-- internal model causality.
+The exact contents depend on the domain and privacy constraints.
 
----
+A-DAP does not require publishing sensitive personal data.
 
-## Repository Status
+It requires that the relevant decision state be committed in a way that can later be reconstructed or challenged under defined conditions.
 
-This repository currently contains the technical scaffold for A-DAP/NDC reconstruction work.
+## Commit Before Explain
 
-Current status:
+A-DAP is based on a temporal rule:
 
-```text
-Technical notes: available
-Synthetic case: available
-GCD-001 external reconstruction package: available
-External disjoint reconstruction: pending
-Acceptance Committee: not yet appointed
-Public bounty: not yet active
-Submission channel: not yet open
-```
+Commit before explain.
 
-No claim in this repository should be interpreted as independently validated unless it has been reviewed by external parties under published review rules.
+The commitment must exist before the operator has an opportunity to rewrite the record in response to challenge, litigation, audit, or public pressure.
 
----
+This is why ordinary explanations are insufficient.
+
+A post-hoc explanation may be useful.
+
+But without a prior commitment, it cannot prove that it corresponds to the original decision state.
+
+A-DAP does not reject explanations.
+
+It limits what explanations can prove.
+
+## Auditability Is Not Explainability
+
+Explainability asks:
+
+“Why did the model say this?”
+
+Auditability asks:
+
+“Can an independent party reconstruct what the system committed to, and detect whether the later account diverges from it?”
+
+These are different problems.
+
+A system can be explainable but not auditable.
+
+A system can produce natural-language reasons while still lacking a reconstructible evidentiary record.
+
+A-DAP focuses on the second problem.
+
+## Accountability Requires Institutions
+
+A-DAP does not itself create accountability.
+
+Accountability requires:
+
+legal authority
+
+procedural rights
+
+institutional capacity
+
+remedies
+
+enforcement
+
+human judgment
+
+A-DAP produces a stronger object for those institutions to inspect.
+
+It turns a dispute from:
+
+“Trust our explanation.”
+
+into:
+
+“Compare this explanation against the committed record.”
+
+That is a narrower but important contribution.
+
+## Effective Contestability
+
+A-DAP creates reconstructible decision records, but reconstructibility is not the same as exercised contestability or institutional accountability.
+
+Structural NDC describes the independent verification paths available in the architecture.
+
+ADAP-EXP-003.md introduces the related concept of Effective NDC: the expected number of verification constraints that are actually exercised.
+
+This matters because a system may expose multiple verification paths while still facing little real-world contestation if affected parties, auditors, or regulators do not reconstruct the decision record.
+
+ADAP-EXP-003.md formalizes this gap as Exercise Debt.
+
+The safe claim is therefore limited:
+
+A-DAP can increase structural verifiability.
+
+It does not guarantee that verification will be exercised, nor that accountability will follow automatically.
+
+## Structural Independence and Economic Resistance
+
+A-DAP distinguishes structural independence from economic resistance.
+
+Structural independence asks:
+
+“Are the verification paths materially disjoint after dependency collapse?”
+
+Economic resistance asks:
+
+“Is the expected cost of fraud, capture, suppression, or manipulation greater than the expected benefit of keeping the fraud hidden?”
+
+These are related, but they are not the same.
+
+A system is not independent merely because fraud is expensive.
+
+A system is structurally independent only when an attacker must compromise materially separate custody, verification, or accountability paths.
+
+A system is economically resistant when abusing those paths becomes more costly, risky, or exposed than operating within the declared rules.
+
+In A-DAP terms:
+
+NDC describes structural independence.
+
+ADAP-EXP-003 describes whether verification paths are actually exercised.
+
+Economic resistance asks whether the cost of defeating those paths exceeds the expected benefit of fraud.
+
+The safe claim is:
+
+A-DAP does not make fraud impossible.
+
+It helps make hidden fraud more structurally exposed, more costly to sustain, and easier to contest under stated assumptions.
+
+Structural independence is the architecture.
+
+Economic resistance is the incentive effect created when that architecture is actually exercised.
+
+## Structural NDC
+
+NDC means Non-Dependency Count.
+
+In this repository, NDC is a proposed conceptual measure, not an established industry standard.
+
+In this repository, NDC is used to describe how many genuinely independent verification paths exist after collapsing dependencies.
+
+The purpose of NDC is to avoid false multiplicity.
+
+Five dashboards controlled by the same operator are not five independent verification paths.
+
+Five logs generated by the same system are not five independent verification paths.
+
+Five explanations produced by the same model are not five independent verification paths.
+
+The independence of verification matters more than the quantity of artifacts.
+
+## Computable NDC Separability Criterion
+
+A-DAP is not defined by the presence of logs, dashboards, explanations, signatures, timestamps, read-only access, or an external auditor alone.
+
+A-DAP requires a computable separability test.
+
+The relevant question is not who can read the audit record after the fact.
+
+The relevant question is who materially controls the generation, inscription, preservation, verification, and reconstruction path of the evidentiary object.
+
+If that path collapses into one material control domain, the system remains NDC=1, regardless of dashboards, logs, signatures, regulatory language, or read-only access.
+
+The canonical criterion is defined in:
+
+architecture/ndc-separability-criterion.md
+
+In short:
+
+A-DAP is satisfied only when the custody graph of a high-impact automated decision yields a reproducible Non-Dependency Count greater than 1 for the critical path between decision generation, record inscription, preservation, verification, and reconstruction.
+
+A system that exposes audit logs, explanations, signatures, dashboards, or read-only ledgers, but leaves generation, inscription, preservation, or verification under one material control domain, remains NDC=1 and does not satisfy A-DAP separability.
+
+The safe claim is:
+
+A-DAP is not a claim that an auditor is external.
+
+It is a procedure for making measurable whether verification still depends on the verified.
+
+## Materiality and NDC Scope
+
+NDC is not an absolute property of a system.
+
+NDC is a property of a system under a declared materiality model.
+
+This means that an NDC score is only meaningful when the audit defines which custody domains, dependencies, collapse rules, and verification paths are considered material.
+
+A-DAP therefore does not treat self-declared materiality as independent verification.
+
+If the same actor selects the materiality model, applies it to the custody graph, and benefits from the resulting NDC claim, the result remains self-attested at the criteria layer.
+
+For this reason, A-DAP requires materiality claims to be at least one of the following:
+
+externally anchored
+
+adversarially contestable
+
+independently reproducible
+
+Otherwise, the NDC result should be labeled as an internal diagnostic, not as an independent audit claim.
+
+This limitation is formalized in:
+
+architecture/non-self-attested-materiality.md
+
+The safe claim is:
+
+NDC can help reason about structural dependency only under disclosed materiality assumptions.
+
+It should not be treated as a standalone proof of independent auditability.
+
+## The Envelope Bottleneck
+
+A-DAP includes a known failure mode called the Envelope Bottleneck.
+
+If every verification path depends on the same envelope, operator, interface, or custody channel, then the apparent independence may collapse.
+
+This is documented in:
+
+architecture/envelope-bottleneck.md
+
+The point is methodological:
+
+A-DAP must not count multiple artifacts as independent if they share the same controlling dependency.
+
+Before claiming strong verification, dependency paths must be collapsed conservatively.
+
+## Automated NDC Analysis
+
+This repository also includes work on automated NDC analysis.
+
+The purpose is not to claim that a tool can fully determine trust independence.
+
+The purpose is to help detect where independence may be overstated.
+
+Automated analysis can assist reviewers by identifying dependency concentration, shared custody paths, and possible verification bottlenecks.
+
+It does not replace adversarial review.
+
+Related file:
+
+architecture/automated-ndc-v2.md
+
+The safe claim is:
+
+Automated NDC tooling may help expose where trust is still concentrated.
+
+It does not prove that verification is independent.
+
+## Non-Self-Attested Materiality
+
+A-DAP treats materiality as part of the audit object.
+
+This matters because whoever controls what counts as material can influence the resulting NDC claim.
+
+A materiality model is not independent merely because it is declared.
+
+If the same actor selects the materiality model, applies it to the custody graph, and benefits from the resulting audit claim, the result remains self-attested at the criteria layer.
+
+This risk is documented in:
+
+architecture/non-self-attested-materiality.md
+
+The safe claim is:
+
+A-DAP metrics should disclose their materiality basis.
+
+Self-declared materiality may support internal diagnosis, but it should not be presented as independent verification.
+
+## Reconstructible Verdicts
+
+The repository also explores reconstructible verdicts for higher-level evaluators such as Ω++.
+
+The risk is recursive:
+
+A verifier can become another system asking to be trusted.
+
+To avoid this, any automated risk verdict should itself be reconstructible.
+
+A verdict should not merely say:
+
+“No circular dependency found.”
+
+It should expose the evidence, rules, intermediate steps, and assumptions that allow another reviewer to reconstruct why that verdict was produced.
+
+Related file:
+
+architecture/omega-plus-plus-reconstructible-verdicts.md
+
+The safe claim is:
+
+Automated verdicts can support review only when their own reasoning path is reconstructible.
+
+They should not become a new authority layer that validates itself.
+
+## ZK-Proofs and TEEs
+
+A-DAP can work alongside technologies such as Zero-Knowledge Proofs and Trusted Execution Environments.
+
+These technologies address important parts of the trust problem, but they do not eliminate the need for custody, scope, and dependency analysis.
+
+ZK-Proofs can help prove that a computation satisfies a defined statement without revealing all underlying data.
+
+TEEs can help attest that specific code executed in a protected environment.
+
+Both can strengthen verification.
+
+But neither automatically proves:
+
+that the input was true or complete
+
+that the schema was sufficient
+
+that the circuit or code represented the right policy
+
+that the operator did not control the observation boundary
+
+that the anchor was independently reachable
+
+that verification was actually exercised
+
+that the verifier was institutionally independent
+
+In A-DAP terms:
+
+ZK-Proofs and TEEs may reduce what must be trusted inside a decision pipeline.
+
+A-DAP asks where trust still remains.
+
+The safe claim is:
+
+ZK-Proofs and TEEs can be useful components in an A-DAP architecture, but they do not replace dependency-collapse analysis, external reconstruction, custody review, or institutional accountability.
+
+Cryptographic strength does not, by itself, prove independent contestability.
+
+## Adoption Capture Risk
+
+A-DAP also documents a non-technical adoption risk: formal implementation without substantive contestability.
+
+A powerful operator may adopt visible A-DAP artifacts such as envelopes, hashes, signatures, Merkle roots, timestamps, receipts, dashboards, and verifiers, while still preserving control over:
+
+what enters the envelope
+
+what remains outside the envelope
+
+how the receipt is delivered
+
+who controls the verification interface
+
+whether verification is actually exercised
+
+This creates a risk of compliance theater.
+
+The operator may appear to adopt A-DAP while preserving the same control structure that A-DAP is meant to expose.
+
+This risk is documented in:
+
+architecture/adoption-capture-risk.md
+
+The safe claim is:
+
+A-DAP adoption is meaningful only when paired with independent scope review, conservative dependency-collapse analysis, externalizable reconstruction, and realistic exercise-risk assessment.
+
+Formal adoption alone does not prove accountability.
+
+## Exercisable Verification Interface
+
+A-DAP also distinguishes between validator authority and reproducible verification.
+
+A verification interface should not become a new authority that asks affected parties, auditors, regulators, or courts to trust its report.
+
+Instead, it should produce reproducible verification output:
+
+the receipt analyzed
+
+the tool version used
+
+the input hash
+
+the declared schema
+
+the deterministic checks performed
+
+the fields present or missing
+
+the dependencies detected
+
+the method required for another party to reproduce the same result
+
+This distinction matters because a validator that merely issues reports can recreate the same trust problem A-DAP is designed to avoid.
+
+The goal is not:
+
+“Trust the validator.”
+
+The goal is:
+
+“Run the same open procedure over the same receipt and obtain the same result.”
+
+This design is documented in:
+
+architecture/exercisable-verification-interface.md
+
+The safe claim is:
+
+A-DAP verification should be exercisable by non-technical people without turning the interface into an attestation authority.
+
+The interface may help translate deterministic checks into human-readable language, but the evidentiary force must come from independent reproducibility, not from the validator’s status.
+
+A hosted or client-side interface may reduce friction, but local execution is not independent verification by itself.
+
+Client-side verification can help exercise the verification path, but it does not automatically increase NDC.
+
+NDC depends on independent custody and verification paths after dependency collapse, including whether timestamp evidence, anchors, schemas, public keys, and proof availability are reachable outside the operator’s control.
+
+Do not confuse local execution with independent verification.
+
+## Verifier Funding Capture
+
+A-DAP also treats verifier funding as a possible control vector.
+
+A third-party verifier is not independent merely because it is organizationally separate.
+
+If the verifier’s funding, access, scope, contract renewal, governance, or survival depends materially on the operator being verified, the verifier may collapse into the same control domain under conservative NDC analysis.
+
+This risk is documented in:
+
+architecture/verifier-funding-capture.md
+
+The safe claim is:
+
+Independent verification requires more than a third-party label. It requires disclosure and analysis of the verifier’s funding, access, scope, governance, and revocation dependencies.
+
+Formal third-party verification alone does not prove independence.
+
+## IP Priority and Authorized Execution
+
+A-DAP may also support limited intellectual-property-adjacent evidence, but only under narrow claims.
+
+The safe use is not algorithmic plagiarism detection.
+
+A-DAP cannot prove that another system copied an algorithm merely because outputs, behavior, or decision patterns are similar.
+
+Similarity is not origin.
+
+Correlation is not authorship.
+
+A Merkle tree proves integrity of committed data, not authorship of a function.
+
+This risk is documented in:
+
+architecture/ip-priority-and-authorized-execution.md
+
+The defensible uses are narrower:
+
+temporal priority evidence: showing that a specific artifact existed in a specific form no later than a specific date
+
+historical process evidence: showing that material development steps were externally anchored over time
+
+externally authorized execution evidence: showing that a specific execution presented a valid authorization token issued by a materially disjoint authority for a declared version, scope, deployment, or time window
+
+The safe claim is:
+
+A-DAP can support existence-by-date, externally anchored process evidence, and externally authorized execution evidence under stated custody assumptions.
+
+Historical process evidence is complementary to temporal priority, not superior to it.
+
+A self-reported history is not proof.
+
+Even an anchored process chain does not eliminate independent convergence.
+
+A-DAP cannot prove copying, sole authorship, infringement, or authorized execution from output similarity, self-reported process narratives, or self-signed receipts.
+
+## Challenge Package: GCD-001
+
+This repository includes the challenge/gcd-001/ package.
+
+GCD-001 is an external reconstruction challenge based on the German Credit Dataset.
+
+Its purpose is to test whether a third party can reconstruct a committed decision object using the provided specification and materials.
+
+The challenge is not proof that A-DAP is complete.
+
+It is a limited test of reconstructibility under defined conditions.
+
+GCD-001 should be read as a staged stress test, not as final proof.
+
+The first phase tests reproducibility:
+
+Can a third party reconstruct the committed decision object under declared assumptions?
+
+The stronger adversarial phase tests contestability:
+
+Can a third party detect an injected divergence without relying on cooperation from the operator-controlled environment?
+
+Success in reconstruction alone is a necessary condition for A-DAP, not sufficient evidence of structural separability.
+
+A reconstruction-only challenge may prove that the procedure is documented and deterministic.
+
+It does not, by itself, prove that the custody graph is materially separable or that verification does not collapse into the operator’s control domain.
+
+For this reason, GCD-001 distinguishes between:
+
+reproducibility testing
+
+adversarial divergence testing
+
+blinded adversarial variants
+
+third-party divergence generation
+
+The stress-test positioning is documented in:
+
+challenge/gcd-001/stress-test-positioning.md
+
+Related files:
+
+challenge/gcd-001/README.md
+
+challenge/gcd-001/reconstruction-challenge.md
+
+challenge/gcd-001/reconstruction-spec.md
+
+challenge/gcd-001/stress-test-positioning.md
+
+challenge/gcd-001/submission-template.md
+
+challenge/gcd-001/reviewer-guidelines.md
+
+## Challenge Package: GCD-002
+
+This repository also includes the challenge/gcd-002-verifier-funding/ package.
+
+GCD-002 tests whether a claimed third-party verifier remains independent when funding, access, scope, governance, and revocation dependencies are included in the custody graph.
+
+Its purpose is not to prove that all third-party verification is captured.
+
+Its purpose is narrower:
+
+to test whether formal third-party verification can collapse under conservative dependency analysis when material control vectors lead back to the operator being verified.
+
+Related files:
+
+challenge/gcd-002-verifier-funding/README.md
+
+challenge/gcd-002-verifier-funding/experiment-spec.md
+
+challenge/gcd-002-verifier-funding/custody-graph.json
+
+challenge/gcd-002-verifier-funding/expected-findings.md
+
+challenge/gcd-002-verifier-funding/submission-template.md
+
+challenge/gcd-002-verifier-funding/reviewer-guidelines.md
+
+The safe claim is:
+
+GCD-002 extends A-DAP’s dependency-collapse method to the verification ecosystem.
+
+It asks whether a verifier is materially independent, not merely formally separate.
+
+Third-party verification should not be counted as independent until its funding, access, scope, governance, and revocation dependencies are examined.
+
+## Challenge Package: GCD-003
+
+This repository also includes the challenge/gcd-003-internal-integrity-sensor/ package.
+
+GCD-003 tests whether an internal integrity sensor increases NDC or collapses into the operator’s control domain under conservative dependency analysis.
+
+Its purpose is not to prove that all sensors are useless.
+
+Its purpose is narrower:
+
+to test when an integrity sensor is merely another operator-controlled artifact, and when it may survive as a materially independent verification path.
+
+Related files:
+
+challenge/gcd-003-internal-integrity-sensor/README.md
+
+challenge/gcd-003-internal-integrity-sensor/experiment-spec.md
+
+challenge/gcd-003-internal-integrity-sensor/custody-graph.json
+
+challenge/gcd-003-internal-integrity-sensor/expected-findings.md
+
+challenge/gcd-003-internal-integrity-sensor/submission-template.md
+
+challenge/gcd-003-internal-integrity-sensor/reviewer-guidelines.md
+
+The safe claim is:
+
+GCD-003 extends A-DAP’s dependency-collapse method to internal integrity sensors.
+
+It asks whether the sensor is truly an independent constraint or merely another operator-controlled artifact.
+
+An internal sensor should not be counted as independent unless its observation boundary, key custody, anchoring path, receipt availability, and verification access are materially disjoint from the operator being verified.
+
+Internal measurement is not independent verification by default.
+
+## Proofs, Claims, Timestamps, and Audits
+
+This repository distinguishes between four things that are often confused:
+
+Claim
+
+A statement made by the operator or author.
+
+Example:
+
+“This decision record was generated at a certain time.”
+
+Proof
+
+A verifiable artifact that supports or constrains a claim.
+
+Example:
+
+A hash, signature, timestamp token, or reproducible reconstruction result.
+
+Timestamp
+
+Evidence that a commitment existed no later than a certain time, depending on the timestamp authority and custody assumptions.
+
+Audit
+
+A review process performed by a person, institution, or system that interprets the available evidence.
+
+A-DAP does not collapse these into one thing.
+
+Related file:
+
+proofs/README.md
+
+## Solver Status
+
+Any solver in this repository should be treated as experimental unless explicitly stated otherwise.
+
+A solver may help reconstruct decision artifacts, verify hashes, or check consistency.
+
+But a solver is not itself the source of truth.
+
+A solver can contain bugs.
+
+A solver can encode wrong assumptions.
+
+A solver can falsely validate a flawed reconstruction.
+
+Therefore, the repository distinguishes between:
+
+the committed object
+
+the reconstruction specification
+
+the solver implementation
+
+the reviewer’s interpretation
+
+Related file:
+
+solver/README.md
+
+## Threat Model
+
+A-DAP assumes some things and does not attempt to solve others.
+
+Examples of threats A-DAP can help expose:
+
+later alteration of decision records
+
+mismatch between explanation and committed record
+
+substitution of outputs
+
+inconsistent reconstruction
+
+missing or invalid commitments
+
+unverifiable custody claims
+
+dependency concentration
+
+Examples of threats outside the basic scope:
+
+total collusion among all parties
+
+compromised hardware root of trust
+
+malicious timestamp authority
+
+false data at origin
+
+lawful but unfair decision logic
+
+incorrect model design
+
+institutional refusal to act on evidence
+
+A-DAP does not eliminate trust.
+
+It tries to locate where trust remains.
+
+Related file:
+
+THREAT_MODEL.md
+
+## Materiality Limitation
+
+A-DAP metrics can be manipulated if graph boundaries are chosen arbitrarily.
+
+To reduce this risk, A-DAP treats materiality as part of the audit object.
+
+A materiality model is not independent merely because it is declared.
+
+If the model is selected, applied, and benefited from by the same actor, the resulting claim remains self-attested.
+
+This limitation is formalized in:
+
+architecture/non-self-attested-materiality.md
+
+## Minimal Verification Flow
+
+A simplified A-DAP verification flow:
+
+Obtain the decision envelope.
+
+Confirm the canonicalization method.
+
+Reconstruct the committed object.
+
+Compute the hash.
+
+Compare the hash against the committed value.
+
+Verify any signature or timestamp evidence.
+
+Check whether the claimed model, policy, or decision state matches the commitment.
+
+Report mismatch, missing evidence, or successful reconstruction.
+
+Interpret the result within the stated threat model.
+
+This does not prove the decision was right.
+
+It tests whether the later record is consistent with the earlier commitment.
 
 ## Repository Structure
 
-```text
+Typical repository structure:
+
 .
+
 ├── README.md
-├── technical-note-v0.3.1.md
-├── references.md
-├── oracle-boundary.md
-├── oracle-boundary-short.md
+
+├── NOTICE.md
+
+├── THREAT_MODEL.md
+
+├── CONTRIBUTING.md
+
+├── QUICKSTART.md
+
+├── RELEASE_NOTES.md
+
+├── ADAP-EXP-003.md
+
 ├── architecture/
-├── examples/
+
+│ ├── adoption-capture-risk.md
+
+│ ├── automated-ndc-v2.md
+
+│ ├── envelope-bottleneck.md
+
+│ ├── exercisable-verification-interface.md
+
+│ ├── ip-priority-and-authorized-execution.md
+
+│ ├── non-self-attested-materiality.md
+
+│ ├── ndc-separability-criterion.md
+
+│ ├── omega-plus-plus-reconstructible-verdicts.md
+
+│ └── verifier-funding-capture.md
+
+├── challenge/
+
+│ ├── gcd-001/
+
+│ │ ├── README.md
+
+│ │ ├── reconstruction-challenge.md
+
+│ │ ├── reconstruction-spec.md
+
+│ │ ├── stress-test-positioning.md
+
+│ │ ├── submission-template.md
+
+│ │ └── reviewer-guidelines.md
+
+│ ├── gcd-002-verifier-funding/
+
+│ │ ├── README.md
+
+│ │ ├── experiment-spec.md
+
+│ │ ├── custody-graph.json
+
+│ │ ├── expected-findings.md
+
+│ │ ├── submission-template.md
+
+│ │ └── reviewer-guidelines.md
+
+│ └── gcd-003-internal-integrity-sensor/
+
+│ ├── README.md
+
+│ ├── experiment-spec.md
+
+│ ├── custody-graph.json
+
+│ ├── expected-findings.md
+
+│ ├── submission-template.md
+
+│ └── reviewer-guidelines.md
+
 ├── proofs/
-├── solver/
-└── challenge/
-    ├── README.md
-    ├── ROADMAP.md
-    ├── attacks/
-    │   └── attack-template.md
-    ├── synthetic-case/
-    │   ├── README.md
-    │   ├── input.json
-    │   ├── output.json
-    │   ├── envelope.json
-    │   ├── custody.json
-    │   ├── expected-verdict.json
-    │   ├── run.md
-    │   ├── verify_synthetic_case.py
-    │   └── tampered/
-    └── gcd-001/
-        ├── README.md
-        ├── reconstruction-spec.md
-        ├── reconstruction-challenge.md
-        ├── submission-template.md
-        └── reviewer-guidelines.md
-```
 
----
+│ └── README.md
 
-## Main Technical Notes
+└── solver/
 
-### `technical-note-v0.3.1.md`
+└── README.md
 
-Main technical note defining the A-DAP/NDC framing, including:
+The exact structure may evolve.
 
-- decision custody;
-- structural verifiability;
-- NDC;
-- detectability boundaries;
-- limitations;
-- oracle-bound claims.
+The important distinction is conceptual:
 
----
+architecture explains the theory
 
-### `oracle-boundary.md`
+challenge tests reconstruction
 
-Defines what A-DAP can independently reconstruct and what remains dependent on external oracles by design.
+proofs separate evidentiary categories
 
-This distinction is central.
+solver contains experimental tooling
 
-A-DAP does not claim to make AI decisions fully trustless.
+threat model defines limits
 
-Its verifiable core applies to decision records and custody evidence, not to decision truth itself.
+## Quickstart for Reviewers
 
----
+For a five-minute review:
 
-### `oracle-boundary-short.md`
+Read the core claim at the top of this README.
 
-Short English version of the oracle-boundary note for external reviewers.
+Check what A-DAP explicitly does not claim.
 
-Useful for quick review, outreach, and challenge participants.
+Read architecture/ndc-separability-criterion.md.
 
----
+Read THREAT_MODEL.md.
 
-## Public Challenge Area
+Inspect architecture/envelope-bottleneck.md.
 
-The `challenge/` directory contains public reconstruction materials.
+Inspect ADAP-EXP-003.md.
 
-Its purpose is to expose A-DAP/NDC claims to external testing rather than author-controlled validation.
+Inspect architecture/adoption-capture-risk.md.
 
-The challenge area separates two different things:
+Inspect architecture/exercisable-verification-interface.md.
 
-```text
-Synthetic Case = executable demonstration
-GCD-001 = external reconstruction target
-```
+Inspect architecture/verifier-funding-capture.md.
 
-They must not be treated as the same thing.
+Inspect architecture/ip-priority-and-authorized-execution.md.
 
----
+Inspect architecture/automated-ndc-v2.md.
 
-## Synthetic Case
+Inspect architecture/non-self-attested-materiality.md.
 
-Location:
+Run or review the reconstruction challenge in challenge/gcd-001/.
 
-```text
-challenge/synthetic-case/
-```
+Read challenge/gcd-001/stress-test-positioning.md.
 
-The synthetic case is a controlled demonstration.
+Run or review the verifier-funding challenge in challenge/gcd-002-verifier-funding/.
 
-It shows how A-DAP-style evidence can be represented, verified, and tamper-tested.
+Run or review the internal-integrity-sensor challenge in challenge/gcd-003-internal-integrity-sensor/.
 
-It includes:
+Try to identify where trust is still concentrated.
 
-- input artifact;
-- output artifact;
-- decision envelope;
-- custody declaration;
-- expected verdict;
-- tampered examples;
-- one-command Python verifier.
+The best review is adversarial.
 
-The synthetic case is useful for demonstrating workflow mechanics.
+Do not ask only whether the protocol works.
 
-It is not independent adversarial validation because it was designed by the author.
+Ask where it silently asks to be trusted.
 
----
+## Design Discipline
 
-## GCD-001 External Reconstruction Package
+A-DAP follows several design rules:
 
-Location:
+Do not overclaim
 
-```text
-challenge/gcd-001/
-```
+If the protocol only detects inconsistency, say that.
 
-GCD-001 is the first public A-DAP/NDC external reconstruction target.
+Do not call inconsistency detection “truth.”
 
-It is not a synthetic demonstration.
+Separate proof from explanation
 
-It is a candidate public reconstruction package prepared for independent adversarial review.
+A convincing explanation is not a proof.
 
-The purpose of GCD-001 is to test whether a published decision-custody/NDC claim can be:
+A proof constrains what can be changed later.
 
-- independently reproduced;
-- constructively falsified;
-- shown to be structurally ambiguous.
+Collapse false independence
 
-Current status:
+Multiple artifacts do not matter if they depend on the same authority.
 
-```text
-External disjoint reconstruction: pending
-Acceptance Committee: not yet appointed
-Public bounty: not yet active
-Submission channel: not yet open
-```
+Define separability as computation, not language
 
-No result in `challenge/gcd-001/` should be described as independently validated until reviewed by external parties under published challenge rules.
+A-DAP should not be reduced to terms such as auditability, external verification, traceability, decision envelope, or trusted ledger.
 
----
+A-DAP separability requires a reconstructible custody graph and reproducible NDC computation.
 
-## GCD-001 Files
+If the graph cannot be reconstructed, the claim should be treated as unverifiable.
 
-```text
-challenge/gcd-001/
-├── README.md
-├── reconstruction-spec.md
-├── reconstruction-challenge.md
-├── submission-template.md
-└── reviewer-guidelines.md
-```
+If the graph collapses into one material control domain, the system remains NDC=1.
 
-### `challenge/gcd-001/README.md`
+Commit before challenge
 
-Explains the purpose, scope, current status, review path, admissible outcomes, oracle boundary, and minimal honest claim for GCD-001.
+The evidentiary object must exist before the operator knows which decision will be contested.
 
-### `challenge/gcd-001/reconstruction-spec.md`
+Make verification externalizable
 
-Defines how an external verifier should reconstruct the GCD-001 decision-custody graph and compute or challenge the claimed NDC.
+A verifier outside the original decision system should be able to reconstruct the relevant commitment under defined assumptions.
 
-### `challenge/gcd-001/reconstruction-challenge.md`
+Declare assumptions
 
-Defines the planned public challenge structure, admissible outcomes, prize logic, acceptance committee model, author non-voting rule, and disclosure standard.
+A-DAP is only meaningful when custody, canonicalization, timestamping, materiality, and verification assumptions are explicit.
 
-### `challenge/gcd-001/submission-template.md`
+Treat non-exercise as a real weakness
 
-Provides the standard format for external reviewers submitting R1, R2, or R3 results.
+A verification path that nobody uses may still be latent evidence.
 
-### `challenge/gcd-001/reviewer-guidelines.md`
+But latent evidence is not the same as exercised contestability.
 
-Provides evaluation guidance for independent reviewers and future committee members.
+Treat adoption capture as a first-class risk
 
----
+A-DAP should not be evaluated only by whether an operator formally adopts its artifacts.
 
-## Admissible GCD-001 Outcomes
+It should also be evaluated by whether the deployment preserves independent scope review, external reconstruction, dependency separation, and realistic exercise of verification.
 
-GCD-001 accepts three useful outcomes.
+Do not turn the validator into an authority
 
-### R1 — Reproduction
+A-DAP verification should not depend on trusting a validator’s report.
 
-The claimed NDC is independently reproduced under the published specification.
+The validator should produce reproducible verification output that another party can independently run, inspect, compare, and challenge.
 
-Honest claim:
+Do not confuse client-side execution with independence
 
-```text
-The specific GCD-001 NDC claim was reproduced under the published specification.
-```
+Client-side verification can reduce friction and help people exercise verification.
 
-R1 does not validate A-DAP as a whole.
+But local execution does not, by itself, create independent custody, external anchoring, or higher NDC.
 
----
+Do not confuse third-party verification with independent verification
 
-### R2 — Falsification
+A verifier may be legally separate but economically or operationally dependent.
 
-The claimed NDC is shown to be incorrect through a constructive demonstration.
+Funding, access, scope, renewal, governance, and revocation dependencies must be included in ecosystem-level NDC analysis.
 
-Examples:
+Do not confuse priority evidence with plagiarism proof
 
-- smaller valid vertex-cut;
-- invalid graph edge;
-- invalid vertex classification;
-- omitted dependency path;
-- oracle-bound claim incorrectly counted as verified;
-- incorrect NDC calculation.
+A timestamped artifact can support existence-by-date.
 
-Honest claim:
+It does not prove sole authorship, copying, infringement, or lack of independent invention.
 
-```text
-The GCD-001 NDC claim was falsified through a constructive demonstration.
-```
+Authorized execution also cannot be self-attested by the engine being checked.
 
-R2 is not a failure of the review process.
+Do not confuse process history with proof of origin
 
-It is a successful adversarial finding.
+A development history can support provenance analysis only when its material steps were independently anchored over time.
 
----
+A self-reported history is not proof.
 
-### R3 — Structural Ambiguity
+Historical process evidence is complementary to temporal priority, not superior to it.
 
-The specification is incomplete or ambiguous enough to prevent deterministic reconstruction.
+Even an anchored process chain does not eliminate independent convergence.
 
-Examples:
+Do not confuse internal measurement with independent verification
 
-- ambiguous canonicalization;
-- missing artifacts;
-- undefined graph vertices;
-- undefined graph edges;
-- unclear A/V role assignment;
-- unclear detection condition;
-- unclear alteration condition;
-- unstable oracle-boundary classification.
+An internal integrity sensor does not increase NDC merely because it monitors the system from inside.
 
-Honest claim:
+A sensor is independent only if its observation boundary, key custody, anchoring path, receipt availability, and verification access are materially disjoint from the operator being verified.
 
-```text
-The GCD-001 specification requires correction before deterministic reconstruction is possible.
-```
+A protected sensor may sign what it observes.
 
-R3 improves the specification.
+That does not prove the observed input was true, complete, or unmanipulated before observation.
 
----
+Do not confuse cryptographic strength with independent contestability
 
-## Independent Implementation Requirement
+ZK-Proofs and TEEs can strengthen specific parts of a verification pipeline.
 
-For adversarial reconstruction, reviewers must not rely on author-controlled tools as the primary computation path.
+But they do not automatically resolve input truth, schema scope, custody, anchoring, exercise probability, or institutional independence.
 
-The author’s tools may be used only for secondary comparison after independent reconstruction.
+A-DAP should treat them as components, not as substitutes for dependency analysis.
 
-A valid reconstruction should be inspectable, reproducible, and independent of author authority.
+Do not confuse structural independence with economic resistance
 
-A valid reconstruction must not depend on:
+Structural independence means verification paths are materially disjoint after dependency collapse.
 
-- author’s solver;
-- author’s scripts;
-- expected outputs generated by the author;
-- private infrastructure;
-- undocumented author intent;
-- manually asserted conclusions.
+Economic resistance means the expected cost of fraud, capture, suppression, or manipulation exceeds the expected benefit of keeping the fraud hidden.
 
-This requirement exists to prevent self-validation.
+A-DAP should not claim that fraud is impossible.
 
----
+It should ask whether hidden fraud becomes more costly, risky, and contestable than compliance.
 
-## What Counts as Progress
+Do not confuse declared materiality with independent verification
 
-Progress does not mean only confirmation.
+NDC is meaningful only under a materiality model.
 
-The following outcomes all improve the protocol:
+If the materiality model is selected, applied, and benefited from by the same actor, the NDC claim remains self-attested at the criteria layer.
 
-```text
-R1 — reproduction
-R2 — falsification
-R3 — structural ambiguity
-```
+A-DAP should disclose whether materiality is self-declared, externally anchored, adversarially contestable, or independently reproducible.
 
-A-DAP/NDC becomes stronger when claims can be reconstructed, corrected, or falsified under public rules.
+Self-declared materiality may be useful for internal diagnosis.
 
-The worst outcome is not falsification.
+It should not be presented as independent verification.
 
-The worst outcome is untestable self-confirmation.
+## Example Safe Use
 
----
+A public agency uses an automated eligibility system.
 
-## Minimal Honest Claim
+At the moment of decision, the system creates a decision envelope committing to:
 
-The minimal honest claim for this repository is:
+applicant record hash
 
-```text
-A-DAP is a protocol architecture for making decision evidence independently reconstructible as evidence.
-```
+rule version
 
-It does not prove decision truth.
+model version
 
-It does not eliminate the need for legal, institutional, or regulatory authority.
+output
 
-It does not ask for trust.
+threshold
 
-It asks for reconstruction.
+timestamp evidence
 
----
+reconstruction instructions
 
-## Recommended Review Path
+Later, the applicant challenges the denial.
 
-For external reviewers:
+An auditor reconstructs the envelope and discovers that the explanation sent to the applicant does not match the committed decision state.
 
-1. Read this README.
-2. Read `oracle-boundary.md`.
-3. Read `technical-note-v0.3.1.md`.
-4. Inspect `challenge/synthetic-case/`.
-5. Inspect `challenge/gcd-001/README.md`.
-6. Read `challenge/gcd-001/reconstruction-spec.md`.
-7. Read `challenge/gcd-001/reconstruction-challenge.md`.
-8. Use `challenge/gcd-001/submission-template.md` if preparing a submission.
-9. Use `challenge/gcd-001/reviewer-guidelines.md` if evaluating a submission.
+A-DAP does not decide the legal remedy.
 
-Reviewer posture:
+But it gives the auditor a concrete inconsistency to examine.
 
-```text
-Do not trust the author.
-Reconstruct the graph.
-Compute the cut.
-Challenge the NDC claim.
-Declare the oracle boundary.
-```
+## Example Unsafe Use
 
----
+A company says:
 
-## Current Limitations
+“Our AI decisions are accountable because we use A-DAP.”
 
-This repository is still in an early public technical stage.
+This is not a valid claim.
 
-Known limitations:
+A-DAP does not guarantee accountability.
 
-- external disjoint reconstruction is pending;
-- no Acceptance Committee has been appointed;
-- no public bounty is active;
-- no formal submission channel is open;
-- synthetic examples are controlled demonstrations;
-- GCD-001 has not yet been independently accepted as R1, R2, or R3;
-- NDC is a structural metric, not a complete governance theory;
-- A-DAP verifies evidence structure, not decision truth.
+A safer statement would be:
 
-These limitations are part of the protocol’s honest boundary.
+“Our system generates reconstructible decision envelopes designed to make later alteration or inconsistency detectable under stated assumptions.”
 
----
+That statement is narrower and more defensible.
 
-## Public Disclosure Standard
+## Current Maturity
 
-Any future public review summary should disclose:
+This repository should be read as an evolving technical note, protocol architecture, and adversarial review surface.
 
-- number of submissions received;
-- number of administratively valid submissions;
-- number of accepted R1 outcomes;
-- number of accepted R2 outcomes;
-- number of accepted R3 outcomes;
-- committee members;
-- unresolved ambiguities;
-- specification changes triggered by review.
+Some parts are conceptual.
 
-No result should be described as full validation of A-DAP.
+Some parts are experimental.
 
----
+Some parts are challenge-oriented.
 
-## Empty Challenge Clause
+Some parts are intended for adversarial review.
 
-If no valid external reconstruction is submitted, the challenge does not validate GCD-001.
+The project is not presented as a finished compliance product.
 
-Silence is not confirmation.
+It is a structured attempt to formalize and test the conditions under which automated decisions can become externally contestable.
 
-An empty challenge means only:
+## Open Problems
 
-```text
-No qualifying external reconstruction was submitted during the review period.
-```
+A-DAP leaves several important problems open:
 
-Further outreach, workshop review, expert review, or independent audit may still be required.
+How should exercise probability be measured in real institutions?
 
----
+How should correlated non-exercise be modeled?
 
-## Project Direction
+How should privacy-preserving reconstruction work in sensitive domains?
 
-The immediate goal is not commercialization.
+How should timestamp authority failure be handled?
 
-The immediate goal is adversarial reconstruction.
+How should courts or regulators treat partial reconstruction?
 
-Priority sequence:
+How should dependency collapse be standardized?
 
-1. complete public reconstruction materials;
-2. invite external reviewers;
-3. obtain R1, R2, or R3 outcomes;
-4. correct the specification based on adversarial findings;
-5. only then discuss institutional deployment.
+How should reconstruction cost be reduced for affected parties?
 
-The protocol gains legitimacy by surviving independent reconstruction pressure, not by author assertion.
+How should A-DAP interact with sector-specific legal duties?
 
----
+How should false positives and false negatives in reconstruction be reported?
 
-## Final Principle
+How should external reviewers be incentivized to actually verify?
 
-A-DAP is not a claim that AI decisions become automatically trustworthy.
+How should independent envelope scope be defined and enforced?
 
-A-DAP is a claim that decision evidence can be structured so that third parties can reconstruct what was committed, when it was committed, under which declared custody structure, and where the oracle boundary begins.
+How should adoption capture be detected before it becomes compliance theater?
 
-```text
-Do not trust the author.
-Reconstruct the evidence.
-```
+How should verification be made exercisable without turning the validator into a new authority?
+
+How should client-side verification reduce friction without being mistaken for independent custody?
+
+How should verifier funding, access, scope, governance, and revocation dependencies be disclosed and analyzed?
+
+How should externally issued authorization tokens be designed without turning the token issuer into a new bottleneck?
+
+How should temporal priority evidence be used without overstating authorship or plagiarism claims?
+
+How should historical process evidence be anchored over time without becoming self-reported narrative?
+
+How should anchored process chains be evaluated when another party claims independent convergence?
+
+How should internal integrity sensors be modeled when their observation boundary is operator-controlled?
+
+How should post-observation integrity claims be separated from input-truth claims?
+
+How should affected-party receipt possession be distinguished from non-exclusive receipt access?
+
+How should ZK-Proofs and TEEs be integrated without hiding custody, input, schema, or exercise dependencies?
+
+How should the expected cost of fraud be modeled without reducing structural independence to a purely economic calculation?
+
+How should legal, reputational, technical, and institutional costs be incorporated into adversarial cost models?
+
+How should materiality models be externally anchored?
+
+How should adversarial challenges to materiality be conducted?
+
+How should self-declared materiality be labeled in audit reports?
+
+How should composed custody graphs include the verifier, materiality authority, and standard maintainer?
+
+How should the computable NDC separability criterion be standardized without allowing regulatory or vendor capture of the terminology?
+
+How should third parties reproduce NDC computation when custody graphs are incomplete, disputed, or strategically under-disclosed?
+
+How should A-DAP distinguish between adoption of its vocabulary and satisfaction of its separability criterion?
+
+How should GCD-style reconstruction challenges evolve from reproducibility tests into blinded adversarial contestability tests?
+
+How should third-party-generated divergence cases be incorporated without creating a new authority bottleneck?
+
+These are not minor implementation details.
+
+They are part of the accountability problem.
+
+## Contribution Guidelines
+
+Contributions are welcome if they improve clarity, testability, threat modeling, or adversarial review.
+
+Especially useful contributions include:
+
+attacks on the protocol
+
+dependency-collapse examples
+
+reconstruction failures
+
+false-independence cases
+
+adoption-capture scenarios
+
+verifier-funding capture scenarios
+
+IP-priority and authorized-execution critiques
+
+authorization-token custody critiques
+
+historical-process evidence critiques
+
+anchored-process chain critiques
+
+internal-integrity sensor collapse examples
+
+observation-boundary critiques
+
+sensor-key custody critiques
+
+materiality-model critiques
+
+self-attested materiality critiques
+
+ZK-Proof and TEE integration critiques
+
+adversarial cost-model critiques
+
+economic-resistance analysis
+
+envelope-scope critiques
+
+exercisable-verification interface designs
+
+validator-capture critiques
+
+client-side verification critiques
+
+verifier supply-chain critiques
+
+canonicalization edge cases
+
+timestamping critiques
+
+privacy-preserving envelope designs
+
+GCD-style blinded divergence tests
+
+third-party divergence generation
+
+legal interpretation notes
+
+empirical evidence about whether verification paths are actually exercised
+
+Please do not contribute language that inflates the protocol beyond what it can prove.
+
+Related file:
+
+CONTRIBUTING.md
+
+## Citation and Attribution
+
+If referencing A-DAP, cite it as a protocol architecture for reconstructible decision evidence and contestability.
+
+Do not describe it as a complete accountability solution.
+
+Related file:
+
+NOTICE.md
+
+Suggested short description:
+
+A-DAP is a protocol architecture for creating reconstructible evidentiary records around high-impact automated decisions, so that later alteration or inconsistency can be detected under stated assumptions.
+
+## Release Notes
+
+See:
+
+RELEASE_NOTES.md
+
+Release notes should document not only features, but also narrowed claims, removed overclaims, known weaknesses, and adversarial findings.
+
+In this project, reducing a false claim is progress.
+
+## Final Position
+
+A-DAP is based on a narrow but important claim:
+
+Automated decisions should not depend only on post-hoc explanation.
+
+They should produce reconstructible evidence.
+
+But reconstructible evidence is not truth.
+
+Structural contestability is not exercised accountability.
+
+Formal adoption is not substantive contestability.
+
+Validator output is not authority.
+
+Client-side execution is not independent verification by itself.
+
+Third-party verification is not independent verification by default.
+
+Temporal priority is not plagiarism proof.
+
+Historical process evidence is not proof of origin by itself.
+
+A self-reported history is not proof.
+
+Internal measurement is not independent verification by default.
+
+Cryptographic strength is not independent contestability by itself.
+
+Structural independence is not the same as economic resistance.
+
+Declared materiality is not independent verification by itself.
+
+NDC is meaningful only under disclosed materiality assumptions.
+
+Self-declared materiality should be treated as internal diagnostic unless externally anchored, adversarially contestable, or independently reproducible.
+
+A-DAP terminology is not A-DAP compliance.
+
+A-DAP compliance requires a reconstructible custody graph and reproducible NDC computation.
+
+A reconstruction challenge is not a separability proof by itself.
+
+GCD-style tests must distinguish reproducibility from adversarial contestability.
+
+If verification still depends on the verified, the system remains structurally dependent.
+
+A-DAP helps create the object that later accountability may need.
+
+It does not replace the institutions that must use it.
