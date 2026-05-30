@@ -1,0 +1,158 @@
+{
+  "challenge": "GCD-003",
+  "title": "Internal Integrity Sensor Challenge",
+  "version": "0.1",
+  "nodes": {
+    "O": {
+      "label": "Operator",
+      "description": "Entity operating or controlling the automated decision system."
+    },
+    "E": {
+      "label": "Engine",
+      "description": "Decision engine or runtime being monitored."
+    },
+    "S": {
+      "label": "Sensor",
+      "description": "Internal integrity sensor."
+    },
+    "I": {
+      "label": "Input / Observed State",
+      "description": "State, data, event, or boundary observed by the sensor."
+    },
+    "K": {
+      "label": "Sensor Signing Key",
+      "description": "Key used by the sensor to sign or authenticate its readings."
+    },
+    "R": {
+      "label": "Receipt",
+      "description": "Receipt or record containing sensor output."
+    },
+    "A": {
+      "label": "External Anchor",
+      "description": "Timestamp, ledger, or other external anchoring mechanism."
+    },
+    "PKD": {
+      "label": "Public Key Directory",
+      "description": "Directory or metadata source used to retrieve public keys, certificates, or verification material."
+    },
+    "P": {
+      "label": "Affected Party",
+      "description": "Person or entity affected by the decision."
+    },
+    "V": {
+      "label": "Verifier",
+      "description": "Party or tool attempting to verify the sensor output."
+    },
+    "Reg": {
+      "label": "Regulator or Independent Reviewer",
+      "description": "External party able to inspect or reconstruct evidence under defined assumptions."
+    }
+  },
+  "scenarios": {
+    "scenario_a_operator_controlled_internal_sensor": {
+      "description": "Operator controls the engine, sensor, input, receipt channel, and verification access.",
+      "edges": [
+        ["O", "E", "controls"],
+        ["O", "S", "controls"],
+        ["O", "I", "controls"],
+        ["S", "I", "observes"],
+        ["S", "R", "produces"],
+        ["O", "R", "controls"],
+        ["V", "R", "verifies_through_operator_channel"]
+      ],
+      "expected_conservative_result": {
+        "sensor_collapses_into_operator": true,
+        "reason": "The sensor, input, receipt, and verification access are controlled by the operator.",
+        "ndc_effect": "Apparent sensor path collapses into the operator domain. Conservative NDC remains 1.",
+        "surviving_claim": "No materially independent sensor claim survives."
+      }
+    },
+    "scenario_b_operator_controlled_sensor_key": {
+      "description": "Sensor signs its readings, but the operator controls the signing key or can cause the key to be used.",
+      "edges": [
+        ["O", "E", "controls"],
+        ["O", "S", "controls"],
+        ["O", "I", "controls"],
+        ["O", "K", "controls"],
+        ["S", "I", "observes"],
+        ["S", "K", "uses_key"],
+        ["S", "R", "produces_signed_receipt"],
+        ["O", "R", "controls"],
+        ["V", "R", "verifies_signature"]
+      ],
+      "expected_conservative_result": {
+        "sensor_collapses_into_operator": true,
+        "reason": "A signature does not create independence when the operator controls the signing key.",
+        "ndc_effect": "Sensor and key collapse into the operator domain. Conservative NDC remains 1.",
+        "surviving_claim": "The signed output is self-attestation."
+      }
+    },
+    "scenario_c_protected_sensor_operator_controlled_input": {
+      "description": "Sensor runs in a protected environment with non-exportable key, but operator controls the input or observation boundary.",
+      "edges": [
+        ["O", "E", "controls"],
+        ["O", "I", "controls"],
+        ["S", "I", "observes"],
+        ["S", "K", "uses_non_exportable_key"],
+        ["S", "R", "produces_signed_receipt"],
+        ["A", "R", "anchors"],
+        ["PKD", "K", "publishes_public_key_metadata"],
+        ["V", "R", "verifies"],
+        ["V", "A", "checks_anchor"],
+        ["V", "PKD", "checks_public_key_metadata"]
+      ],
+      "expected_conservative_result": {
+        "sensor_collapses_into_operator": "for_input_truth_and_origin",
+        "reason": "The protected sensor may faithfully sign a state that was already distorted by the operator-controlled input or observation boundary.",
+        "ndc_effect": "For origin, input truth, and completeness, the cut still passes through operator-controlled input. For post-observation tamper evidence, a narrow integrity claim may survive.",
+        "surviving_claim": "A narrow claim that the observed state was signed and anchored after observation, not that the observed state was true or complete."
+      }
+    },
+    "scenario_d1_disjoint_sensor_affected_party_receipt": {
+      "description": "Sensor key custody, observation boundary, anchoring path, public-key directory, and receipt possession are materially disjoint from the operator.",
+      "edges": [
+        ["O", "E", "controls"],
+        ["Reg", "S", "controls_or_certifies_sensor"],
+        ["Reg", "I", "defines_or_constrains_observation_boundary"],
+        ["S", "I", "observes"],
+        ["S", "K", "uses_non_exportable_key"],
+        ["PKD", "K", "publishes_public_key_metadata"],
+        ["S", "R", "produces_receipt"],
+        ["R", "P", "delivered_to_affected_party"],
+        ["A", "R", "anchors"],
+        ["V", "R", "verifies_from_affected_party_receipt"],
+        ["V", "A", "checks_anchor"],
+        ["V", "PKD", "checks_public_key_metadata"]
+      ],
+      "expected_conservative_result": {
+        "sensor_collapses_into_operator": false,
+        "reason": "Key custody, observation boundary, anchor, public-key metadata, and receipt possession are materially outside operator control.",
+        "ndc_effect": "Sensor may survive as an independent verification path for the specific measured claim.",
+        "surviving_claim": "The sensor may support an independent claim about what it measured, subject to the defined observation boundary."
+      }
+    },
+    "scenario_d2_disjoint_sensor_non_exclusive_channel": {
+      "description": "Sensor key custody and anchoring are disjoint, but receipt access occurs through a non-exclusive channel that may still be influenced by the operator.",
+      "edges": [
+        ["O", "E", "controls"],
+        ["Reg", "S", "controls_or_certifies_sensor"],
+        ["Reg", "I", "defines_or_constrains_observation_boundary"],
+        ["S", "I", "observes"],
+        ["S", "K", "uses_non_exportable_key"],
+        ["PKD", "K", "publishes_public_key_metadata"],
+        ["S", "R", "produces_receipt"],
+        ["A", "R", "anchors"],
+        ["O", "R", "may_influence_receipt_channel"],
+        ["V", "R", "verifies_through_non_exclusive_channel"],
+        ["V", "A", "checks_anchor"],
+        ["V", "PKD", "checks_public_key_metadata"]
+      ],
+      "expected_conservative_result": {
+        "sensor_collapses_into_operator": "depends_on_receipt_channel_control",
+        "reason": "A non-exclusive channel is not automatically equivalent to affected-party possession if the operator can suppress, delay, gate, or selectively disclose evidence.",
+        "ndc_effect": "The min-cut must be evaluated separately. Do not report D2 as D1.",
+        "surviving_claim": "Only survives if receipt access is practically reachable outside operator suppression or gating."
+      }
+    }
+  }
+}
