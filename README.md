@@ -471,6 +471,37 @@ Related files:
 
 ---
 
+## Challenge Package: GCD-002
+
+This repository also includes the `challenge/gcd-002-verifier-funding/` package.
+
+GCD-002 tests whether a claimed third-party verifier remains independent when funding, access, scope, governance, and revocation dependencies are included in the custody graph.
+
+Its purpose is not to prove that all third-party verification is captured.
+
+Its purpose is narrower:
+
+to test whether formal third-party verification can collapse under conservative dependency analysis when material control vectors lead back to the operator being verified.
+
+Related files:
+
+- `challenge/gcd-002-verifier-funding/README.md`
+- `challenge/gcd-002-verifier-funding/experiment-spec.md`
+- `challenge/gcd-002-verifier-funding/custody-graph.json`
+- `challenge/gcd-002-verifier-funding/expected-findings.md`
+- `challenge/gcd-002-verifier-funding/submission-template.md`
+- `challenge/gcd-002-verifier-funding/reviewer-guidelines.md`
+
+The safe claim is:
+
+GCD-002 extends A-DAP’s dependency-collapse method to the verification ecosystem.
+
+It asks whether a verifier is materially independent, not merely formally separate.
+
+Third-party verification should not be counted as independent until its funding, access, scope, governance, and revocation dependencies are examined.
+
+---
+
 ## Proofs, Claims, Timestamps, and Audits
 
 This repository distinguishes between four things that are often confused:
@@ -609,10 +640,17 @@ Typical repository structure:
 │   ├── automated-ndc-v2.md
 │   └── omega-plus-plus-reconstructible-verdicts.md
 ├── challenge/
-│   └── gcd-001/
+│   ├── gcd-001/
+│   │   ├── README.md
+│   │   ├── reconstruction-challenge.md
+│   │   ├── reconstruction-spec.md
+│   │   ├── submission-template.md
+│   │   └── reviewer-guidelines.md
+│   └── gcd-002-verifier-funding/
 │       ├── README.md
-│       ├── reconstruction-challenge.md
-│       ├── reconstruction-spec.md
+│       ├── experiment-spec.md
+│       ├── custody-graph.json
+│       ├── expected-findings.md
 │       ├── submission-template.md
 │       └── reviewer-guidelines.md
 ├── proofs/
@@ -646,7 +684,8 @@ For a five-minute review:
 7. Inspect `architecture/exercisable-verification-interface.md`.
 8. Inspect `architecture/verifier-funding-capture.md`.
 9. Run or review the reconstruction challenge in `challenge/gcd-001/`.
-10. Try to identify where trust is still concentrated.
+10. Run or review the verifier-funding challenge in `challenge/gcd-002-verifier-funding/`.
+11. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
