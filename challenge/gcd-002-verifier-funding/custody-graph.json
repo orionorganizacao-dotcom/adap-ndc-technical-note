@@ -1,0 +1,140 @@
+{
+  "challenge": "GCD-002",
+  "title": "Verifier Funding Capture Challenge",
+  "version": "0.1",
+  "nodes": {
+    "O": {
+      "label": "Operator",
+      "description": "Entity making the automated decision."
+    },
+    "E": {
+      "label": "Decision Envelope",
+      "description": "Committed decision object."
+    },
+    "R": {
+      "label": "Receipt Delivery Channel",
+      "description": "Channel used to deliver the receipt to the affected party."
+    },
+    "A": {
+      "label": "External Anchor",
+      "description": "Timestamp or external anchoring mechanism."
+    },
+    "V": {
+      "label": "Verifier",
+      "description": "Third-party verifier."
+    },
+    "F": {
+      "label": "Funding Source",
+      "description": "Entity or mechanism funding the verifier."
+    },
+    "S": {
+      "label": "Scope Authority",
+      "description": "Entity defining what the verifier can inspect."
+    },
+    "X": {
+      "label": "Access Provider",
+      "description": "Entity providing access to receipts, APIs, schemas, or proof material."
+    },
+    "G": {
+      "label": "Governance Authority",
+      "description": "Entity appointing, certifying, or approving the verifier."
+    },
+    "Q": {
+      "label": "Revocation Authority",
+      "description": "Entity able to terminate, revoke, or block the verifier."
+    },
+    "P": {
+      "label": "Affected Party",
+      "description": "Person affected by the automated decision."
+    },
+    "Reg": {
+      "label": "Regulator or Independent Reviewer",
+      "description": "External party capable of independent review."
+    }
+  },
+  "scenarios": {
+    "scenario_1_operator_funded": {
+      "description": "Verifier is selected, funded, scoped, and renewed by the operator.",
+      "edges": [
+        ["O", "E", "creates"],
+        ["O", "R", "controls"],
+        ["O", "F", "controls"],
+        ["F", "V", "funds"],
+        ["O", "S", "controls"],
+        ["S", "V", "defines_scope"],
+        ["O", "X", "controls"],
+        ["X", "V", "provides_access"],
+        ["O", "G", "controls"],
+        ["G", "V", "appoints"],
+        ["O", "Q", "controls"],
+        ["Q", "V", "can_revoke"],
+        ["V", "E", "verifies"],
+        ["P", "R", "receives_receipt_through"]
+      ],
+      "expected_conservative_result": {
+        "verifier_collapses_into_operator": true,
+        "reason": "Funding, access, scope, governance, and revocation depend materially on the operator.",
+        "ndc_effect": "Apparent third-party path likely collapses to operator domain."
+      }
+    },
+    "scenario_2_independent_funding_operator_scope": {
+      "description": "Verifier is independently funded but scope and access are controlled by the operator.",
+      "edges": [
+        ["O", "E", "creates"],
+        ["O", "R", "controls"],
+        ["Reg", "F", "controls"],
+        ["F", "V", "funds"],
+        ["O", "S", "controls"],
+        ["S", "V", "defines_scope"],
+        ["O", "X", "controls"],
+        ["X", "V", "provides_access"],
+        ["V", "E", "verifies"],
+        ["P", "R", "receives_receipt_through"]
+      ],
+      "expected_conservative_result": {
+        "verifier_collapses_into_operator": "partial",
+        "reason": "Funding is independent, but scope and access remain operator-controlled.",
+        "ndc_effect": "Some independence may exist, but substantive verification is limited by scope/access capture."
+      }
+    },
+    "scenario_3_independent_mandate": {
+      "description": "Verifier is independently funded, independently scoped, and has non-operator access to proof material.",
+      "edges": [
+        ["O", "E", "creates"],
+        ["O", "R", "controls"],
+        ["Reg", "F", "controls"],
+        ["F", "V", "funds"],
+        ["Reg", "S", "defines"],
+        ["S", "V", "defines_scope"],
+        ["Reg", "X", "controls"],
+        ["X", "V", "provides_access"],
+        ["Reg", "G", "appoints"],
+        ["G", "V", "appoints"],
+        ["Reg", "Q", "controls"],
+        ["Q", "V", "can_revoke"],
+        ["V", "E", "verifies"],
+        ["P", "R", "receives_receipt_through"],
+        ["Reg", "A", "can_verify_anchor"]
+      ],
+      "expected_conservative_result": {
+        "verifier_collapses_into_operator": false,
+        "reason": "Material control vectors are outside the operator's control.",
+        "ndc_effect": "Verifier may count as a materially independent path if proof access is also independent."
+      }
+    },
+    "scenario_4_open_tool_unfunded_exercise": {
+      "description": "Verification tool is open and reproducible, but no independent actor is funded to exercise it at scale.",
+      "edges": [
+        ["O", "E", "creates"],
+        ["O", "R", "controls"],
+        ["P", "R", "receives_receipt_through"],
+        ["Reg", "A", "can_verify_anchor"]
+      ],
+      "expected_conservative_result": {
+        "verifier_collapses_into_operator": false,
+        "reason": "No captured verifier is present, but exercise may be weak.",
+        "ndc_effect": "Structural path may exist, but Effective NDC may remain low under ADAP-EXP-003."
+      }
+    }
+  }
+}
