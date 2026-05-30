@@ -437,6 +437,20 @@ Related file:
 
 architecture/exercisable-citizen-verification.md
 
+### Citizen Verifier UI Specification
+
+A-DAP should not stop at reconstructible evidence.
+
+A citizen verifier should convert A-DAP evidence into a usable verification flow, allowing affected people to paste, upload, scan, or provide a receipt and receive a plain-language result.
+
+The interface should show whether the explanation matches the committed record, what is missing, what remains operator-controlled, and what can be exported for review.
+
+It should make verification usable without becoming a new trust authority.
+
+Related file:
+
+architecture/citizen-verifier-ui-spec.md
+
 ### Verifier Funding Capture
 
 A third-party verifier is not independent merely because it is organizationally separate.
@@ -647,6 +661,7 @@ It tests whether the later record is consistent with the earlier commitment.
 ├── architecture/
 │   ├── adoption-capture-risk.md
 │   ├── automated-ndc-v2.md
+│   ├── citizen-verifier-ui-spec.md
 │   ├── cryptographic-habeas-data.md
 │   ├── disjoint-anchoring-for-contestability.md
 │   ├── envelope-bottleneck.md
@@ -695,8 +710,9 @@ For a five-minute review:
 6. Inspect ADAP-EXP-003.md.
 7. Inspect architecture/non-self-attested-materiality.md.
 8. Inspect architecture/exercisable-citizen-verification.md.
-9. Run or review the reconstruction challenge in challenge/gcd-001/.
-10. Try to identify where trust is still concentrated.
+9. Inspect architecture/citizen-verifier-ui-spec.md.
+10. Run or review the reconstruction challenge in challenge/gcd-001/.
+11. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -827,6 +843,8 @@ Especially useful contributions include:
 - economic-resistance analysis
 - envelope-scope critiques
 - exercisable-verification interface designs
+- citizen-verifier UI critiques
+- reconstruction-cost critiques
 - canonicalization edge cases
 - timestamping critiques
 - privacy-preserving envelope designs
@@ -882,6 +900,8 @@ Validator output is not authority.
 Client-side execution is not independent verification by itself.
 
 Citizen-facing usability is not independent verification by itself.
+
+A citizen verifier can make verification easier to exercise, but it does not automatically increase NDC.
 
 Third-party verification is not independent verification by default.
 
