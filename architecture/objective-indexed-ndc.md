@@ -323,9 +323,3 @@ Therefore:
 - Proof surfaces must be non-invertible with respect to protected payloads.
 - Canonical recovery must distinguish committed artifacts from later substitutes.
 - A-DAP assurance is a vector of cuts, not a single score.
-
-## 13. Commit message
-
-Recommended commit message:
-
-    Replace incomplete objective-indexed NDC note
