@@ -527,6 +527,18 @@ Related file:
 
 - `architecture/input-truth-boundary.md`
 
+### Input Provenance Envelope
+
+Decision envelopes reconstruct what the system committed to using.
+
+Input provenance envelopes reconstruct how the system obtained what it used.
+
+This distinction prevents weak input capture from being hidden behind strong decision reconstruction.
+
+Related file:
+
+- `architecture/input-provenance-envelope.md`
+
 ### The Envelope Bottleneck
 
 If every verification path depends on the same envelope, operator, interface, or custody channel, apparent independence may collapse.
@@ -880,6 +892,7 @@ It tests whether the later record is consistent with the earlier commitment.
 │   ├── exercisable-citizen-verification.md
 │   ├── exercisable-verification-interface.md
 │   ├── independent-verification-topology.md
+│   ├── input-provenance-envelope.md
 │   ├── input-truth-boundary.md
 │   ├── ip-priority-and-authorized-execution.md
 │   ├── ndc-comparative-positioning.md
@@ -927,14 +940,15 @@ For a five-minute review:
 4. Read `architecture/objective-indexed-ndc.md`.
 5. Read `THREAT_MODEL.md`.
 6. Inspect `architecture/input-truth-boundary.md`.
-7. Inspect `architecture/envelope-bottleneck.md`.
-8. Inspect `ADAP-EXP-003.md`.
-9. Inspect `architecture/non-self-attested-materiality.md`.
-10. Inspect `architecture/exercisable-citizen-verification.md`.
-11. Inspect `architecture/citizen-verifier-ui-spec.md`.
-12. Inspect `experiments/adec-001.md`.
-13. Run or review the reconstruction challenge in `challenge/gcd-001/`.
-14. Try to identify where trust is still concentrated.
+7. Inspect `architecture/input-provenance-envelope.md`.
+8. Inspect `architecture/envelope-bottleneck.md`.
+9. Inspect `ADAP-EXP-003.md`.
+10. Inspect `architecture/non-self-attested-materiality.md`.
+11. Inspect `architecture/exercisable-citizen-verification.md`.
+12. Inspect `architecture/citizen-verifier-ui-spec.md`.
+13. Inspect `experiments/adec-001.md`.
+14. Run or review the reconstruction challenge in `challenge/gcd-001/`.
+15. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -970,6 +984,8 @@ A-DAP follows several design rules:
 - Do not confuse declared materiality with independent verification.
 - Do not confuse repository publication with independent evidentiary custody.
 - Do not confuse input commitment with input truth.
+- Do not confuse input provenance with input truth.
+- Do not hide weak input capture behind strong decision reconstruction.
 - Do not confuse experimental escape-cost measurement with certification.
 - Do not treat NDC as a single scalar score when adversarial objectives differ.
 - Do not treat ADEC as a universal robustness score.
@@ -981,7 +997,16 @@ A-DAP follows several design rules:
 
 A public agency uses an automated eligibility system.
 
-At the moment of decision, the system creates a decision envelope committing to:
+At the moment of decision, the system creates an input provenance envelope committing to:
+
+- submission channel;
+- input source;
+- capture timestamp;
+- user confirmation receipt;
+- transformation rules;
+- custody path from input capture to decision system.
+
+The system then creates a decision envelope committing to:
 
 - applicant record hash;
 - rule version;
@@ -993,11 +1018,16 @@ At the moment of decision, the system creates a decision envelope committing to:
 
 Later, the applicant challenges the denial.
 
-An auditor reconstructs the envelope and discovers that the explanation sent to the applicant does not match the committed decision state.
+An auditor reconstructs the input provenance envelope and the decision envelope.
+
+The auditor can separate two questions:
+
+1. whether the system used the committed input; and
+2. whether the captured input itself is disputed.
 
 A-DAP does not decide the legal remedy.
 
-But it gives the auditor a concrete inconsistency to examine.
+But it gives the auditor a concrete evidentiary structure to examine.
 
 ---
 
@@ -1024,6 +1054,16 @@ This is not a valid claim.
 A safer statement would be:
 
 > A-DAP records what the system committed to using; it does not prove what the world was.
+
+Another unsafe statement would be:
+
+> Our input provenance envelope proves the external-world fact was true.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+> The input provenance envelope records how the input entered the decision process under stated assumptions.
 
 Another unsafe statement would be:
 
@@ -1082,6 +1122,8 @@ A-DAP leaves several important problems open:
 - How should availability be optimized differently for public proof objects, sensitive payloads, and dangerous payloads?
 - How should input provenance be separated from decision-state commitment?
 - How should input capture NDC be reported separately from decision-envelope NDC?
+- How should citizen-facing interfaces explain the difference between verified input commitment and disputed input truth?
+- How should random audit sampling reduce Exercise Debt in practice?
 - How should ADEC define reproducible adversary classes?
 - How should ADEC report escape cost without collapsing into a universal robustness score?
 - How should adversary compensation be disclosed so that adversarial testing does not become another captured verification layer?
@@ -1204,7 +1246,11 @@ Repository publication is not independent evidentiary custody by itself.
 
 Input commitment is not input truth.
 
+Input provenance is not input truth.
+
 A valid envelope can preserve a false input perfectly.
+
+A strong decision envelope can hide weak input capture if provenance is not separately declared.
 
 A single NDC score is not sufficient when adversarial objectives differ.
 
