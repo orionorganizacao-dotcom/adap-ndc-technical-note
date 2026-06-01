@@ -515,6 +515,18 @@ A-DAP must therefore preserve recovery paths capable of distinguishing committed
 
 A-DAP includes several known risks and limitations.
 
+### Input Truth Boundary
+
+A-DAP can reconstruct what a system committed to using.
+
+It cannot, by itself, prove that the committed input was true, complete, correctly captured, or faithful to the external world.
+
+This distinction prevents A-DAP from being misused as proof that a decision was factually correct.
+
+Related file:
+
+- `architecture/input-truth-boundary.md`
+
 ### The Envelope Bottleneck
 
 If every verification path depends on the same envelope, operator, interface, or custody channel, apparent independence may collapse.
@@ -868,6 +880,7 @@ It tests whether the later record is consistent with the earlier commitment.
 │   ├── exercisable-citizen-verification.md
 │   ├── exercisable-verification-interface.md
 │   ├── independent-verification-topology.md
+│   ├── input-truth-boundary.md
 │   ├── ip-priority-and-authorized-execution.md
 │   ├── ndc-comparative-positioning.md
 │   ├── ndc-separability-criterion.md
@@ -913,14 +926,15 @@ For a five-minute review:
 3. Read `architecture/ndc-separability-criterion.md`.
 4. Read `architecture/objective-indexed-ndc.md`.
 5. Read `THREAT_MODEL.md`.
-6. Inspect `architecture/envelope-bottleneck.md`.
-7. Inspect `ADAP-EXP-003.md`.
-8. Inspect `architecture/non-self-attested-materiality.md`.
-9. Inspect `architecture/exercisable-citizen-verification.md`.
-10. Inspect `architecture/citizen-verifier-ui-spec.md`.
-11. Inspect `experiments/adec-001.md`.
-12. Run or review the reconstruction challenge in `challenge/gcd-001/`.
-13. Try to identify where trust is still concentrated.
+6. Inspect `architecture/input-truth-boundary.md`.
+7. Inspect `architecture/envelope-bottleneck.md`.
+8. Inspect `ADAP-EXP-003.md`.
+9. Inspect `architecture/non-self-attested-materiality.md`.
+10. Inspect `architecture/exercisable-citizen-verification.md`.
+11. Inspect `architecture/citizen-verifier-ui-spec.md`.
+12. Inspect `experiments/adec-001.md`.
+13. Run or review the reconstruction challenge in `challenge/gcd-001/`.
+14. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -955,6 +969,7 @@ A-DAP follows several design rules:
 - Do not confuse structural independence with economic resistance.
 - Do not confuse declared materiality with independent verification.
 - Do not confuse repository publication with independent evidentiary custody.
+- Do not confuse input commitment with input truth.
 - Do not confuse experimental escape-cost measurement with certification.
 - Do not treat NDC as a single scalar score when adversarial objectives differ.
 - Do not treat ADEC as a universal robustness score.
@@ -999,6 +1014,16 @@ A safer statement would be:
 > Our system generates reconstructible decision envelopes designed to make later alteration or inconsistency detectable under stated assumptions.
 
 That statement is narrower and more defensible.
+
+Another unsafe statement would be:
+
+> A-DAP proves that the committed input was true.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+> A-DAP records what the system committed to using; it does not prove what the world was.
 
 Another unsafe statement would be:
 
@@ -1055,6 +1080,8 @@ A-DAP leaves several important problems open:
 - How should recovery substitution be detected in public repositories and mirrors?
 - How should proof surfaces be tested for practical invertibility?
 - How should availability be optimized differently for public proof objects, sensitive payloads, and dangerous payloads?
+- How should input provenance be separated from decision-state commitment?
+- How should input capture NDC be reported separately from decision-envelope NDC?
 - How should ADEC define reproducible adversary classes?
 - How should ADEC report escape cost without collapsing into a universal robustness score?
 - How should adversary compensation be disclosed so that adversarial testing does not become another captured verification layer?
@@ -1094,6 +1121,8 @@ Especially useful contributions include:
 - recovery-substitution examples;
 - proof-surface invertibility critiques;
 - object-class availability critiques;
+- input-truth boundary critiques;
+- input-provenance critiques;
 - ADEC adversary-class critiques;
 - ADEC escape-boundary critiques;
 - ADEC compensation-model critiques;
@@ -1172,6 +1201,10 @@ Structural independence is not the same as economic resistance.
 Declared materiality is not independent verification by itself.
 
 Repository publication is not independent evidentiary custody by itself.
+
+Input commitment is not input truth.
+
+A valid envelope can preserve a false input perfectly.
 
 A single NDC score is not sufficient when adversarial objectives differ.
 
