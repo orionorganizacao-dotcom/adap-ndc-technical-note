@@ -539,6 +539,18 @@ Related file:
 
 - `architecture/input-provenance-envelope.md`
 
+### Random Audit Sampling
+
+A-DAP creates reconstructible evidence, but reconstructibility is not the same as exercised verification.
+
+Random audit sampling helps reduce Exercise Debt by making verification exercised, not merely possible.
+
+This distinction prevents A-DAP evidence from becoming a strong lock that no one ever tests.
+
+Related file:
+
+- `architecture/random-audit-sampling.md`
+
 ### The Envelope Bottleneck
 
 If every verification path depends on the same envelope, operator, interface, or custody channel, apparent independence may collapse.
@@ -900,6 +912,7 @@ It tests whether the later record is consistent with the earlier commitment.
 │   ├── non-self-attested-materiality.md
 │   ├── objective-indexed-ndc.md
 │   ├── omega-plus-plus-reconstructible-verdicts.md
+│   ├── random-audit-sampling.md
 │   ├── scope-completeness-boundary.md
 │   ├── sdk-vs-external-audit-service.md
 │   ├── signer-custody-boundary.md
@@ -941,14 +954,15 @@ For a five-minute review:
 5. Read `THREAT_MODEL.md`.
 6. Inspect `architecture/input-truth-boundary.md`.
 7. Inspect `architecture/input-provenance-envelope.md`.
-8. Inspect `architecture/envelope-bottleneck.md`.
-9. Inspect `ADAP-EXP-003.md`.
-10. Inspect `architecture/non-self-attested-materiality.md`.
-11. Inspect `architecture/exercisable-citizen-verification.md`.
-12. Inspect `architecture/citizen-verifier-ui-spec.md`.
-13. Inspect `experiments/adec-001.md`.
-14. Run or review the reconstruction challenge in `challenge/gcd-001/`.
-15. Try to identify where trust is still concentrated.
+8. Inspect `architecture/random-audit-sampling.md`.
+9. Inspect `architecture/envelope-bottleneck.md`.
+10. Inspect `ADAP-EXP-003.md`.
+11. Inspect `architecture/non-self-attested-materiality.md`.
+12. Inspect `architecture/exercisable-citizen-verification.md`.
+13. Inspect `architecture/citizen-verifier-ui-spec.md`.
+14. Inspect `experiments/adec-001.md`.
+15. Run or review the reconstruction challenge in `challenge/gcd-001/`.
+16. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -986,6 +1000,8 @@ A-DAP follows several design rules:
 - Do not confuse input commitment with input truth.
 - Do not confuse input provenance with input truth.
 - Do not hide weak input capture behind strong decision reconstruction.
+- Do not confuse reconstructibility with exercised verification.
+- Do not let random audits collapse into sampling theater.
 - Do not confuse experimental escape-cost measurement with certification.
 - Do not treat NDC as a single scalar score when adversarial objectives differ.
 - Do not treat ADEC as a universal robustness score.
@@ -997,7 +1013,7 @@ A-DAP follows several design rules:
 
 A public agency uses an automated eligibility system.
 
-At the moment of decision, the system creates an input provenance envelope committing to:
+At the moment of intake, the system creates an input provenance envelope committing to:
 
 - submission channel;
 - input source;
@@ -1006,7 +1022,7 @@ At the moment of decision, the system creates an input provenance envelope commi
 - transformation rules;
 - custody path from input capture to decision system.
 
-The system then creates a decision envelope committing to:
+At the moment of decision, the system creates a decision envelope committing to:
 
 - applicant record hash;
 - rule version;
@@ -1020,10 +1036,11 @@ Later, the applicant challenges the denial.
 
 An auditor reconstructs the input provenance envelope and the decision envelope.
 
-The auditor can separate two questions:
+The auditor can separate three questions:
 
-1. whether the system used the committed input; and
-2. whether the captured input itself is disputed.
+1. whether the input capture path is reconstructible;
+2. whether the system used the committed input; and
+3. whether the explanation matches the committed record.
 
 A-DAP does not decide the legal remedy.
 
@@ -1064,6 +1081,16 @@ This is not a valid claim.
 A safer statement would be:
 
 > The input provenance envelope records how the input entered the decision process under stated assumptions.
+
+Another unsafe statement would be:
+
+> Random audits prove all decisions are correct.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+> Random audit sampling periodically exercises reconstruction under a disclosed sampling model and reduces Exercise Debt.
 
 Another unsafe statement would be:
 
@@ -1124,6 +1151,8 @@ A-DAP leaves several important problems open:
 - How should input capture NDC be reported separately from decision-envelope NDC?
 - How should citizen-facing interfaces explain the difference between verified input commitment and disputed input truth?
 - How should random audit sampling reduce Exercise Debt in practice?
+- How should random audit sampling avoid sampling theater?
+- How should failed sampled audits trigger escalation, notice, or remediation?
 - How should ADEC define reproducible adversary classes?
 - How should ADEC report escape cost without collapsing into a universal robustness score?
 - How should adversary compensation be disclosed so that adversarial testing does not become another captured verification layer?
@@ -1165,6 +1194,8 @@ Especially useful contributions include:
 - object-class availability critiques;
 - input-truth boundary critiques;
 - input-provenance critiques;
+- random audit sampling critiques;
+- sampling theater examples;
 - ADEC adversary-class critiques;
 - ADEC escape-boundary critiques;
 - ADEC compensation-model critiques;
@@ -1251,6 +1282,12 @@ Input provenance is not input truth.
 A valid envelope can preserve a false input perfectly.
 
 A strong decision envelope can hide weak input capture if provenance is not separately declared.
+
+Reconstructibility is not exercised verification.
+
+Random audit sampling can reduce Exercise Debt, but it does not prove correctness or replace institutional accountability.
+
+A random audit can become sampling theater if the operator controls the sample, verifier, scope, evidence access, and failure disclosure.
 
 A single NDC score is not sufficient when adversarial objectives differ.
 
