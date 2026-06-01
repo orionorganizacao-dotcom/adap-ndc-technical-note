@@ -631,6 +631,18 @@ Related file:
 
 - `architecture/citizen-verifier-ui-spec.md`
 
+### Citizen-Facing Evidence Language
+
+Citizen-facing verification must explain what the evidence proves, what it does not prove, and what remains contestable.
+
+A verifier should not merely say `Hash verified`.
+
+It should communicate scope, limits, exportable evidence, and possible next procedural steps without becoming a new authority.
+
+Related file:
+
+- `architecture/citizen-facing-evidence-language.md`
+
 ### Verifier Funding Capture
 
 A third-party verifier is not independent merely because it is organizationally separate.
@@ -896,6 +908,7 @@ It tests whether the later record is consistent with the earlier commitment.
 ├── architecture/
 │   ├── adoption-capture-risk.md
 │   ├── automated-ndc-v2.md
+│   ├── citizen-facing-evidence-language.md
 │   ├── citizen-verifier-ui-spec.md
 │   ├── cryptographic-habeas-data.md
 │   ├── disjoint-anchoring-for-contestability.md
@@ -960,9 +973,10 @@ For a five-minute review:
 11. Inspect `architecture/non-self-attested-materiality.md`.
 12. Inspect `architecture/exercisable-citizen-verification.md`.
 13. Inspect `architecture/citizen-verifier-ui-spec.md`.
-14. Inspect `experiments/adec-001.md`.
-15. Run or review the reconstruction challenge in `challenge/gcd-001/`.
-16. Try to identify where trust is still concentrated.
+14. Inspect `architecture/citizen-facing-evidence-language.md`.
+15. Inspect `experiments/adec-001.md`.
+16. Run or review the reconstruction challenge in `challenge/gcd-001/`.
+17. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -1002,6 +1016,8 @@ A-DAP follows several design rules:
 - Do not hide weak input capture behind strong decision reconstruction.
 - Do not confuse reconstructibility with exercised verification.
 - Do not let random audits collapse into sampling theater.
+- Do not turn cryptographic success into public-facing overclaim.
+- Do not let a green checkmark imply correctness, fairness, legality, or truth.
 - Do not confuse experimental escape-cost measurement with certification.
 - Do not treat NDC as a single scalar score when adversarial objectives differ.
 - Do not treat ADEC as a universal robustness score.
@@ -1094,6 +1110,16 @@ A safer statement would be:
 
 Another unsafe statement would be:
 
+> Hash verified, therefore the decision is correct.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+> The checked record matches the committed evidence within the declared verification scope.
+
+Another unsafe statement would be:
+
 > Our agent is certified as behaviorally bounded because it passed ADEC.
 
 This is not a valid claim.
@@ -1150,6 +1176,7 @@ A-DAP leaves several important problems open:
 - How should input provenance be separated from decision-state commitment?
 - How should input capture NDC be reported separately from decision-envelope NDC?
 - How should citizen-facing interfaces explain the difference between verified input commitment and disputed input truth?
+- How should citizen-facing messages explain scope, limits, exportable evidence, and next procedural steps?
 - How should random audit sampling reduce Exercise Debt in practice?
 - How should random audit sampling avoid sampling theater?
 - How should failed sampled audits trigger escalation, notice, or remediation?
@@ -1177,6 +1204,7 @@ Especially useful contributions include:
 - adoption-capture scenarios;
 - verifier-funding capture scenarios;
 - citizen-facing verification critiques;
+- citizen-facing evidence language critiques;
 - usability-versus-reproducibility critiques;
 - internal-integrity sensor collapse examples;
 - materiality-model critiques;
@@ -1258,6 +1286,10 @@ Client-side execution is not independent verification by itself.
 Citizen-facing usability is not independent verification by itself.
 
 A citizen verifier can make verification easier to exercise, but it does not automatically increase NDC.
+
+Citizen-facing language must explain what evidence proves, what it does not prove, and what remains contestable.
+
+A green checkmark must not imply correctness, fairness, legality, or truth.
 
 Third-party verification is not independent verification by default.
 
