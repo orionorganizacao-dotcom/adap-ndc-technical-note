@@ -777,6 +777,60 @@ ADEC is experimental and must not be interpreted as a production certification m
 
 Before ADEC can become a certification metric, it must survive at least one pre-registered falsification experiment.
 
+### GCD-002 — Benchmark Custody Collapse
+
+GCD-002 extends A-DAP from automated decision systems to frontier model evaluation.
+
+It examines benchmarks as custody graphs and asks whether a benchmark score can still function as independent evidence when the evaluated model can recognize, infer, or optimize against the evaluation surface itself.
+
+Core thesis:
+
+> The benchmark is no longer only measuring the model.  
+> The model is also measuring the benchmark.
+
+In this case, the score remains useful, but its evidentiary status changes.
+
+It no longer reconstructs capability alone.
+
+It reconstructs capability under evaluation-aware conditions.
+
+GCD-002 argues that benchmark independence is not guaranteed merely because an evaluator is external.
+
+A third-party evaluator may increase NDC compared to vendor self-reporting, but if the evaluated model can infer or optimize against the benchmark format, the evaluation surface itself may become part of the model’s strategic environment.
+
+This creates a deeper custody problem:
+
+> Independent evaluator does not automatically mean independent measurement.
+
+GCD-002 does not claim that benchmarks are useless.
+
+It claims something narrower:
+
+> Benchmarks become structurally weaker as independent verifiers when the evaluated model can recognize, infer, or optimize against the evaluation surface.
+
+The benchmark may still produce useful information.
+
+But its evidentiary status changes from clean capability proof to performance evidence under evaluation-aware conditions.
+
+This note is currently framed as a conceptual draft and pre-solver hypothesis.
+
+Its manual NDC estimate must be falsified by execution, especially in two cases:
+
+1. when the verifier shares the same recognizable evaluation envelope;
+2. when the verifier uses a genuinely disjoint evaluation envelope.
+
+Related file:
+
+- `GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md`
+
+Solver validation specification:
+
+- `experiments/gcd-002-solver-validation.md`
+
+Related issue:
+
+- `#12 — Run solver validation for GCD-002 Benchmark Custody Collapse`
+
 ---
 
 ## Proofs, Claims, Timestamps, and Audits
@@ -904,6 +958,7 @@ It tests whether the later record is consistent with the earlier commitment.
 ├── QUICKSTART.md
 ├── RELEASE_NOTES.md
 ├── ADAP-EXP-003.md
+├── GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md
 ├── 90-DAY-GO-NO-GO.md
 ├── architecture/
 │   ├── adoption-capture-risk.md
@@ -936,6 +991,7 @@ It tests whether the later record is consistent with the earlier commitment.
 │   └── gcd-003-internal-integrity-sensor/
 ├── experiments/
 │   ├── adec-001.md
+│   ├── gcd-002-solver-validation.md
 │   └── second-order-entity-ndc/
 ├── proofs/
 │   └── README.md
@@ -975,8 +1031,10 @@ For a five-minute review:
 13. Inspect `architecture/citizen-verifier-ui-spec.md`.
 14. Inspect `architecture/citizen-facing-evidence-language.md`.
 15. Inspect `experiments/adec-001.md`.
-16. Run or review the reconstruction challenge in `challenge/gcd-001/`.
-17. Try to identify where trust is still concentrated.
+16. Inspect `GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md`.
+17. Inspect `experiments/gcd-002-solver-validation.md`.
+18. Run or review the reconstruction challenge in `challenge/gcd-001/`.
+19. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -1022,6 +1080,9 @@ A-DAP follows several design rules:
 - Do not treat NDC as a single scalar score when adversarial objectives differ.
 - Do not treat ADEC as a universal robustness score.
 - Do not treat availability as a universal good across all object classes.
+- Do not confuse benchmark score with clean capability proof.
+- Do not confuse external evaluation with structurally independent measurement.
+- Do not treat pre-solver NDC estimates as executed results.
 
 ---
 
@@ -1128,6 +1189,16 @@ A safer statement would be:
 
 > ADEC-001 is an experimental falsification protocol for measuring observed escape resistance under a declared adversary class and pre-registered boundary conditions.
 
+Another unsafe statement would be:
+
+> The benchmark improved, therefore the model’s general capability is proven.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+> The benchmark score is evidence of performance under benchmark conditions; its evidentiary status depends on the custody structure of the evaluation.
+
 ---
 
 ## Current Maturity
@@ -1184,6 +1255,11 @@ A-DAP leaves several important problems open:
 - How should ADEC report escape cost without collapsing into a universal robustness score?
 - How should adversary compensation be disclosed so that adversarial testing does not become another captured verification layer?
 - How should pre-registered escape boundaries be chosen before observing adversarial results?
+- How should benchmark custody graphs be modeled when the evaluated system can infer the evaluator?
+- How should benchmark envelopes be decomposed into prompt structure, rubric, task distribution, scoring function, harness, and public benchmark culture?
+- How should independent evaluators prove that their measurement envelope is structurally disjoint from vendor-facing or training-recognizable benchmark surfaces?
+- How should pre-solver NDC estimates be labeled so they do not become premature claims?
+- How should capability claims distinguish between performance under benchmark conditions and externally reconstructible evidence of general capability?
 
 These are not minor implementation details.
 
@@ -1227,6 +1303,9 @@ Especially useful contributions include:
 - ADEC adversary-class critiques;
 - ADEC escape-boundary critiques;
 - ADEC compensation-model critiques;
+- benchmark custody collapse critiques;
+- evaluation-envelope decomposition critiques;
+- third-party benchmark independence critiques;
 - legal interpretation notes;
 - empirical evidence about whether verification paths are actually exercised.
 
@@ -1263,84 +1342,3 @@ See:
 Release notes should document not only features, but also narrowed claims, removed overclaims, known weaknesses, and adversarial findings.
 
 In this project, reducing a false claim is progress.
-
----
-
-## Final Position
-
-A-DAP is based on a narrow but important claim:
-
-> Automated decisions should not depend only on post-hoc explanation.  
-> They should produce reconstructible evidence.
-
-But reconstructible evidence is not truth.
-
-Structural contestability is not exercised accountability.
-
-Formal adoption is not substantive contestability.
-
-Validator output is not authority.
-
-Client-side execution is not independent verification by itself.
-
-Citizen-facing usability is not independent verification by itself.
-
-A citizen verifier can make verification easier to exercise, but it does not automatically increase NDC.
-
-Citizen-facing language must explain what evidence proves, what it does not prove, and what remains contestable.
-
-A green checkmark must not imply correctness, fairness, legality, or truth.
-
-Third-party verification is not independent verification by default.
-
-Temporal priority is not plagiarism proof.
-
-Historical process evidence is not proof of origin by itself.
-
-Internal measurement is not independent verification by default.
-
-Cryptographic strength is not independent contestability by itself.
-
-Structural independence is not the same as economic resistance.
-
-Declared materiality is not independent verification by itself.
-
-Repository publication is not independent evidentiary custody by itself.
-
-Input commitment is not input truth.
-
-Input provenance is not input truth.
-
-A valid envelope can preserve a false input perfectly.
-
-A strong decision envelope can hide weak input capture if provenance is not separately declared.
-
-Reconstructibility is not exercised verification.
-
-Random audit sampling can reduce Exercise Debt, but it does not prove correctness or replace institutional accountability.
-
-A random audit can become sampling theater if the operator controls the sample, verifier, scope, evidence access, and failure disclosure.
-
-A single NDC score is not sufficient when adversarial objectives differ.
-
-Availability is not a universal good across all object classes.
-
-Experimental escape-cost measurement is not production certification.
-
-ADEC terminology is not ADEC validation.
-
-A-DAP terminology is not A-DAP compliance.
-
-A-DAP compliance requires a reconstructible custody graph and reproducible NDC computation under stated adversarial objectives and object-class assumptions.
-
-If verification still depends on the verified, the system remains structurally dependent.
-
-A-DAP helps create the object that later accountability may need.
-
-It does not replace the institutions that must use it.
-
----
-
-## License
-
-MIT License.
