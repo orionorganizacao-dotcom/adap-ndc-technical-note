@@ -639,6 +639,22 @@ Related file:
 
 architecture/human-readable-decision-receipt.md
 
+### Public-Interest Verifier Maintenance
+
+A-DAP requires not only reconstructible evidence, but exercisable verification infrastructure.
+
+If the only usable verifier is controlled by the same institution that made the decision, practical contestability may collapse even when the decision envelope is technically well-formed.
+
+A public-interest verifier should be independently maintained, openly inspectable, reproducible, and not controlled by the decision-making institution.
+
+The verifier should help people test the record.
+
+It should not become the record.
+
+Related file:
+
+architecture/public-interest-verifier-maintenance.md
+
 ### The Envelope Bottleneck
 
 If every verification path depends on the same envelope, operator, interface, or custody channel, apparent independence may collapse.
@@ -1058,6 +1074,7 @@ It tests whether the later record is consistent with the earlier commitment.
 │   ├── objective-indexed-ndc.md
 │   ├── omega-plus-plus-reconstructible-verdicts.md
 │   ├── procedural-finality-and-perpetual-refutability.md
+│   ├── public-interest-verifier-maintenance.md
 │   ├── random-audit-sampling.md
 │   ├── scope-completeness-boundary.md
 │   ├── sdk-vs-external-audit-service.md
@@ -1107,17 +1124,18 @@ For a five-minute review:
 12. Inspect architecture/self-validating-limitation-claims.md.
 13. Inspect architecture/adoption-and-accessibility-risks.md.
 14. Inspect architecture/human-readable-decision-receipt.md.
-15. Inspect architecture/envelope-bottleneck.md.
-16. Inspect ADAP-EXP-003.md.
-17. Inspect architecture/non-self-attested-materiality.md.
-18. Inspect architecture/exercisable-citizen-verification.md.
-19. Inspect architecture/citizen-verifier-ui-spec.md.
-20. Inspect architecture/citizen-facing-evidence-language.md.
-21. Inspect experiments/adec-001.md.
-22. Inspect GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md.
-23. Inspect experiments/gcd-002-solver-validation.md.
-24. Run or review the reconstruction challenge in challenge/gcd-001/.
-25. Try to identify where trust is still concentrated.
+15. Inspect architecture/public-interest-verifier-maintenance.md.
+16. Inspect architecture/envelope-bottleneck.md.
+17. Inspect ADAP-EXP-003.md.
+18. Inspect architecture/non-self-attested-materiality.md.
+19. Inspect architecture/exercisable-citizen-verification.md.
+20. Inspect architecture/citizen-verifier-ui-spec.md.
+21. Inspect architecture/citizen-facing-evidence-language.md.
+22. Inspect experiments/adec-001.md.
+23. Inspect GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md.
+24. Inspect experiments/gcd-002-solver-validation.md.
+25. Run or review the reconstruction challenge in challenge/gcd-001/.
+26. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -1174,6 +1192,9 @@ A-DAP follows several design rules:
 - Do not confuse procedural finality with evidentiary finality.
 - Do not treat a closed case as proof that the evidence is epistemically final.
 - Do not treat a refutable evidence object as proof that a case must remain procedurally open forever.
+- Do not confuse an operator-provided verifier with independent verification.
+- Do not confuse verifier availability with verifier independence.
+- Do not let the verifier become the new authority.
 
 ## Example Safe Use
 
@@ -1210,6 +1231,10 @@ The affected person receives a human-readable decision receipt with:
 - a statement of what the receipt does not prove;
 - a list of issues that may still be contested.
 
+The institution provides a basic verification interface.
+
+A public-interest verifier, maintained outside the decision-making institution, can independently inspect or reproduce the reconstruction procedure under stated assumptions.
+
 Later, the applicant challenges the denial.
 
 An auditor reconstructs the input provenance envelope and the decision envelope.
@@ -1222,6 +1247,8 @@ The auditor can separate several questions:
 - whether the explanation matches the committed record;
 - whether the input itself was true;
 - whether the rule, threshold, or remedy was lawful;
+- whether the verification path was controlled by the decision-making institution;
+- whether a public-interest verifier can reproduce the result;
 - whether the case is still procedurally open under applicable law;
 - whether later reconstruction may support review, audit, reopening, or systemic correction.
 
@@ -1381,6 +1408,26 @@ A safer statement would be:
 
 Procedural finality may close the case. It does not make the evidence epistemically final.
 
+Another unsafe statement would be:
+
+Because the operator provides a verifier, the system is independently auditable.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+An operator-provided verifier may be useful as a convenience interface, but independent verification requires a structurally disjoint and reproducible verification path.
+
+Another unsafe statement would be:
+
+The public verifier says green, so the decision is valid.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+A verifier result may show consistency within the declared verification scope. It does not decide correctness, fairness, legality, remedy, input truth, or procedural finality.
+
 ## Current Maturity
 
 This repository should be read as an evolving technical note, protocol architecture, and adversarial review surface.
@@ -1473,6 +1520,25 @@ A-DAP leaves several important problems open:
 - How should human-readable receipts explain appeal deadlines without implying unlimited challenge rights?
 - How should A-DAP evidence be archived after procedural closure?
 - Who may request reconstruction after a case is closed?
+- Who should maintain public-interest verifiers?
+- How should public-interest verifiers be funded without capture?
+- Should regulators certify verifier maintainers?
+- Should courts accept verifier outputs as technical evidence?
+- How should verifier defects be disclosed?
+- How should old verifier versions be preserved?
+- How should verifier outputs be cited in legal proceedings?
+- How should public-interest verifiers handle sensitive personal data?
+- How should verifier access work when the envelope is restricted?
+- How should competing verifier outputs be reconciled?
+- How should verifier forks be governed?
+- How should public-interest verifiers avoid becoming new authorities?
+- How should funding dependency be disclosed?
+- How should verifier maintenance be audited?
+- How should a citizen know which verifier to use?
+- How should public defenders, ombuds offices, and civil society organizations access verifier infrastructure?
+- How should verification be made available in low-resource environments?
+- How should institutional refusal to provide envelopes be handled?
+- How should a verifier report that the envelope is missing, inaccessible, or non-reconstructible?
 
 These are not minor implementation details.
 
@@ -1530,6 +1596,9 @@ Especially useful contributions include:
 - court-facing interpretation critiques;
 - procedural-finality critiques;
 - evidentiary-finality critiques;
+- public-interest verifier critiques;
+- verifier-maintenance critiques;
+- verifier-governance critiques;
 - legal interpretation notes;
 - empirical evidence about whether verification paths are actually exercised.
 
