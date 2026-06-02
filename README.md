@@ -587,6 +587,18 @@ Related file:
 
 architecture/self-validating-limitation-claims.md
 
+### Adoption and Accessibility Risks
+
+A-DAP can make automated decisions more reconstructible, but reconstructibility does not automatically make verification practically accessible.
+
+A technically valid envelope may still be difficult for regulators, courts, affected individuals, public managers, journalists, lawyers, or civil society organizations to understand or exercise without usable tools, institutional support, or independent assistance.
+
+This creates an adoption and accessibility risk: A-DAP may become technically robust but practically underused if verification remains too complex, costly, or expert-dependent.
+
+Related file:
+
+architecture/adoption-and-accessibility-risks.md
+
 ### The Envelope Bottleneck
 
 If every verification path depends on the same envelope, operator, interface, or custody channel, apparent independence may collapse.
@@ -982,6 +994,7 @@ It tests whether the later record is consistent with the earlier commitment.
 ├── GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md
 ├── 90-DAY-GO-NO-GO.md
 ├── architecture/
+│   ├── adoption-and-accessibility-risks.md
 │   ├── adoption-capture-risk.md
 │   ├── automated-ndc-v2.md
 │   ├── citizen-facing-evidence-language.md
@@ -1047,17 +1060,18 @@ For a five-minute review:
 8. Inspect architecture/random-audit-sampling.md.
 9. Inspect architecture/non-terminal-verification.md.
 10. Inspect architecture/self-validating-limitation-claims.md.
-11. Inspect architecture/envelope-bottleneck.md.
-12. Inspect ADAP-EXP-003.md.
-13. Inspect architecture/non-self-attested-materiality.md.
-14. Inspect architecture/exercisable-citizen-verification.md.
-15. Inspect architecture/citizen-verifier-ui-spec.md.
-16. Inspect architecture/citizen-facing-evidence-language.md.
-17. Inspect experiments/adec-001.md.
-18. Inspect GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md.
-19. Inspect experiments/gcd-002-solver-validation.md.
-20. Run or review the reconstruction challenge in challenge/gcd-001/.
-21. Try to identify where trust is still concentrated.
+11. Inspect architecture/adoption-and-accessibility-risks.md.
+12. Inspect architecture/envelope-bottleneck.md.
+13. Inspect ADAP-EXP-003.md.
+14. Inspect architecture/non-self-attested-materiality.md.
+15. Inspect architecture/exercisable-citizen-verification.md.
+16. Inspect architecture/citizen-verifier-ui-spec.md.
+17. Inspect architecture/citizen-facing-evidence-language.md.
+18. Inspect experiments/adec-001.md.
+19. Inspect GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md.
+20. Inspect experiments/gcd-002-solver-validation.md.
+21. Run or review the reconstruction challenge in challenge/gcd-001/.
+22. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -1107,6 +1121,8 @@ A-DAP follows several design rules:
 - Do not treat pre-solver NDC estimates as executed results.
 - Do not treat limitation claims as self-validating.
 - Do not confuse a model’s statement of inability with externally reconstructed impossibility.
+- Do not confuse reconstructibility with practical accessibility.
+- Do not assume affected people can exercise verification without usable tools or institutional support.
 
 ## Example Safe Use
 
@@ -1237,6 +1253,16 @@ A safer statement would be:
 
 The model did not demonstrate access with the capabilities exposed in that execution context; whether access was impossible requires reconstructible verification or explicit limitation labeling.
 
+Another unsafe statement would be:
+
+A-DAP makes verification accessible because the envelope is reconstructible.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+A-DAP improves reconstructibility, but practical accessibility depends on usable tools, institutional support, independent assistance, and the ability of affected parties or their representatives to exercise verification.
+
 ## Current Maturity
 
 This repository should be read as an evolving technical note, protocol architecture, and adversarial review surface.
@@ -1298,6 +1324,17 @@ A-DAP leaves several important problems open:
 - How should limitation claims be externally reconstructed when the relevant tools, permissions, or retrieval paths are controlled by the same generator or operator?
 - How should tool-call evidence be committed without exposing sensitive prompts, files, credentials, or protected user data?
 - How should AI systems label the difference between “not demonstrated,” “not checked,” “not exposed,” “policy-restricted,” and “impossible”?
+- How can a regulator understand A-DAP without reading the full technical repository?
+- How can a court interpret a decision envelope?
+- How can an affected person obtain a receipt?
+- What must a public agency disclose in a denial notice?
+- Who pays for independent reconstruction?
+- How can public-interest verifiers be funded without capture?
+- How can citizen-facing tools avoid becoming new authorities?
+- How can verification results be explained without overclaiming?
+- How can NDC disagreement between auditors be recorded?
+- How can dependency-collapse rules become reproducible?
+- How can reconstruction be exercised at scale without becoming symbolic compliance?
 
 These are not minor implementation details.
 
@@ -1345,6 +1382,9 @@ Especially useful contributions include:
 - limitation-claim self-validation critiques;
 - epistemic boundary claim critiques;
 - tool-call reconstruction critiques;
+- adoption and accessibility critiques;
+- regulator-facing explanation critiques;
+- citizen-accessibility critiques;
 - legal interpretation notes;
 - empirical evidence about whether verification paths are actually exercised.
 
