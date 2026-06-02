@@ -599,6 +599,20 @@ Related file:
 
 architecture/adoption-and-accessibility-risks.md
 
+### Human-Readable Decision Receipt
+
+A-DAP decision envelopes make automated decisions more reconstructible, but affected people should not be expected to understand raw JSON envelopes, hashes, timestamp tokens, custody graphs, or reconstruction scripts.
+
+A human-readable decision receipt provides an accessible entry point to the technical envelope. It should identify the decision record, provide a receipt code or access path, explain what the receipt supports, explain what it does not prove, and preserve the person’s ability to contest input truth, policy validity, legality, fairness, or remedy.
+
+A receipt without an envelope is only a notice.
+
+An envelope without a receipt may be technically valid but socially inaccessible.
+
+Related file:
+
+architecture/human-readable-decision-receipt.md
+
 ### The Envelope Bottleneck
 
 If every verification path depends on the same envelope, operator, interface, or custody channel, apparent independence may collapse.
@@ -1005,6 +1019,7 @@ It tests whether the later record is consistent with the earlier commitment.
 │   ├── example-verification-topology.md
 │   ├── exercisable-citizen-verification.md
 │   ├── exercisable-verification-interface.md
+│   ├── human-readable-decision-receipt.md
 │   ├── independent-verification-topology.md
 │   ├── input-provenance-envelope.md
 │   ├── input-truth-boundary.md
@@ -1061,17 +1076,18 @@ For a five-minute review:
 9. Inspect architecture/non-terminal-verification.md.
 10. Inspect architecture/self-validating-limitation-claims.md.
 11. Inspect architecture/adoption-and-accessibility-risks.md.
-12. Inspect architecture/envelope-bottleneck.md.
-13. Inspect ADAP-EXP-003.md.
-14. Inspect architecture/non-self-attested-materiality.md.
-15. Inspect architecture/exercisable-citizen-verification.md.
-16. Inspect architecture/citizen-verifier-ui-spec.md.
-17. Inspect architecture/citizen-facing-evidence-language.md.
-18. Inspect experiments/adec-001.md.
-19. Inspect GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md.
-20. Inspect experiments/gcd-002-solver-validation.md.
-21. Run or review the reconstruction challenge in challenge/gcd-001/.
-22. Try to identify where trust is still concentrated.
+12. Inspect architecture/human-readable-decision-receipt.md.
+13. Inspect architecture/envelope-bottleneck.md.
+14. Inspect ADAP-EXP-003.md.
+15. Inspect architecture/non-self-attested-materiality.md.
+16. Inspect architecture/exercisable-citizen-verification.md.
+17. Inspect architecture/citizen-verifier-ui-spec.md.
+18. Inspect architecture/citizen-facing-evidence-language.md.
+19. Inspect experiments/adec-001.md.
+20. Inspect GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md.
+21. Inspect experiments/gcd-002-solver-validation.md.
+22. Run or review the reconstruction challenge in challenge/gcd-001/.
+23. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -1123,6 +1139,8 @@ A-DAP follows several design rules:
 - Do not confuse a model’s statement of inability with externally reconstructed impossibility.
 - Do not confuse reconstructibility with practical accessibility.
 - Do not assume affected people can exercise verification without usable tools or institutional support.
+- Do not confuse a human-readable receipt with proof that the decision was correct.
+- Do not confuse receipt delivery with envelope reconstruction.
 
 ## Example Safe Use
 
@@ -1147,15 +1165,30 @@ At the moment of decision, the system creates a decision envelope committing to:
 - timestamp evidence;
 - reconstruction instructions.
 
+The affected person receives a human-readable decision receipt with:
+
+- a receipt identifier;
+- a decision reference;
+- a decision date;
+- an issuing institution;
+- a plain-language decision summary;
+- a verification link or access path;
+- a statement of what the receipt supports;
+- a statement of what the receipt does not prove;
+- a list of issues that may still be contested.
+
 Later, the applicant challenges the denial.
 
 An auditor reconstructs the input provenance envelope and the decision envelope.
 
-The auditor can separate three questions:
+The auditor can separate several questions:
 
+- whether the receipt identifies a decision record;
 - whether the input capture path is reconstructible;
 - whether the system used the committed input;
-- whether the explanation matches the committed record.
+- whether the explanation matches the committed record;
+- whether the input itself was true;
+- whether the rule, threshold, or remedy was lawful.
 
 A-DAP does not decide the legal remedy.
 
@@ -1263,6 +1296,26 @@ A safer statement would be:
 
 A-DAP improves reconstructibility, but practical accessibility depends on usable tools, institutional support, independent assistance, and the ability of affected parties or their representatives to exercise verification.
 
+Another unsafe statement would be:
+
+The person received a receipt, therefore the decision was auditable.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+The receipt provides an access point to the decision record. Auditability depends on whether the corresponding envelope, verification path, custody assumptions, and reconstruction procedure are available and testable.
+
+Another unsafe statement would be:
+
+The receipt proves the decision was correct.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+The receipt identifies a decision record that may be checked against the corresponding A-DAP envelope. It does not prove correctness, fairness, legality, or input truth.
+
 ## Current Maturity
 
 This repository should be read as an evolving technical note, protocol architecture, and adversarial review surface.
@@ -1335,6 +1388,13 @@ A-DAP leaves several important problems open:
 - How can NDC disagreement between auditors be recorded?
 - How can dependency-collapse rules become reproducible?
 - How can reconstruction be exercised at scale without becoming symbolic compliance?
+- What minimum fields should a human-readable decision receipt contain?
+- How should Receipt IDs be standardized across institutions?
+- What should happen if a person has a receipt but cannot access the corresponding envelope?
+- What should happen if the envelope exists but no usable verifier is available?
+- How should receipts distinguish between internal timestamp claims and external timestamp evidence?
+- How should receipts be delivered by email, SMS, postal notice, portal notification, printed document, or API response?
+- How should receipts support legal representatives, guardians, public defenders, ombuds offices, and regulators?
 
 These are not minor implementation details.
 
@@ -1385,6 +1445,9 @@ Especially useful contributions include:
 - adoption and accessibility critiques;
 - regulator-facing explanation critiques;
 - citizen-accessibility critiques;
+- human-readable receipt critiques;
+- receipt delivery critiques;
+- receipt-versus-envelope critiques;
 - legal interpretation notes;
 - empirical evidence about whether verification paths are actually exercised.
 
