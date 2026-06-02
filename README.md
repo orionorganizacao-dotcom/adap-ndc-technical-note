@@ -88,6 +88,16 @@ The protocol separates:
 
 This separation is the core of the protocol.
 
+## Executive Brief for Regulators and Courts
+
+For non-technical readers, regulators, courts, public agencies, lawyers, ombuds offices, auditors, and institutional reviewers, this repository includes a short executive brief.
+
+The brief explains A-DAP in plain language, including what it does, what it does not prove, how decision envelopes and human-readable receipts support contestability, and how regulators or courts can use A-DAP as an evidentiary review criterion.
+
+Related file:
+
+EXECUTIVE_BRIEF_FOR_REGULATORS_AND_COURTS.md
+
 ## What A-DAP Is
 
 A-DAP is:
@@ -1002,6 +1012,7 @@ It tests whether the later record is consistent with the earlier commitment.
 ├── NOTICE.md
 ├── THREAT_MODEL.md
 ├── CONTRIBUTING.md
+├── EXECUTIVE_BRIEF_FOR_REGULATORS_AND_COURTS.md
 ├── QUICKSTART.md
 ├── RELEASE_NOTES.md
 ├── ADAP-EXP-003.md
@@ -1067,27 +1078,28 @@ For a five-minute review:
 
 1. Read the core claim at the top of this README.
 2. Check what A-DAP explicitly does not claim.
-3. Read architecture/ndc-separability-criterion.md.
-4. Read architecture/objective-indexed-ndc.md.
-5. Read THREAT_MODEL.md.
-6. Inspect architecture/input-truth-boundary.md.
-7. Inspect architecture/input-provenance-envelope.md.
-8. Inspect architecture/random-audit-sampling.md.
-9. Inspect architecture/non-terminal-verification.md.
-10. Inspect architecture/self-validating-limitation-claims.md.
-11. Inspect architecture/adoption-and-accessibility-risks.md.
-12. Inspect architecture/human-readable-decision-receipt.md.
-13. Inspect architecture/envelope-bottleneck.md.
-14. Inspect ADAP-EXP-003.md.
-15. Inspect architecture/non-self-attested-materiality.md.
-16. Inspect architecture/exercisable-citizen-verification.md.
-17. Inspect architecture/citizen-verifier-ui-spec.md.
-18. Inspect architecture/citizen-facing-evidence-language.md.
-19. Inspect experiments/adec-001.md.
-20. Inspect GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md.
-21. Inspect experiments/gcd-002-solver-validation.md.
-22. Run or review the reconstruction challenge in challenge/gcd-001/.
-23. Try to identify where trust is still concentrated.
+3. Read EXECUTIVE_BRIEF_FOR_REGULATORS_AND_COURTS.md for a non-technical overview.
+4. Read architecture/ndc-separability-criterion.md.
+5. Read architecture/objective-indexed-ndc.md.
+6. Read THREAT_MODEL.md.
+7. Inspect architecture/input-truth-boundary.md.
+8. Inspect architecture/input-provenance-envelope.md.
+9. Inspect architecture/random-audit-sampling.md.
+10. Inspect architecture/non-terminal-verification.md.
+11. Inspect architecture/self-validating-limitation-claims.md.
+12. Inspect architecture/adoption-and-accessibility-risks.md.
+13. Inspect architecture/human-readable-decision-receipt.md.
+14. Inspect architecture/envelope-bottleneck.md.
+15. Inspect ADAP-EXP-003.md.
+16. Inspect architecture/non-self-attested-materiality.md.
+17. Inspect architecture/exercisable-citizen-verification.md.
+18. Inspect architecture/citizen-verifier-ui-spec.md.
+19. Inspect architecture/citizen-facing-evidence-language.md.
+20. Inspect experiments/adec-001.md.
+21. Inspect GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md.
+22. Inspect experiments/gcd-002-solver-validation.md.
+23. Run or review the reconstruction challenge in challenge/gcd-001/.
+24. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -1395,6 +1407,9 @@ A-DAP leaves several important problems open:
 - How should receipts distinguish between internal timestamp claims and external timestamp evidence?
 - How should receipts be delivered by email, SMS, postal notice, portal notification, printed document, or API response?
 - How should receipts support legal representatives, guardians, public defenders, ombuds offices, and regulators?
+- How should non-technical executive briefs be maintained without oversimplifying the protocol?
+- How should courts cite or attach A-DAP evidence without treating it as a final legal conclusion?
+- How should regulators translate A-DAP into procurement, audit, or enforcement criteria?
 
 These are not minor implementation details.
 
@@ -1448,6 +1463,8 @@ Especially useful contributions include:
 - human-readable receipt critiques;
 - receipt delivery critiques;
 - receipt-versus-envelope critiques;
+- executive-brief critiques;
+- court-facing interpretation critiques;
 - legal interpretation notes;
 - empirical evidence about whether verification paths are actually exercised.
 
