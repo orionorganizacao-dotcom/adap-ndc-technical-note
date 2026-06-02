@@ -583,6 +583,22 @@ Related file:
 
 architecture/non-terminal-verification.md
 
+### Procedural Finality and Perpetual Refutability
+
+A-DAP distinguishes legal or administrative finality from evidentiary finality.
+
+Courts, regulators, and public agencies may need deadlines, closure, preclusion, res judicata, administrative stability, and final decisions. A-DAP does not claim that every dispute must remain procedurally open forever.
+
+Perpetual refutability means something narrower: no technical verification event should be treated as absolute proof beyond future contradiction. A decision may become final within a legal or administrative process, while the evidentiary artifact remains reconstructible and contestable under whatever review paths remain legally available.
+
+Procedural finality may close the case.
+
+It does not make the evidence epistemically final.
+
+Related file:
+
+architecture/procedural-finality-and-perpetual-refutability.md
+
 ### Limitation Claims Are Not Self-Validating
 
 A model saying “I cannot access that” is not evidence that access was impossible.
@@ -1041,6 +1057,7 @@ It tests whether the later record is consistent with the earlier commitment.
 │   ├── non-terminal-verification.md
 │   ├── objective-indexed-ndc.md
 │   ├── omega-plus-plus-reconstructible-verdicts.md
+│   ├── procedural-finality-and-perpetual-refutability.md
 │   ├── random-audit-sampling.md
 │   ├── scope-completeness-boundary.md
 │   ├── sdk-vs-external-audit-service.md
@@ -1086,20 +1103,21 @@ For a five-minute review:
 8. Inspect architecture/input-provenance-envelope.md.
 9. Inspect architecture/random-audit-sampling.md.
 10. Inspect architecture/non-terminal-verification.md.
-11. Inspect architecture/self-validating-limitation-claims.md.
-12. Inspect architecture/adoption-and-accessibility-risks.md.
-13. Inspect architecture/human-readable-decision-receipt.md.
-14. Inspect architecture/envelope-bottleneck.md.
-15. Inspect ADAP-EXP-003.md.
-16. Inspect architecture/non-self-attested-materiality.md.
-17. Inspect architecture/exercisable-citizen-verification.md.
-18. Inspect architecture/citizen-verifier-ui-spec.md.
-19. Inspect architecture/citizen-facing-evidence-language.md.
-20. Inspect experiments/adec-001.md.
-21. Inspect GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md.
-22. Inspect experiments/gcd-002-solver-validation.md.
-23. Run or review the reconstruction challenge in challenge/gcd-001/.
-24. Try to identify where trust is still concentrated.
+11. Inspect architecture/procedural-finality-and-perpetual-refutability.md.
+12. Inspect architecture/self-validating-limitation-claims.md.
+13. Inspect architecture/adoption-and-accessibility-risks.md.
+14. Inspect architecture/human-readable-decision-receipt.md.
+15. Inspect architecture/envelope-bottleneck.md.
+16. Inspect ADAP-EXP-003.md.
+17. Inspect architecture/non-self-attested-materiality.md.
+18. Inspect architecture/exercisable-citizen-verification.md.
+19. Inspect architecture/citizen-verifier-ui-spec.md.
+20. Inspect architecture/citizen-facing-evidence-language.md.
+21. Inspect experiments/adec-001.md.
+22. Inspect GCD-002_BENCHMARK_CUSTODY_COLLAPSE.md.
+23. Inspect experiments/gcd-002-solver-validation.md.
+24. Run or review the reconstruction challenge in challenge/gcd-001/.
+25. Try to identify where trust is still concentrated.
 
 The best review is adversarial.
 
@@ -1153,6 +1171,9 @@ A-DAP follows several design rules:
 - Do not assume affected people can exercise verification without usable tools or institutional support.
 - Do not confuse a human-readable receipt with proof that the decision was correct.
 - Do not confuse receipt delivery with envelope reconstruction.
+- Do not confuse procedural finality with evidentiary finality.
+- Do not treat a closed case as proof that the evidence is epistemically final.
+- Do not treat a refutable evidence object as proof that a case must remain procedurally open forever.
 
 ## Example Safe Use
 
@@ -1200,7 +1221,9 @@ The auditor can separate several questions:
 - whether the system used the committed input;
 - whether the explanation matches the committed record;
 - whether the input itself was true;
-- whether the rule, threshold, or remedy was lawful.
+- whether the rule, threshold, or remedy was lawful;
+- whether the case is still procedurally open under applicable law;
+- whether later reconstruction may support review, audit, reopening, or systemic correction.
 
 A-DAP does not decide the legal remedy.
 
@@ -1328,6 +1351,36 @@ A safer statement would be:
 
 The receipt identifies a decision record that may be checked against the corresponding A-DAP envelope. It does not prove correctness, fairness, legality, or input truth.
 
+Another unsafe statement would be:
+
+A-DAP means every decision can be challenged forever.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+A-DAP preserves reconstructible evidence. Legal and administrative systems decide when and how challenges may be brought.
+
+Another unsafe statement would be:
+
+Perpetual refutability defeats res judicata or administrative finality.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+Perpetual refutability is an evidentiary principle, not a rule of claim preclusion, reopening, appeal, or administrative finality.
+
+Another unsafe statement would be:
+
+A closed case means the evidence is technically final.
+
+This is not a valid claim.
+
+A safer statement would be:
+
+Procedural finality may close the case. It does not make the evidence epistemically final.
+
 ## Current Maturity
 
 This repository should be read as an evolving technical note, protocol architecture, and adversarial review surface.
@@ -1373,7 +1426,7 @@ A-DAP leaves several important problems open:
 - How should input provenance be separated from decision-state commitment?
 - How should input capture NDC be reported separately from decision-envelope NDC?
 - How should citizen-facing interfaces explain the difference between verified input commitment and disputed input truth?
-- How should citizen-facing messages explain scope, limits, exportable evidence, and next procedural steps?
+- How should citizen-facing messages explain scope, limits, exportable evidence, and possible next steps?
 - How should random audit sampling reduce Exercise Debt in practice?
 - How should random audit sampling avoid sampling theater?
 - How should failed sampled audits trigger escalation, notice, or remediation?
@@ -1410,6 +1463,16 @@ A-DAP leaves several important problems open:
 - How should non-technical executive briefs be maintained without oversimplifying the protocol?
 - How should courts cite or attach A-DAP evidence without treating it as a final legal conclusion?
 - How should regulators translate A-DAP into procurement, audit, or enforcement criteria?
+- How should procedural finality and evidentiary refutability be labeled separately in real systems?
+- How should courts treat late-discovered A-DAP contradictions after judgment?
+- How should agencies treat envelope mismatch after administrative finality?
+- Should regulators require retention of reconstructible envelopes beyond appeal deadlines?
+- How long should decision envelopes remain available after procedural closure?
+- Should a verified mismatch trigger mandatory notice to affected persons?
+- Should systemic envelope failures trigger reopening, audit, prospective correction, or regulatory enforcement?
+- How should human-readable receipts explain appeal deadlines without implying unlimited challenge rights?
+- How should A-DAP evidence be archived after procedural closure?
+- Who may request reconstruction after a case is closed?
 
 These are not minor implementation details.
 
@@ -1465,6 +1528,8 @@ Especially useful contributions include:
 - receipt-versus-envelope critiques;
 - executive-brief critiques;
 - court-facing interpretation critiques;
+- procedural-finality critiques;
+- evidentiary-finality critiques;
 - legal interpretation notes;
 - empirical evidence about whether verification paths are actually exercised.
 
