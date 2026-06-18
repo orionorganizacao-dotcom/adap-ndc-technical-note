@@ -2,7 +2,7 @@
 
 2. Layer Separation
    2.1 NDC
-   2.2 CEI-Structural
+   2.2 CEI-Structura1
    2.3 CEI-Effective
    2.4 Rights Exercised
    2.5 Rights Satisfied
