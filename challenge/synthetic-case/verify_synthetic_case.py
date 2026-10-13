@@ -118,7 +118,7 @@ def main():
 
     if all_passed:
         print("VERDICT: PASS")
-        print("The original case was reconstructed and all documented tampering examples were detected.")
+        print("The fixture checks and bundled mutation checks passed.")
         return 0
     else:
         print("VERDICT: FAIL")

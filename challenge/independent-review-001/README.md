@@ -39,7 +39,7 @@ VERDICT: PASS
 
 Exit status `0` means these local fixture checks passed; any failed check prints `VERDICT: FAIL` and exits nonzero. To test that failure behavior without changing repository evidence, copy `challenge/synthetic-case/` to a temporary directory, change the copied `input.json` so its risk score and decision disagree, and run the copied `verify_synthetic_case.py`; it must report `FAIL` and exit nonzero.
 
-This is a check of the supplied synthetic example and its prewritten tampering cases only. It is not an independent reconstruction, an NDC computation, or evidence that input truth, custody, or real-world decisions are correct.
+This is a check of the supplied synthetic example and its prewritten mutation cases only. It checks fixture consistency, not integrity against an authenticated baseline: changing both the input risk score and the output risk score to `0.42` while retaining the `approved` decision still returns `PASS`. The envelope filename checks and custody-manifest membership check do not authenticate those artifacts, prove their provenance, or establish actual custody. It is not an independent reconstruction, an NDC computation, or evidence that input truth or real-world decisions are correct.
 
 ## External review procedure
 
