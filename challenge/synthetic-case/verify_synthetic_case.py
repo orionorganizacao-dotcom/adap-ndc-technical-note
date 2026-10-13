@@ -64,7 +64,7 @@ def verify_original_case():
     if expected.get("expected_result") != "pass":
         return fail("Expected verdict does not declare pass")
 
-    return pass_result("Original synthetic case verified successfully")
+    return pass_result("Original synthetic fixture passed consistency checks")
 
 
 def verify_tampered_cases():
@@ -72,28 +72,28 @@ def verify_tampered_cases():
 
     tampered_input = load_json(TAMPERED_DIR / "input-risk-score-modified.json")
     if tampered_input.get("risk_score", 0) >= tampered_input.get("threshold", 1):
-        results.append(pass_result("Tampered input risk score detected"))
+        results.append(pass_result("Modified input meets or exceeds its threshold"))
     else:
-        results.append(fail("Tampered input risk score was not detected"))
+        results.append(fail("Modified input is below its threshold"))
 
     tampered_output = load_json(TAMPERED_DIR / "output-decision-modified.json")
     if tampered_output.get("risk_score") < tampered_output.get("threshold") and tampered_output.get("decision") != "approved":
-        results.append(pass_result("Tampered output decision detected"))
+        results.append(pass_result("Modified output decision conflicts with its score and threshold"))
     else:
-        results.append(fail("Tampered output decision was not detected"))
+        results.append(fail("Modified output decision matches its score and threshold"))
 
     tampered_envelope = load_json(TAMPERED_DIR / "envelope-file-reference-modified.json")
     if tampered_envelope.get("input_file") != "input.json":
-        results.append(pass_result("Tampered envelope file reference detected"))
+        results.append(pass_result("Modified envelope input reference differs from the expected filename"))
     else:
-        results.append(fail("Tampered envelope file reference was not detected"))
+        results.append(fail("Modified envelope input reference matches the expected filename"))
 
     tampered_custody = load_json(TAMPERED_DIR / "custody-file-list-modified.json")
     custody_files = set(tampered_custody.get("files_under_custody", []))
     if "envelope.json" not in custody_files:
-        results.append(pass_result("Tampered custody file list detected"))
+        results.append(pass_result("Modified custody manifest omits envelope.json"))
     else:
-        results.append(fail("Tampered custody file list was not detected"))
+        results.append(fail("Modified custody manifest includes envelope.json"))
 
     return results
 
@@ -103,7 +103,7 @@ def main():
     print("---------------------------------")
 
     original_result = verify_original_case()
-    print(f"Original case: {original_result['status'].upper()} — {original_result['message']}")
+    print(f"Original fixture consistency: {original_result['status'].upper()} — {original_result['message']}")
 
     tampered_results = verify_tampered_cases()
 

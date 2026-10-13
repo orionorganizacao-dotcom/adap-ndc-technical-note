@@ -29,17 +29,17 @@ python challenge/synthetic-case/verify_synthetic_case.py
 Expected result on the unmodified fixture:
 
 ```text
-Original case: PASS — Original synthetic case verified successfully
-Tampered case 1: PASS — Tampered input risk score detected
-Tampered case 2: PASS — Tampered output decision detected
-Tampered case 3: PASS — Tampered envelope file reference detected
-Tampered case 4: PASS — Tampered custody file list detected
+Original fixture consistency: PASS — Original synthetic fixture passed consistency checks
+Tampered case 1: PASS — Modified input meets or exceeds its threshold
+Tampered case 2: PASS — Modified output decision conflicts with its score and threshold
+Tampered case 3: PASS — Modified envelope input reference differs from the expected filename
+Tampered case 4: PASS — Modified custody manifest omits envelope.json
 VERDICT: PASS
 ```
 
 Exit status `0` means these local fixture checks passed; any failed check prints `VERDICT: FAIL` and exits nonzero. To test that failure behavior without changing repository evidence, copy `challenge/synthetic-case/` to a temporary directory, change the copied `input.json` so its risk score and decision disagree, and run the copied `verify_synthetic_case.py`; it must report `FAIL` and exit nonzero.
 
-This is a check of the supplied synthetic example and its prewritten mutation cases only. It checks fixture consistency, not integrity against an authenticated baseline: changing both the input risk score and the output risk score to `0.42` while retaining the `approved` decision still returns `PASS`. The envelope filename checks and custody-manifest membership check do not authenticate those artifacts, prove their provenance, or establish actual custody. It is not an independent reconstruction, an NDC computation, or evidence that input truth or real-world decisions are correct.
+This is a check of the supplied synthetic example and its prewritten mutation cases only. It checks fixture consistency, not integrity against an authenticated baseline: changing both the input risk score and the output risk score to `0.42` while retaining the `approved` decision still returns `PASS`. The `verification_note` in `custody.json` claims modifications should require detection, but this result shows that claim is not satisfied by the current verifier. The envelope filename checks and custody-manifest membership check do not authenticate artifacts, prove their provenance, or establish actual custody. It is not an independent reconstruction, an NDC computation, or evidence that input truth or real-world decisions are correct.
 
 ## External review procedure
 

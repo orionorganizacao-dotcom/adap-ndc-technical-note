@@ -12,9 +12,9 @@ Its purpose is to provide a minimal and reproducible case that anyone can run qu
 
 ## Expected outcome
 
-The verifier should pass on the unmodified case.
+The fixture consistency checks should pass on the unmodified case.
 
-The bundled one-file alterations should trigger their documented checks. Coordinated edits to both the input and output can remain internally consistent and are not authenticated by this verifier.
+The bundled one-file alterations should trigger their documented checks. These checks evaluate stated relationships; they do not authenticate changes against an original baseline. Coordinated edits to both the input and output can remain internally consistent and pass.
 
 ## Why this case exists
 
@@ -29,6 +29,14 @@ It is the onboarding case: a simple public test of fixture consistency before mo
 The verifier checks whether the fixture's decision agrees with its stated input and threshold, whether the envelope names the expected files, and whether the custody manifest lists those files. These are internal consistency and manifest-membership checks only.
 
 It does not compare the files with a trusted baseline or authenticated commitment. A coordinated edit that changes both `input.json` and `output.json` while preserving the decision rule can pass. The verifier does not establish file integrity, artifact provenance, or actual custody; the manifest is itself an input assertion, not independent custody evidence.
+
+The `verification_note` in `custody.json` asserts that any modification should require verifier detection. The coordinated-edit regression test demonstrates that this assertion is not satisfied by the current verifier; treat it as an unverified fixture claim, not a verification guarantee.
+
+Run the regression check with:
+
+```bash
+python -B challenge/synthetic-case/test_verify_synthetic_case.py
+```
 
 ## Next step
 
