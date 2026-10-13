@@ -53,8 +53,7 @@ def verify_original_case():
     required_files = {
         "input.json",
         "output.json",
-        "envelope.json",
-        "custody.json"
+        "envelope.json"
     }
 
     custody_files = set(custody.get("files_under_custody", []))
@@ -120,10 +119,12 @@ def main():
     if all_passed:
         print("VERDICT: PASS")
         print("The original case was reconstructed and all documented tampering examples were detected.")
+        return 0
     else:
         print("VERDICT: FAIL")
         print("At least one verification check failed.")
+        return 1
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

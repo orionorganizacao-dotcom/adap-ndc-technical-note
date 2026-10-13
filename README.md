@@ -795,6 +795,10 @@ They do not replace dependency-collapse analysis, external reconstruction, custo
 
 This repository includes challenge packages intended to test A-DAP claims under defined conditions.
 
+### Independent Review Packet 001
+
+`challenge/independent-review-001/README.md` is the entry point for external reviewers. It identifies existing reconstruction and custody challenges, gives the available local reproduction command, and distinguishes local fixture checks from independent validation.
+
 ### GCD-001 — External Reconstruction
 
 GCD-001 is an external reconstruction challenge based on the German Credit Dataset.
