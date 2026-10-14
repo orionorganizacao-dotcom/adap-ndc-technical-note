@@ -50,7 +50,7 @@ This is a check of the supplied synthetic example and its prewritten mutation ca
 5. Report one outcome for each claim:
    - **R1 — Reproduction:** the specific claim was independently reproduced under stated assumptions;
    - **R2 — Falsification:** a constructive counterexample, smaller cut, invalid assumption, or omitted dependency changes the claim;
-   - **R3 — Structural ambiguity:** an identified missing required artifact or undefined specification rule prevents a determinate reconstruction of the claim.
+   - **R3 — Structural ambiguity:** accepted only when a specific, demonstrated gap is decisive: at least two materially different admissible reconstructions or completions produce different claim outcomes. If an absent artifact blocks complete alternatives, show how its admissible completions can change the outcome. If the claim holds under every admissible completion, classify R1; if it fails under every completion, classify R2. State a remediation condition. A non-decisive indeterminate graph element is only a specification note.
 6. State what remains trusted or unobserved, who controls each critical dependency, and whether verification was actually exercised by an affected person.
 
 ## Failure and rejection criteria

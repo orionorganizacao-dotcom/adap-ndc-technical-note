@@ -584,13 +584,19 @@ A valid R2 should provide a constructive demonstration, such as:
 
 ### R3 — Structural Ambiguity
 
-Use this section if a missing required artifact or undefined rule in the reviewed specification prevents deterministic reconstruction for a stated claim/version.
+Use this section to propose R3 for a specific claim and reviewed repository version only when the gap is decisive.
 
 ```text
 [Explain why the claim qualifies as R3]
 ```
 
-A valid R3 should identify ambiguity affecting at least one of:
+A valid R3 must identify the exact missing artifact or undefined rule and show that it is outcome-determinative. Provide at least two materially different admissible reconstructions or completions: one under which the claim holds and one under which it fails (for example, NDC > 1 versus NDC ≤ 1). If an absent artifact prevents complete alternatives, demonstrate how admissible completions of that artifact can change the claim’s outcome.
+
+If the claim holds under every admissible completion, classify it R1. If it fails under every admissible completion, classify it R2. An indeterminate graph element that does not change the claim’s outcome is a specification note, not R3.
+
+Identify the precise gap, cite the relevant specification and repository version, and explain its effect on the graph, cut, or NDC. Mark the affected graph or cut **not determinable** where justified; do not invent missing elements. Every R3 finding must state a remediation condition: the specific artifact to supply or rule to define that would make the claim determinable.
+
+A qualifying gap may affect:
 
 - canonicalization;
 - artifact availability;
@@ -601,8 +607,6 @@ A valid R3 should identify ambiguity affecting at least one of:
 - NDC calculation;
 - minimum vertex-cut reasoning;
 - dependency interpretation.
-
-Identify the precise gap, cite the relevant specification and repository version, and explain its effect on the graph, cut, or NDC. Mark the affected graph or cut **not determinable** where appropriate. If possible, show two or more materially different reconstructions permitted by the same specification; if the missing artifact prevents that comparison, explain why.
 
 Do not use R3 for a transient access or environment error, timeout, unavailable compute resource, or incomplete submission alone. Record operational failures separately and retry where reasonable. An incomplete submission is Invalid / Incomplete unless a specification-level gap is independently demonstrated.
 
@@ -692,6 +696,12 @@ I understand that author-provided tools must not be used as the primary computat
 I understand that record integrity is not decision truth.
 
 I understand that oracle-bound claims must be declared rather than treated as structurally verified.
+
+I understand that R1, R2, or R3 applies to a specific claim and repository version, not to A-DAP as a whole.
+
+I understand that R3 requires a demonstrated decisive gap, materially different admissible completions with different claim outcomes, and a remediation condition.
+
+I have disclosed my independence and relationships, including any relationship with the author, repository owner, affiliated organization, or challenge sponsor.
 ```
 
 Reviewer confirmation:
