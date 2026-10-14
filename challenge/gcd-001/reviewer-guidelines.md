@@ -774,7 +774,7 @@ If the initial R1/R2/R3 classification votes split with no majority, hold two se
 
 (a) Is the claimed gap established and decisive under §8? A “yes” requires a majority on both gap existence and decisiveness. If yes, classify R3 unless R2’s constructive falsification holds under every admissible completion, in which case classify R2.
 
-(b) If the gap is not established and decisive by majority, decide between R1 and R2 only if the corresponding positive evidence-sufficiency vote has a majority. The absence of a majority for R3 does not imply R1 or R2. If neither R1 nor R2 has sufficient evidence by majority, record **not accepted (unresolved)**.
+(b) If a majority does not confirm both the existence and decisiveness of the gap, decide between R1 and R2 only if the corresponding positive evidence-sufficiency vote has a majority. The absence of a majority for R3 does not imply R1 or R2. If neither R1 nor R2 has sufficient evidence by majority, record **not accepted (unresolved)**.
 
 “Unresolved disagreement” means no absolute majority after this procedure. A member’s inability to decide is explained in the decision note, not treated as an abstention. A minority dissent is published but does not change the classification.
 
