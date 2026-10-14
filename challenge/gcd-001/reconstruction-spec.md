@@ -674,18 +674,21 @@ A failed reconstruction may indicate R2 or R3.
 A complete reviewer submission should include:
 
 - declared outcome: R1, R2, or R3;
+- claim and reviewed repository version to which that outcome applies;
 - reviewer identity or pseudonym;
 - materials reviewed;
 - reconstruction code;
-- graph representation;
-- vertex list;
-- edge list;
-- min-cut calculation memo;
+- graph representation, or for R3, the affected graph element(s) marked **not determinable** with the specific gap and its demonstrated effect;
+- vertex list, or for R3, each field not determinable with its justification and evidence that admissible completions change the claim outcome;
+- edge list, or for R3, each field not determinable with its justification and evidence that admissible completions change the claim outcome;
+- min-cut calculation memo, or for R3, the missing rule/artifact that prevents the calculation and the outcome-divergent admissible completions;
 - oracle-boundary analysis;
 - NDC calculation or challenge;
 - reproducibility instructions;
 - independence declaration;
 - technical note of 2–5 pages.
+
+For R3, these conditional **not determinable** fields are permitted only when the submission delimits admissible alternatives, gives independently checkable reasoning for at least one completion supporting and one falsifying the claim, and states the artifact or rule that would make the claim determinable. A field may not be marked not determinable solely because it is unavailable, inconvenient, or unresolved by the submitter.
 
 The submission should use `submission-template.md`.
 

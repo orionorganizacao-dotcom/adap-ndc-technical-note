@@ -196,7 +196,7 @@ R2 is a successful adversarial finding.
 
 R3 is accepted for a specific claim and reviewed repository version only if the gap is decisive. The submission must show at least one admissible completion of the missing artifact or undefined rule under which the claim holds and at least one admissible completion under which it fails (for example, NDC > 1 versus NDC ≤ 1).
 
-If the claim holds under every admissible completion, classify it R1. If it fails under every admissible completion, classify it R2. An indeterminate graph element that does not change the claim’s outcome is a specification note, not R3.
+If the claim holds under every admissible completion, R1 requires positive, independent, inspectable reproduction evidence; absence of a counterexample is not reproduction. If it fails under every admissible completion, R2 requires constructive, independently checkable falsification. Failure to confirm R3 does not imply R1 or R2. An indeterminate graph element that does not change the claim’s outcome is a specification note, not R3.
 
 Examples of valid R3 findings include:
 
@@ -213,7 +213,7 @@ Examples of valid R3 findings include:
 - dependency on undocumented assumptions;
 - dependency on author-controlled tools for the primary reconstruction.
 
-The submitter must identify the exact missing artifact or undefined rule and explain how it affects the graph, a relevant edge, the cut, or the NDC. R3 acceptance requires at least two materially different admissible reconstructions or completions: one under which the claim holds and one under which it fails. If an absent artifact prevents construction of complete alternatives, the submitter must still demonstrate how admissible completions of that artifact can change the claim’s outcome. The affected graph or cut may be reported as **not determinable** only with this evidence; do not invent an unsupported reconstruction.
+The submitter must identify the exact missing artifact or undefined rule, delimit the admissible reconstructions using the published materials and stated assumptions, and explain its effect on the graph, a relevant edge, the cut, or the NDC with independently checkable reasoning. R3 acceptance requires at least two materially different admissible reconstructions or completions: one under which the claim holds and one under which it fails. If an absent artifact prevents construction of complete alternatives, the submitter must still demonstrate how admissible completions of that artifact can change the claim’s outcome. The affected graph or cut may be reported as **not determinable** only with this evidence; do not invent an unsupported reconstruction.
 
 Every R3 finding must state a remediation condition: the specific artifact to supply or rule to define that would make the claim determinable.
 
@@ -921,6 +921,10 @@ Before making a recommendation, the reviewer should confirm:
 [ ] Candidate cuts are discussed.
 [ ] Minimum vertex-cut reasoning is provided.
 [ ] NDC calculation or challenge is explained.
+[ ] For R3, the specific gap is established and decisive, admissible alternatives are delimited, and independently checkable reasoning shows different claim outcomes.
+[ ] For each R3 field marked not determinable, the submission explains why and identifies outcome-changing admissible completions.
+[ ] For R3, a remediation condition identifies the artifact or rule needed to make the claim determinable.
+[ ] The outcome is stated separately for each claim and reviewed version.
 [ ] Reproducibility instructions are provided.
 [ ] The conclusion does not overclaim.
 ```

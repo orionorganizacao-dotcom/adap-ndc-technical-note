@@ -145,7 +145,7 @@ A successful falsification improves the protocol and should not be treated as a 
 
 A submission qualifies as **R3 — Structural Ambiguity** for a specific claim and reviewed repository version only if the gap is decisive. It must show at least one admissible completion of the missing artifact or undefined rule under which the claim holds and at least one admissible completion under which it fails (for example, NDC > 1 versus NDC ≤ 1).
 
-If the claim holds under every admissible completion, the outcome is R1. If it fails under every admissible completion, the outcome is R2. An indeterminate graph element that does not change the claim’s outcome is recorded as a specification note, not R3.
+If the claim holds under every admissible completion, R1 requires positive, independent, inspectable reproduction evidence; absence of a counterexample is not reproduction. If it fails under every admissible completion, R2 requires constructive, independently checkable falsification. Failure to confirm R3 does not imply R1 or R2. An indeterminate graph element that does not change the claim’s outcome is recorded as a specification note, not R3.
 
 Valid R3 findings may include ambiguity in:
 
@@ -159,7 +159,7 @@ Valid R3 findings may include ambiguity in:
 - minimum vertex-cut reasoning;
 - dependency interpretation.
 
-A valid R3 submission must identify the exact missing artifact or undefined rule and show its effect on the reconstruction and claim outcome. R3 acceptance requires at least two materially different admissible reconstructions or completions: one under which the claim holds and one under which it fails. If an absent artifact prevents constructing complete alternatives, demonstrate how admissible completions of that artifact can still change the claim’s outcome. The affected graph, edge, cut, or NDC may be marked **not determinable** only with this evidence; do not invent a graph or cut to fill the gap.
+A valid R3 submission must identify the exact missing artifact or undefined rule, delimit the admissible completions by the reviewed materials and stated assumptions, and give independently checkable reasoning showing the effect on the reconstruction and claim outcome. R3 acceptance requires at least two materially different admissible reconstructions or completions: one under which the claim holds and one under which it fails. If an absent artifact prevents constructing complete alternatives, demonstrate how admissible completions of that artifact can still change the claim’s outcome. The affected graph, edge, cut, or NDC may be marked **not determinable** only with this evidence; do not invent a graph or cut to fill the gap.
 
 Every R3 finding must state a remediation condition: the specific artifact to supply or rule to define that would make the claim determinable.
 
@@ -269,25 +269,33 @@ The committee, when appointed, must consist of three publicly named external rev
 
 Each committee member and alternate must provide the same independence and relationship disclosure required of submitters, including relationships with the author, repository owner, affiliated organizations, and challenge sponsor. A member with a disclosed conflict for a submission must recuse, and a pre-named alternate replaces that member for that submission.
 
-Each member votes one outcome per claim; an absolute majority (2 of 3) decides. If no outcome has a majority (for example, an R1/R2/R3 split), the committee holds two separate binary votes, without abstention:
+For each claim, members must first vote separately on evidence sufficiency: whether the submitted evidence is sufficient for R1, whether it is sufficient for R2, and, for each claimed gap, whether the gap exists and whether it is decisive. These are yes/no votes. Members then vote one provisional technical classification (R1, R2, or R3). An absolute majority (2 of 3) is required for every adopted finding. No abstentions are allowed; a member who cannot decide must state why in the decision note and still cast a vote.
 
-1. Is the claimed gap established and decisive under §7? If yes, the outcome is R3 unless the R2 falsification holds under every admissible completion of the gap, in which case the outcome is R2.
-2. If the gap is not established, the committee decides between R1 and R2 by majority. If the gap is established but not decisive, R3 is unavailable and §7’s all-completions rule determines R1 or R2.
+Apply this precedence:
 
-For every claimed gap, each member must separately vote yes or no on whether the gap is established and whether it is decisive. No abstentions are allowed. In binary vote (a), “yes” requires an absolute majority confirming both the existence and decisiveness of the gap under §7. A member who cannot decide must state why in the decision note and must still vote. Silence or abstention cannot be used to produce R3.
+1. **R2:** Accept R2 only with majority support for sufficient, constructive, independently checkable falsification. If the result depends on an admissible completion of a claimed gap, the falsification must hold under every admissible completion to take precedence over R3.
+2. **R3:** Otherwise, accept R3 only if a majority confirms both that the gap exists and is decisive under §7, with bounded, independently checkable admissible completions producing different outcomes and a stated remediation condition.
+3. **R1:** Otherwise, accept R1 only with majority support for sufficient, positive, independent reproduction. If admissible completions are relevant, the claim must hold under every such completion. Failure to establish R2 or R3 is not evidence for R1.
+4. **Not accepted (unresolved):** If none of these evidentiary conditions receives the required majority, record the claim as **not accepted (unresolved)**, never as R1.
 
-Regardless of the initial outcome tally, R3 may be accepted only if an absolute majority confirms both the existence and decisiveness of the gap. If either vote lacks that majority, apply §7’s all-completions rule: R1 if the claim holds under every admissible completion, R2 if it fails under every completion; otherwise record the claim as not accepted (unresolved).
+If the initial R1/R2/R3 classification votes split with no majority, hold two separate binary votes, without abstention:
 
-“Unresolved disagreement” means no absolute majority after this procedure. The claim is recorded as **not accepted (unresolved)**, never as R1. A minority dissent is published but does not change the classification.
+(a) Is the claimed gap established and decisive under §7? A “yes” requires a majority on both gap existence and decisiveness. If yes, classify R3 unless R2’s constructive falsification holds under every admissible completion, in which case classify R2.
+
+(b) If the gap is not established and decisive by majority, decide between R1 and R2 only if the corresponding positive evidence-sufficiency vote has a majority. The absence of a majority for R3 does not imply R1 or R2. If neither R1 nor R2 has sufficient evidence by majority, record **not accepted (unresolved)**. Rejection of a gap allegation is not evidence for either R1 or R2.
+
+“Unresolved disagreement” means no absolute majority after this procedure. A member’s inability to decide is explained in the decision note, not treated as an abstention. A minority dissent is published but does not change the classification.
 
 Decision hierarchy:
 
 ```text
 R2 over R1 when constructive falsification is valid.
-R3 over R1 when a gap is established and decisive under §7.
 R2 over R3 when constructive falsification holds under every admissible reading.
+R3 over R1 only when a gap is established and decisive under §7.
 Invalid over R1 when independence or reproducibility is missing.
 ```
+
+For worked examples of the four outcomes and unresolved evidence, see §28 of `reviewer-guidelines.md`.
 
 The protocol author has no vote on whether R1, R2, or R3 is technically accepted, or whether a gap is material. The author may clarify published terminology and administrative logistics only.
 

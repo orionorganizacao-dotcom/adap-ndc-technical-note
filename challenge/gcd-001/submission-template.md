@@ -590,9 +590,9 @@ Use this section to propose R3 for a specific claim and reviewed repository vers
 [Explain why the claim qualifies as R3]
 ```
 
-A valid R3 must identify the exact missing artifact or undefined rule and show that it is outcome-determinative. Provide at least two materially different admissible reconstructions or completions: one under which the claim holds and one under which it fails (for example, NDC > 1 versus NDC ≤ 1). If an absent artifact prevents complete alternatives, demonstrate how admissible completions of that artifact can change the claim’s outcome.
+A valid R3 must identify the exact missing artifact or undefined rule, delimit admissible completions by the reviewed materials and stated assumptions, and provide independently checkable reasoning that the gap is outcome-determinative. Provide at least two materially different admissible reconstructions or completions: one under which the claim holds and one under which it fails (for example, NDC > 1 versus NDC ≤ 1). If an absent artifact prevents complete alternatives, demonstrate how admissible completions of that artifact can change the claim’s outcome.
 
-If the claim holds under every admissible completion, classify it R1. If it fails under every admissible completion, classify it R2. An indeterminate graph element that does not change the claim’s outcome is a specification note, not R3.
+If the claim holds under every admissible completion, R1 requires positive, independent, inspectable reproduction evidence; absence of a counterexample is not reproduction. If it fails under every admissible completion, R2 requires constructive, independently checkable falsification. Failure to confirm R3 does not imply R1 or R2. An indeterminate graph element that does not change the claim’s outcome is a specification note, not R3.
 
 Identify the precise gap, cite the relevant specification and repository version, and explain its effect on the graph, cut, or NDC. Mark the affected graph or cut **not determinable** where justified; do not invent missing elements. Every R3 finding must state a remediation condition: the specific artifact to supply or rule to define that would make the claim determinable.
 
@@ -714,23 +714,30 @@ Reviewer confirmation:
 
 ## 23. Final Conclusion
 
-State the final conclusion in one paragraph.
+State one final conclusion for each specific claim and reviewed repository version. Do not combine claims with different evidence or outcomes.
 
 ```text
-[Insert final conclusion here]
+Claim:
+Reviewed version (commit or release):
+Outcome for this claim/version (R1/R2/R3 or not accepted (unresolved)):
+Evidence sufficiency and concise reasoning:
+For R3, confirmed gap, outcome-divergent admissible completions, and remediation condition:
 ```
 
-Recommended final wording:
+Use the applicable claim- and version-specific wording:
 
 ```text
-Based on the materials reviewed and the reconstruction performed, I classify this submission as [R1/R2/R3] because [brief reason].
+For R1: Based on the materials reviewed and independent reconstruction, the specific claim [claim] was reproduced under the published specification for version [version], because [brief, inspectable reasoning].
+For R2: The specific claim [claim] for version [version] was constructively falsified because [counterexample and independently checkable reasoning].
+For R3: The specific claim [claim] for version [version] is not determinable because [decisive specification gap]; admissible completion [A] supports the claim and admissible completion [B] falsifies it. The claim can be determined if [specific artifact or rule is supplied/defined].
+If evidence is insufficient: The claim [claim] for version [version] is not accepted (unresolved); [state which evidence-sufficiency or gap-existence/decisiveness finding lacks a majority]. This is not an R1 or R2 finding.
 ```
 
 ---
 
 ## 24. Minimal Honest Claim
 
-This submission should support only one of the following claims.
+For each specific claim and reviewed version, this submission should support only the matching outcome below. Different claims may have different outcomes.
 
 For a specific claim/version classified R1:
 
@@ -748,6 +755,12 @@ For a specific claim/version classified R3:
 
 ```text
 The GCD-001 specification requires correction before deterministic reconstruction is possible.
+```
+
+For insufficient evidence without an adopted technical classification:
+
+```text
+The claim [claim] for version [version] is not accepted (unresolved); the evidence does not support R1, R2, or R3 by the required majority.
 ```
 
 No submission should claim full validation of A-DAP. The protocol author has no vote on technical acceptance or on whether an R3 gap is material.
