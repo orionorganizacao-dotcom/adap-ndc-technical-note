@@ -43,18 +43,21 @@ This is a check of the supplied synthetic example and its prewritten mutation ca
 
 ## External review procedure
 
-1. Record the repository commit, environment, materials, and commands used. Do not use the author’s solver or expected outputs as the primary reconstruction path.
-2. Reconstruct a target claim independently. Publish the graph, nodes and edges, verifier/adversary assumptions, candidate cuts, and the reason any dependency is or is not material.
-3. Attempt at least one counterexample: add a plausible omitted dependency, vary graph granularity, identify shared custody, suppress an evidence path, or show two materially different reconstructions allowed by the specification.
-4. Report one outcome:
+1. Record the repository commit or release/version, environment, materials, and commands used. Do not use the author’s solver or expected outputs as the primary reconstruction path.
+2. Identify each specific claim and version reviewed. Classify each claim separately as R1, R2, or R3; one review may reach different outcomes for different claims.
+3. Reconstruct each target claim independently. Publish the graph, nodes and edges, verifier/adversary assumptions, candidate cuts, and the reason any dependency is or is not material.
+4. Attempt at least one counterexample: add a plausible omitted dependency, vary graph granularity, identify shared custody, suppress an evidence path, or show two materially different reconstructions allowed by the specification.
+5. Report one outcome for each claim:
    - **R1 — Reproduction:** the specific claim was independently reproduced under stated assumptions;
    - **R2 — Falsification:** a constructive counterexample, smaller cut, invalid assumption, or omitted dependency changes the claim;
-   - **R3 — Structural ambiguity:** underspecification permits materially different reconstructions or prevents a determinate result.
-5. State what remains trusted or unobserved, who controls each critical dependency, and whether verification was actually exercised by an affected person.
+   - **R3 — Structural ambiguity:** an identified missing required artifact or undefined specification rule prevents a determinate reconstruction of the claim.
+6. State what remains trusted or unobserved, who controls each critical dependency, and whether verification was actually exercised by an affected person.
 
 ## Failure and rejection criteria
 
-Do not report successful reproduction if the result depends on the author’s expected output, solver, inaccessible private material, or an unstated custody assumption. Report a reconstruction failure or R3 if another reviewer cannot derive the same graph/result from the cited materials. Report R2 when a concrete alternative graph, dependency, or counterexample defeats the stated claim under its declared assumptions. A failed local fixture check is a software/fixture failure, not by itself a falsification of A-DAP.
+Do not report successful reproduction if the result depends on the author’s expected output, solver, inaccessible private material, or an unstated custody assumption. For R3, identify the exact missing required artifact or undefined rule and explain how it prevents reconstruction of the graph or cut; mark the affected graph or cut “not determinable” rather than inventing one. Where a minimum cut is determinable, justify its sufficiency and minimality; where it is not, explain which specification gap prevents that reasoning.
+
+Distinguish a specification-level gap from an operational problem. A transient download or environment failure, timeout, unavailable compute resource, or incomplete submission is not R3 by itself: record it as an operational limitation or classify the submission Invalid / Incomplete. A repository artifact that the published specification requires but does not provide, or a rule the specification must define but leaves undefined, may support R3 if its effect is demonstrated. Report R2 when a concrete alternative graph, dependency, or counterexample defeats the stated claim under its declared assumptions. A failed local fixture check is a software/fixture failure, not by itself a falsification of A-DAP.
 
 Record disagreements and inconclusive cases; do not convert missing submissions or silence into support. Registration is not proof, supervision is not reconstruction, and internal agreement is not independent validation. No external reviewer, independent result, acceptance committee, bounty, or open submission channel is asserted by this packet.
 

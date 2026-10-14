@@ -143,7 +143,7 @@ A successful falsification improves the protocol and should not be treated as a 
 
 ## 7. R3 — Structural Ambiguity
 
-A submission qualifies as **R3 — Structural Ambiguity** if the published specification is incomplete or ambiguous enough to prevent deterministic reconstruction.
+A submission qualifies as **R3 — Structural Ambiguity** for a specific claim and reviewed repository version if an identified missing required artifact or undefined specification rule prevents deterministic reconstruction of that claim.
 
 Valid R3 findings may include ambiguity in:
 
@@ -157,9 +157,13 @@ Valid R3 findings may include ambiguity in:
 - minimum vertex-cut reasoning;
 - dependency interpretation.
 
-A valid R3 submission should show how the ambiguity affects the reconstruction.
+A valid R3 submission must identify the exact missing artifact or undefined rule and show its effect on the reconstruction. The affected graph, edge, cut, or NDC may be marked **not determinable** when that gap prevents a justified result; do not invent a graph or cut to fill it.
 
-If possible, it should demonstrate two or more materially different reconstructions permitted by the current specification.
+When feasible, demonstrate two materially different reconstructions permitted by the same published specification. If alternatives cannot be constructed because a required artifact is absent, identify what cannot be determined and why.
+
+R3 concerns a specification-level blocker, not a reviewer’s operational difficulty. A transient access or environment failure, timeout, unavailable compute resource, or incomplete submission is not R3 by itself. Record operational failures and retry where reasonable; classify a materially incomplete submission as administratively incomplete. A required artifact missing from the published challenge package, or an undefined rule needed for reconstruction, may support R3 when its effect is demonstrated.
+
+R1, R2, or R3 applies to each identified claim under review at a stated repository release/version or commit. A submission may report different outcomes for different claims; do not classify A-DAP as a whole from one claim.
 
 ---
 
@@ -198,17 +202,19 @@ A valid submission should include:
    - table
    - other inspectable format
 
-5. **Min-cut calculation memo**
+5. **Graph and cut analysis**
 
-   The participant must explain:
+   For a determinable graph/cut, explain:
 
    - graph model used;
    - source condition;
    - target condition;
    - detection condition;
    - candidate cuts tested;
-   - minimum sufficient vertex-cut;
+   - minimum sufficient vertex-cut and why no smaller cut is sufficient;
    - NDC estimate.
+
+   If a missing artifact or undefined rule prevents determination, mark the affected graph or cut **not determinable**, identify the exact gap, and explain its effect instead of supplying an unsupported estimate. Provide minimality reasoning whenever a minimum cut is claimed.
 
 6. **Oracle-boundary analysis**
 
@@ -262,6 +268,8 @@ The intended committee structure is:
 - three publicly named external reviewers;
 - no voting power for the protocol author;
 - skeptical interpretation prevails in case of disagreement.
+
+The protocol author has no vote on whether R1, R2, or R3 is technically accepted, or whether a gap is material. The author may clarify published terminology and administrative logistics only.
 
 The committee should classify submissions as:
 

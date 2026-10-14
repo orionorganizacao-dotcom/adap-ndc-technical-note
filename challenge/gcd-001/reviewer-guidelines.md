@@ -116,6 +116,8 @@ Invalid / Incomplete
 
 The reviewer should not invent additional outcome categories unless the committee formally updates the challenge rules.
 
+Classify each specific claim against the repository release/version or commit reviewed. A submission may contain multiple claims and receive different R1/R2/R3 outcomes for them; do not generalize one outcome to A-DAP as a whole.
+
 ---
 
 ## 6. R1 — Reproduction
@@ -189,7 +191,7 @@ R2 is a successful adversarial finding.
 
 ## 8. R3 — Structural Ambiguity
 
-A submission qualifies as **R3 — Structural Ambiguity** if the reviewer determines that the specification is incomplete, unstable, or ambiguous enough to prevent deterministic reconstruction.
+A submission qualifies as **R3 — Structural Ambiguity** for a specific claim and reviewed repository version if an identified missing required artifact or undefined specification rule prevents deterministic reconstruction of that claim.
 
 Examples of valid R3 findings include:
 
@@ -205,6 +207,10 @@ Examples of valid R3 findings include:
 - multiple materially different reconstructions permitted by the same published materials;
 - dependency on undocumented assumptions;
 - dependency on author-controlled tools for the primary reconstruction.
+
+The submitter must identify the exact missing artifact or undefined rule and explain how it prevents determination of the graph, a relevant edge, the cut, or the NDC. The affected graph or cut may be reported as **not determinable**; do not require the submitter to invent a reconstruction that the published materials do not support. If possible, show materially different reconstructions permitted by the same published specification.
+
+R3 is not a label for operational failure. A transient access/environment problem, timeout, compute limit, or incomplete submission does not establish specification ambiguity. Record operational failures separately; classify an incomplete submission as Invalid / Incomplete unless a distinct specification-level gap is demonstrated. A required artifact absent from the published package can support R3 when that absence blocks the stated reconstruction.
 
 The honest meaning of R3 is:
 
@@ -228,8 +234,8 @@ Examples include:
 
 - no declared outcome;
 - no reconstruction method;
-- no graph representation;
-- no min-cut reasoning;
+- no graph representation or specific explanation of why the graph is not determinable for an R3 claim;
+- no min-cut reasoning where a cut is determinable, or no explanation of why it is not determinable for an R3 claim;
 - no oracle-boundary analysis;
 - no reproducibility instructions;
 - reliance on the author’s solver as the primary computation path;
@@ -249,21 +255,21 @@ Before technical review, a submission should be checked for administrative compl
 
 A submission is administratively complete if it includes:
 
-- declared outcome: R1, R2, or R3;
+- declared R1, R2, or R3 outcome for each claim and reviewed repository version;
 - reviewer name, organization, or pseudonym;
 - contact method;
 - repository snapshot or commit reviewed;
 - materials reviewed;
 - reconstruction method;
-- graph representation;
+- graph representation, or a precise specification-gap explanation supporting “not determinable” for R3;
 - vertex list;
 - edge list;
 - oracle-boundary analysis;
 - detection condition;
 - alteration condition;
 - candidate cuts tested;
-- minimum vertex-cut reasoning;
-- NDC calculation or challenge;
+- minimum vertex-cut sufficiency and minimality reasoning when a cut is claimed, or a precise gap explaining why it is not determinable;
+- NDC calculation or challenge, including “not determinable” with the supporting gap where applicable;
 - reproducibility instructions;
 - independence declaration;
 - final conclusion.
@@ -527,6 +533,8 @@ The reviewer should examine the graph model and assumptions that make the cut me
 If a smaller valid cut exists, the submission may support R2.
 
 If the cut cannot be determined because the graph is ambiguous, the submission may support R3.
+
+For R3, accept “not determinable” only when the submission identifies the exact specification gap and its effect on the graph/cut. Where a minimum cut is claimed, require an explanation of sufficiency and why no smaller valid cut works. Do not require a fabricated min-cut when a demonstrated specification gap makes it indeterminate.
 
 ---
 

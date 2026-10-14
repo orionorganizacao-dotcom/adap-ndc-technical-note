@@ -52,15 +52,15 @@ Branch:
 Date accessed:
 ```
 
-### Declared outcome
+### Claims and declared outcomes
 
-Select exactly one:
+List each specific claim and the repository release/version or commit against which it is assessed. Assign one outcome per claim; different claims may have different outcomes.
 
-```text
-[ ] R1 — Reproduction
-[ ] R2 — Falsification
-[ ] R3 — Structural Ambiguity
-```
+| Claim ID | Exact claim under review | Release/version or commit | Outcome (R1/R2/R3) |
+|---|---|---|---|
+| C1 | [claim] | [version or commit] | [R1/R2/R3] |
+
+Do not infer a repository-wide or A-DAP-wide outcome from one claim.
 
 ---
 
@@ -153,6 +153,17 @@ Summarize the published graph/custody claim.
 ```text
 [Explain here]
 ```
+
+### Graph determinability
+
+Select one for each claim where applicable:
+
+```text
+[ ] Determinable from the reviewed materials
+[ ] Not determinable because of a specification-level gap (R3 candidate)
+```
+
+If not determinable, identify the exact required artifact that is missing or the rule that is undefined, cite where the materials establish its relevance, and explain which vertices, edges, custody relation, or other reconstruction step cannot be determined. Do not invent the missing graph.
 
 ---
 
@@ -462,6 +473,8 @@ Vertices included:
 Reasoning:
 ```
 
+If the graph/cut is not determinable due to a demonstrated specification-level gap, write **Not determinable** above, identify the gap and its effect, and do not provide an unsupported cut or NDC. Whenever a minimum cut is claimed, explain why it is sufficient and why no smaller valid cut works.
+
 ### Why this cut is sufficient
 
 ```text
@@ -520,7 +533,7 @@ Explain:
 
 ## 18. Outcome Justification
 
-Select the declared outcome and justify it.
+For each Claim ID in Section 1, justify its declared outcome. Complete the relevant outcome subsection(s); outcomes apply to the specified claim and version only.
 
 ---
 
@@ -569,7 +582,7 @@ A valid R2 should provide a constructive demonstration, such as:
 
 ### R3 — Structural Ambiguity
 
-Use this section if the specification is ambiguous.
+Use this section if a missing required artifact or undefined rule in the reviewed specification prevents deterministic reconstruction for a stated claim/version.
 
 ```text
 [Explain why the claim qualifies as R3]
@@ -587,7 +600,9 @@ A valid R3 should identify ambiguity affecting at least one of:
 - minimum vertex-cut reasoning;
 - dependency interpretation.
 
-If possible, show two or more materially different reconstructions permitted by the current specification.
+Identify the precise gap, cite the relevant specification and repository version, and explain its effect on the graph, cut, or NDC. Mark the affected graph or cut **not determinable** where appropriate. If possible, show two or more materially different reconstructions permitted by the same specification; if the missing artifact prevents that comparison, explain why.
+
+Do not use R3 for a transient access or environment error, timeout, unavailable compute resource, or incomplete submission alone. Record operational failures separately and retry where reasonable. An incomplete submission is Invalid / Incomplete unless a specification-level gap is independently demonstrated.
 
 ---
 
@@ -705,25 +720,25 @@ Based on the materials reviewed and the reconstruction performed, I classify thi
 
 This submission should support only one of the following claims.
 
-If R1:
+For a specific claim/version classified R1:
 
 ```text
 The GCD-001 NDC claim was reproduced under the published specification.
 ```
 
-If R2:
+For a specific claim/version classified R2:
 
 ```text
 The GCD-001 NDC claim was falsified through a constructive demonstration.
 ```
 
-If R3:
+For a specific claim/version classified R3:
 
 ```text
 The GCD-001 specification requires correction before deterministic reconstruction is possible.
 ```
 
-No submission should claim full validation of A-DAP.
+No submission should claim full validation of A-DAP. The protocol author has no vote on technical acceptance or on whether an R3 gap is material.
 
 ---
 
