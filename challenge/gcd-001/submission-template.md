@@ -306,6 +306,8 @@ Accepted formats include:
 [Paste graph representation here or reference attached file]
 ```
 
+If the graph is **not determinable** for an R3 claim, write that explicitly and provide the precise missing artifact or undefined rule plus its effect on the graph. Include any graph portion that can be reconstructed; do not fabricate missing vertices or edges.
+
 ---
 
 ## 10. Vertex List
@@ -475,13 +477,13 @@ Reasoning:
 
 If the graph/cut is not determinable due to a demonstrated specification-level gap, write **Not determinable** above, identify the gap and its effect, and do not provide an unsupported cut or NDC. Whenever a minimum cut is claimed, explain why it is sufficient and why no smaller valid cut works.
 
-### Why this cut is sufficient
+### Why this cut is sufficient (complete when a cut is claimed)
 
 ```text
 [Explain here]
 ```
 
-### Why smaller cuts are insufficient
+### Why smaller cuts are insufficient (complete when a minimum cut is claimed)
 
 ```text
 [Explain here]
