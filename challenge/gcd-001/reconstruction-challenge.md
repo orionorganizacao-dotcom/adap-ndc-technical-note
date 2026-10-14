@@ -267,7 +267,7 @@ Until such committee is named, no submission should be described as independentl
 
 The committee, when appointed, must consist of three publicly named external reviewers and must pre-name at least one alternate reviewer.
 
-Each committee member must provide the same independence and relationship disclosure required of submitters, including relationships with the author, repository owner, affiliated organizations, and challenge sponsor. A member with a disclosed conflict for a submission must recuse, and a pre-named alternate replaces that member for that submission.
+Each committee member and alternate must provide the same independence and relationship disclosure required of submitters, including relationships with the author, repository owner, affiliated organizations, and challenge sponsor. A member with a disclosed conflict for a submission must recuse, and a pre-named alternate replaces that member for that submission.
 
 Each member votes one outcome per claim; an absolute majority (2 of 3) decides. If no outcome has a majority (for example, an R1/R2/R3 split), the committee holds two separate binary votes, without abstention:
 

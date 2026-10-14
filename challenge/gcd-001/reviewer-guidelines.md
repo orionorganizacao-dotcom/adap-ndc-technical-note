@@ -752,7 +752,7 @@ This rule exists to prevent adversarial validation from becoming self-validation
 
 A future Acceptance Committee must include three publicly named external reviewers and pre-name at least one alternate reviewer.
 
-Each committee member must disclose the same independence and relationship information required from submitters, including relationships with the author, repository owner, affiliated organizations, and challenge sponsors. A member with a disclosed conflict for a submission must recuse; a pre-named alternate replaces that member for that submission.
+Each committee member and alternate must disclose the same independence and relationship information required from submitters, including relationships with the author, repository owner, affiliated organizations, and challenge sponsors. A member with a disclosed conflict for a submission must recuse; a pre-named alternate replaces that member for that submission.
 
 Each member votes one outcome per claim: R1, R2, or R3. An absolute majority (2 of 3) decides.
 
