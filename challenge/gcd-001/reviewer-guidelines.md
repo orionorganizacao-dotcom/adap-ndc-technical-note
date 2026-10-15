@@ -118,7 +118,7 @@ Administrative status: valid / Invalid / Incomplete
 
 “Not accepted (unresolved)” is a committee disposition, not a submitter proposal or an administrative-incompleteness category. Do not collapse technically insufficient evidence into Invalid / Incomplete.
 
-Classify each specific claim against the repository release/version or commit reviewed. A submission may contain multiple claims and receive different R1/R2/R3 outcomes for them; do not generalize one outcome to A-DAP as a whole.
+State the submitter’s proposal for each specific claim and repository release/version or commit reviewed; record any later committee disposition separately. A submission may contain multiple claims with different proposals or dispositions; do not generalize one result to A-DAP as a whole.
 
 ---
 

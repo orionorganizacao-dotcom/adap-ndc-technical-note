@@ -213,7 +213,8 @@ A valid submission should include:
    - graph model used;
    - source condition;
    - target condition;
-   - detection condition;
+   - detection condition, or, for a proposed R3, its decisive undefinedness with bounded admissible alternatives, independently checkable different claim outcomes, and remediation condition;
+   - alteration condition, or, for a proposed R3, its decisive undefinedness with bounded admissible alternatives, independently checkable different claim outcomes, and remediation condition;
    - candidate cuts tested where determinable, or, for a proposed R3, bounded admissible alternatives and independently checkable reasoning showing how the decisive gap changes the claim outcome;
    - minimum sufficient vertex-cut and why no smaller cut is sufficient;
    - NDC estimate.
