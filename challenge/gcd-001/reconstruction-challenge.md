@@ -73,7 +73,7 @@ No result should be described as independently accepted until evaluated by a non
 
 ## 4. Eligible Outcomes
 
-A valid submission must declare one of three admissible outcomes:
+A valid submission must propose one of three technical outcomes for each claim and reviewed version, or state that evidence is insufficient to propose a technical classification:
 
 - **R1 — Reproduction**
 - **R2 — Falsification**
@@ -341,13 +341,14 @@ Before technical review, a submission may be checked for administrative complete
 
 A submission is administratively valid if it includes:
 
-- declared outcome;
+- proposed outcome (R1/R2/R3) for each claim and reviewed version, or a statement that evidence is insufficient to propose a technical classification;
 - reviewer identity or pseudonym;
 - independence declaration;
 - materials reviewed;
 - reconstruction method;
-- graph representation;
-- min-cut calculation memo;
+- graph representation, or for a proposed R3, affected graph fields marked “not determinable” with the decisive gap, outcome-divergent admissible completions, and independently checkable reasoning;
+- vertex and edge lists, or for a proposed R3, each affected field marked “not determinable” with that same decisive-gap evidence;
+- min-cut calculation memo, or for a proposed R3, the decisive gap and admissible completions demonstrating different claim outcomes; whenever a minimum cut is claimed, include sufficiency and minimality reasoning;
 - oracle-boundary analysis;
 - technical note;
 - reproducibility instructions;

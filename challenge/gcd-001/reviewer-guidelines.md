@@ -239,10 +239,10 @@ A submission may be classified as **Invalid / Incomplete** if it does not meet b
 
 Examples include:
 
-- no declared outcome;
+- no proposed outcome and no statement that the evidence is insufficient to propose a technical classification;
 - no reconstruction method;
-- no graph representation or specific explanation of why the graph is not determinable for an R3 claim;
-- no min-cut reasoning where a cut is determinable, or no explanation of why it is not determinable for an R3 claim;
+- no graph representation, or, for a proposed R3, no decisive-gap evidence showing bounded admissible completions that change the claim outcome when graph fields are marked not determinable;
+- no min-cut reasoning where a cut is determinable, or, for a proposed R3, no decisive-gap evidence showing bounded admissible completions that change the claim outcome when the cut is marked not determinable;
 - no oracle-boundary analysis;
 - no reproducibility instructions;
 - reliance on the author’s solver as the primary computation path;
@@ -262,24 +262,24 @@ Before technical review, a submission should be checked for administrative compl
 
 A submission is administratively complete if it includes:
 
-- declared R1, R2, or R3 outcome for each claim and reviewed repository version;
+- proposed R1, R2, or R3 outcome for each claim and reviewed repository version, or an explanation that evidence is insufficient to propose a technical classification;
 - reviewer name, organization, or pseudonym;
 - contact method;
 - repository snapshot or commit reviewed;
 - materials reviewed;
 - reconstruction method;
-- graph representation, or a precise specification-gap explanation supporting “not determinable” for R3;
-- vertex list;
-- edge list;
+- graph representation, or for a proposed R3, the affected graph fields marked “not determinable” with the decisive gap, outcome-divergent admissible completions, and independently checkable reasoning;
+- vertex list, or for a proposed R3, identify each not-determinable vertex field and justify it under the same decisive-gap evidence requirement;
+- edge list, or for a proposed R3, identify each not-determinable edge field and justify it under the same decisive-gap evidence requirement;
 - oracle-boundary analysis;
 - detection condition;
 - alteration condition;
 - candidate cuts tested;
-- minimum vertex-cut sufficiency and minimality reasoning when a cut is claimed, or a precise gap explaining why it is not determinable;
-- NDC calculation or challenge, including “not determinable” with the supporting gap where applicable;
+- minimum vertex-cut sufficiency and minimality reasoning whenever a minimum cut is claimed; if a decisive R3 gap prevents determining the cut, identify the gap and outcome-divergent admissible completions instead of inventing a cut;
+- NDC calculation or challenge, or for a proposed R3, identify the decisive gap and show how admissible completions change the claim’s outcome;
 - reproducibility instructions;
 - independence declaration;
-- final conclusion.
+- submitter-proposed conclusion, with any later committee disposition clearly separated.
 
 Administrative completeness does not imply technical acceptance.
 
@@ -908,19 +908,19 @@ No qualifying external reconstruction was submitted. This does not validate the 
 Before making a recommendation, the reviewer should confirm:
 
 ```text
-[ ] The submission declares R1, R2, or R3.
+[ ] The submission states its proposed R1/R2/R3 outcome for each claim/version, or states that evidence is insufficient to propose a technical classification.
 [ ] The repository snapshot reviewed is identified.
 [ ] The materials reviewed are listed.
 [ ] The primary reconstruction is independent of author tools.
-[ ] The graph representation is inspectable.
-[ ] Vertices are identified.
-[ ] Edges are identified.
+[ ] The graph representation is inspectable, or for a proposed R3 the affected graph fields are marked “not determinable” with the decisive gap, bounded outcome-divergent admissible completions, and independently checkable reasoning.
+[ ] Vertices are identified, or for a proposed R3 each not-determinable vertex field has that same justification.
+[ ] Edges are identified, or for a proposed R3 each not-determinable edge field has that same justification.
 [ ] Oracle-bound claims are declared.
 [ ] Detection condition is defined.
 [ ] Alteration condition is defined.
-[ ] Candidate cuts are discussed.
-[ ] Minimum vertex-cut reasoning is provided.
-[ ] NDC calculation or challenge is explained.
+[ ] Candidate cuts are discussed where determinable; otherwise, for a proposed R3, the decisive gap and bounded outcome-divergent admissible completions are documented.
+[ ] Minimum vertex-cut sufficiency and minimality are explained whenever a minimum cut is claimed; if a decisive R3 gap prevents determining it, the gap and outcome-divergent completions are documented instead.
+[ ] NDC calculation or challenge is explained, or for a proposed R3 the decisive gap and its outcome-changing admissible completions are documented.
 [ ] For R3, the specific gap is established and decisive, admissible alternatives are delimited, and independently checkable reasoning shows different claim outcomes.
 [ ] For each R3 field marked not determinable, the submission explains why and identifies outcome-changing admissible completions.
 [ ] For R3, a remediation condition identifies the artifact or rule needed to make the claim determinable.
