@@ -105,16 +105,20 @@ Until a non-author Acceptance Committee is publicly named and review rules are a
 
 ## 5. Evaluation Outcomes
 
-A reviewer must classify each valid submission as one of the following:
+A reviewer records the submitter’s proposed outcome for each claim and reviewed version separately from any later committee disposition. A submitter may propose R1, R2, or R3, or state that the evidence is insufficient to propose a technical classification. A review without an appointed committee is preliminary and is not an acceptance.
 
 ```text
-R1 — Reproduction
-R2 — Falsification
-R3 — Structural Ambiguity
-Invalid / Incomplete
+Submitter proposal: R1 — Reproduction
+Submitter proposal: R2 — Falsification
+Submitter proposal: R3 — Structural Ambiguity
+Evidence insufficient to propose a technical classification
+Committee disposition: accepted R1 / accepted R2 / accepted R3 / not accepted (unresolved)
+Administrative status: valid / Invalid / Incomplete
 ```
 
-The reviewer should not invent additional outcome categories unless the committee formally updates the challenge rules.
+“Not accepted (unresolved)” is a committee disposition, not a submitter proposal or an administrative-incompleteness category. Do not collapse technically insufficient evidence into Invalid / Incomplete.
+
+State the submitter’s proposal for each specific claim and repository release/version or commit reviewed; record any later committee disposition separately. A submission may contain multiple claims with different proposals or dispositions; do not generalize one result to A-DAP as a whole.
 
 ---
 
@@ -122,6 +126,7 @@ The reviewer should not invent additional outcome categories unless the committe
 
 A submission qualifies as **R1 — Reproduction** if the reviewer determines that:
 
+- the specific claim is positively reproduced using an independent, inspectable method;
 - the GCD-001 custody graph is reconstructible from the published materials;
 - the relevant artifacts are available;
 - canonicalization is deterministic;
@@ -132,6 +137,8 @@ A submission qualifies as **R1 — Reproduction** if the reviewer determines tha
 - oracle-bound claims are separated from reconstructible evidence;
 - the minimum sufficient vertex-cut can be computed;
 - the claimed NDC is reproduced under the published specification.
+
+Absence of a counterexample, rejection of an R3 allegation, or a vote that a gap is not established is not by itself evidence of reproduction. The reconstruction and its reasoning must be independently checkable.
 
 The honest meaning of R1 is:
 
@@ -189,7 +196,9 @@ R2 is a successful adversarial finding.
 
 ## 8. R3 — Structural Ambiguity
 
-A submission qualifies as **R3 — Structural Ambiguity** if the reviewer determines that the specification is incomplete, unstable, or ambiguous enough to prevent deterministic reconstruction.
+R3 is accepted for a specific claim and reviewed repository version only if the gap is decisive. The submission must show at least one admissible completion of the missing artifact or undefined rule under which the claim holds and at least one admissible completion under which it fails (for example, NDC > 1 versus NDC ≤ 1).
+
+If the claim holds under every admissible completion, R1 requires positive, independent, inspectable reproduction evidence; absence of a counterexample is not reproduction. If it fails under every admissible completion, R2 requires constructive, independently checkable falsification. Failure to confirm R3 does not imply R1 or R2. An indeterminate graph element that does not change the claim’s outcome is a specification note, not R3.
 
 Examples of valid R3 findings include:
 
@@ -205,6 +214,12 @@ Examples of valid R3 findings include:
 - multiple materially different reconstructions permitted by the same published materials;
 - dependency on undocumented assumptions;
 - dependency on author-controlled tools for the primary reconstruction.
+
+The submitter must identify the exact missing artifact or undefined rule, delimit the admissible reconstructions using the published materials and stated assumptions, and explain its effect on the graph, a relevant edge, the cut, or the NDC with independently checkable reasoning. R3 acceptance requires at least two materially different admissible reconstructions or completions: one under which the claim holds and one under which it fails. If an absent artifact prevents construction of complete alternatives, the submitter must still demonstrate how admissible completions of that artifact can change the claim’s outcome. The affected graph or cut may be reported as **not determinable** only with this evidence; do not invent an unsupported reconstruction.
+
+Every R3 finding must state a remediation condition: the specific artifact to supply or rule to define that would make the claim determinable.
+
+R3 is not a label for operational failure. A transient access/environment problem, timeout, compute limit, or incomplete submission does not establish specification ambiguity. Record operational failures separately; classify an incomplete submission as Invalid / Incomplete unless a distinct specification-level gap is demonstrated. A required artifact absent from the published package can support R3 when that absence blocks the stated reconstruction.
 
 The honest meaning of R3 is:
 
@@ -226,10 +241,10 @@ A submission may be classified as **Invalid / Incomplete** if it does not meet b
 
 Examples include:
 
-- no declared outcome;
+- no proposed outcome and no statement that the evidence is insufficient to propose a technical classification;
 - no reconstruction method;
-- no graph representation;
-- no min-cut reasoning;
+- no graph representation, or, for a proposed R3, no decisive-gap evidence showing bounded admissible completions that change the claim outcome when graph fields are marked not determinable;
+- no min-cut reasoning where a cut is determinable, or, for a proposed R3, no decisive-gap evidence showing bounded admissible completions that change the claim outcome when the cut is marked not determinable;
 - no oracle-boundary analysis;
 - no reproducibility instructions;
 - reliance on the author’s solver as the primary computation path;
@@ -249,24 +264,24 @@ Before technical review, a submission should be checked for administrative compl
 
 A submission is administratively complete if it includes:
 
-- declared outcome: R1, R2, or R3;
+- proposed R1, R2, or R3 outcome for each claim and reviewed repository version, or an explanation that evidence is insufficient to propose a technical classification;
 - reviewer name, organization, or pseudonym;
 - contact method;
 - repository snapshot or commit reviewed;
 - materials reviewed;
 - reconstruction method;
-- graph representation;
-- vertex list;
-- edge list;
+- graph representation, or for a proposed R3, the affected graph fields marked “not determinable” with the decisive gap, outcome-divergent admissible completions, and independently checkable reasoning;
+- vertex list, or for a proposed R3, identify each not-determinable vertex field and justify it under the same decisive-gap evidence requirement;
+- edge list, or for a proposed R3, identify each not-determinable edge field and justify it under the same decisive-gap evidence requirement;
 - oracle-boundary analysis;
 - detection condition;
 - alteration condition;
-- candidate cuts tested;
-- minimum vertex-cut reasoning;
-- NDC calculation or challenge;
+- candidate cuts tested where determinable, or, for a proposed R3, bounded admissible alternatives and independently checkable reasoning showing how the decisive gap changes the claim outcome;
+- minimum vertex-cut sufficiency and minimality reasoning whenever a minimum cut is claimed; if a decisive R3 gap prevents determining the cut, identify the gap and outcome-divergent admissible completions instead of inventing a cut;
+- NDC calculation or challenge, or for a proposed R3, identify the decisive gap and show how admissible completions change the claim’s outcome;
 - reproducibility instructions;
 - independence declaration;
-- final conclusion.
+- submitter-proposed conclusion, with any later committee disposition clearly separated.
 
 Administrative completeness does not imply technical acceptance.
 
@@ -524,9 +539,9 @@ A reviewer should not accept a cut merely because it is computed by a tool.
 
 The reviewer should examine the graph model and assumptions that make the cut meaningful.
 
-If a smaller valid cut exists, the submission may support R2.
+If a smaller valid cut exists and constructively falsifies the claim under every admissible reading of a claimed gap, this supports R2. If the falsification holds only under some admissible completions and the opposite outcome holds under others, apply the decisive-gap test in §8.
 
-If the cut cannot be determined because the graph is ambiguous, the submission may support R3.
+For R3, accept “not determinable” only when the submission identifies the exact specification gap, establishes bounded admissible alternatives with different claim outcomes, provides independently checkable reasoning, and states the remediation condition. Where a minimum cut is claimed, require an explanation of sufficiency and why no smaller valid cut works. Do not require a fabricated min-cut when a demonstrated specification gap makes it indeterminate.
 
 ---
 
@@ -675,10 +690,14 @@ When evaluating an R3 submission, the reviewer should ask:
 - Does the ambiguity affect the cut?
 - Does the ambiguity affect the NDC?
 - Does the ambiguity affect oracle-boundary classification?
-- Does the specification allow more than one materially different reconstruction?
+- Are the admissible completions delimited by the reviewed materials and stated assumptions?
+- Is there independently checkable reasoning for at least two materially different admissible completions with different claim outcomes?
 - Can the ambiguity be fixed by a specification update?
+- What specific artifact or rule would remediate the gap?
 
-Approve as R3 if deterministic reconstruction is blocked by underspecification.
+Accept R3 only if a majority establishes that the gap exists and is decisive: one admissible completion supports the claim and another makes it fail. An absent artifact does not waive this requirement; demonstrate how admissible completions of that artifact change the claim’s outcome.
+
+If the claim holds under every admissible completion, R1 still requires positive, independently checkable reproduction evidence; absence of falsification is insufficient. If the claim fails under every admissible completion, R2 requires constructive, independently checkable falsification; lack of R3 confirmation alone is insufficient. If neither R1 nor R2 has sufficient evidence and R3 is not confirmed, record **not accepted (unresolved)**.
 
 Do not approve R3 merely because:
 
@@ -690,17 +709,20 @@ Do not approve R3 merely because:
 
 R3 should identify a specific structural ambiguity.
 
+An indeterminate graph element that does not change the claim’s outcome is a specification note, not R3.
+
 ---
 
 ## 26. Skeptical Tie-Breaking Rule
 
-If reviewers disagree, the skeptical interpretation should prevail.
+Skepticism applies to a claimed specification gap as well as to the claim under review. A claimed gap is itself a claim and must be demonstrated, including its decisiveness under §8.
 
 This means:
 
 - uncertainty should not be upgraded into R1;
 - unclear proof should not be treated as reproduction;
-- ambiguous specification should remain R3 unless resolved;
+- a claimed gap should not be treated as established merely because the specification is disputed;
+- an ambiguous specification remains R3 only when a majority confirms that the gap is established and decisive under §8;
 - constructive falsification should be taken seriously;
 - oracle-bound claims should not be silently counted as verified.
 
@@ -737,31 +759,50 @@ This rule exists to prevent adversarial validation from becoming self-validation
 
 ## 28. Committee Decision Standard
 
-A future Acceptance Committee should ideally include three publicly named external reviewers.
+A future Acceptance Committee must include three publicly named external reviewers and pre-name at least one alternate reviewer.
 
-Recommended decision rule:
+Each committee member and alternate must disclose the same independence and relationship information required from submitters, including relationships with the author, repository owner, affiliated organizations, and challenge sponsors. A member with a disclosed conflict for a submission must recuse; a pre-named alternate replaces that member for that submission.
 
-```text
-majority decision
-```
+For each claim, members must first vote separately on evidence sufficiency: whether the submitted evidence is sufficient for R1, whether it is sufficient for R2, and, for each claimed gap, whether the gap exists and whether it is decisive. These are yes/no votes. Members then vote one provisional technical classification (R1, R2, or R3). An absolute majority (2 of 3) is required for every adopted finding. No abstentions are allowed; a member who cannot decide must state why in the decision note and still cast a vote.
 
-Tie or unresolved disagreement should favor the skeptical classification.
+Apply the following precedence rules:
 
-Suggested hierarchy:
+1. **R2:** Accept R2 only with majority support for sufficient, constructive, independently checkable falsification. If the result depends on an admissible completion of a claimed gap, the falsification must hold under every admissible completion to take precedence over R3.
+2. **R3:** Otherwise, accept R3 only if a majority confirms both that the gap exists and is decisive under §8, with bounded, independently checkable admissible completions producing different outcomes and a stated remediation condition.
+3. **R1:** Otherwise, accept R1 only with majority support for sufficient, positive, independent reproduction. If admissible completions are relevant, the claim must hold under every such completion. Failure to establish R2 or R3 is not evidence for R1.
+4. **Not accepted (unresolved):** If none of these evidentiary conditions receives the required majority, record the claim as **not accepted (unresolved)**, never as R1.
+
+If the initial R1/R2/R3 classification votes split with no majority, hold two separate binary votes, without abstention:
+
+(a) Is the claimed gap established and decisive under §8? A “yes” requires a majority on both gap existence and decisiveness. If yes, classify R3 unless R2’s constructive falsification holds under every admissible completion, in which case classify R2.
+
+(b) If a majority does not confirm both the existence and decisiveness of the gap, decide between R1 and R2 only if the corresponding positive evidence-sufficiency vote has a majority. The absence of a majority for R3 does not imply R1 or R2. If neither R1 nor R2 has sufficient evidence by majority, record **not accepted (unresolved)**.
+
+“Unresolved disagreement” means no absolute majority after this procedure. A member’s inability to decide is explained in the decision note, not treated as an abstention. A minority dissent is published but does not change the classification.
+
+Decision hierarchy:
 
 ```text
 R2 over R1 when constructive falsification is valid.
-R3 over R1 when deterministic reconstruction is blocked.
+R2 over R3 when constructive falsification holds under every admissible reading.
+R3 over R1 only when a gap is established and decisive under §8.
 Invalid over R1 when independence or reproducibility is missing.
 ```
 
-The committee should publish a short decision note for each accepted submission.
+The committee must publish a decision note for each claim. The author non-voting rule in §27 remains unchanged.
+
+### Decision examples
+
+- **Reproduction sustained:** The independent reconstruction, graph, and cut are inspectable; the claim is reproduced and remains true under every bounded admissible completion. A majority finds R1 evidence sufficient and votes R1: accept R1 for that claim/version.
+- **Constructive falsification:** An independently checkable omitted dependency yields a smaller valid cut, and the falsification holds under every admissible reading. A majority finds R2 evidence sufficient and votes R2: accept R2, taking precedence over R3.
+- **Decisive gap demonstrated:** The submission identifies an undefined graph rule, gives two bounded, independently checkable completions—one supporting the claim and one falsifying it—and states the exact rule needed to resolve the gap. A majority confirms gap existence and decisiveness: accept R3 for that claim/version.
+- **Insufficient evidence, no confirmed gap:** Initial outcome votes split R1/R2/R3; no majority confirms the gap, and neither positive R1 nor R2 evidence-sufficiency vote has a majority. Record **not accepted (unresolved)**. Rejection of the gap allegation and absence of a counterexample do not establish R1 or R2.
 
 ---
 
 ## 29. Public Disclosure Standard
 
-For transparency, the final review summary should disclose:
+For transparency, the final review summary must disclose:
 
 - number of submissions received;
 - number of administratively valid submissions;
@@ -770,9 +811,12 @@ For transparency, the final review summary should disclose:
 - number of accepted R2 outcomes;
 - number of accepted R3 outcomes;
 - committee members;
-- committee decision summaries;
+- each committee member’s vote and short reasoning for every claim, including dissents and each claimed gap’s existence and decisiveness votes;
+- any conflict disclosure, recusal, and alternate substitution;
 - unresolved ambiguities;
 - specification changes triggered by review.
+
+Aggregate counts alone are insufficient.
 
 The review summary must not describe the challenge as full validation of A-DAP.
 
@@ -866,19 +910,23 @@ No qualifying external reconstruction was submitted. This does not validate the 
 Before making a recommendation, the reviewer should confirm:
 
 ```text
-[ ] The submission declares R1, R2, or R3.
+[ ] The submission states its proposed R1/R2/R3 outcome for each claim/version, or states that evidence is insufficient to propose a technical classification.
 [ ] The repository snapshot reviewed is identified.
 [ ] The materials reviewed are listed.
 [ ] The primary reconstruction is independent of author tools.
-[ ] The graph representation is inspectable.
-[ ] Vertices are identified.
-[ ] Edges are identified.
+[ ] The graph representation is inspectable, or for a proposed R3 the affected graph fields are marked “not determinable” with the decisive gap, bounded outcome-divergent admissible completions, and independently checkable reasoning.
+[ ] Vertices are identified, or for a proposed R3 each not-determinable vertex field has that same justification.
+[ ] Edges are identified, or for a proposed R3 each not-determinable edge field has that same justification.
 [ ] Oracle-bound claims are declared.
-[ ] Detection condition is defined.
-[ ] Alteration condition is defined.
-[ ] Candidate cuts are discussed.
-[ ] Minimum vertex-cut reasoning is provided.
-[ ] NDC calculation or challenge is explained.
+[ ] Detection condition is defined, or, for a proposed R3, its decisive undefinedness is demonstrated with bounded admissible alternatives, different claim outcomes, and a remediation condition.
+[ ] Alteration condition is defined, or, for a proposed R3, its decisive undefinedness is demonstrated with bounded admissible alternatives, different claim outcomes, and a remediation condition.
+[ ] Candidate cuts are discussed where determinable; otherwise, for a proposed R3, the decisive gap and bounded outcome-divergent admissible completions are documented.
+[ ] Minimum vertex-cut sufficiency and minimality are explained whenever a minimum cut is claimed; if a decisive R3 gap prevents determining it, the gap and outcome-divergent completions are documented instead.
+[ ] NDC calculation or challenge is explained, or for a proposed R3 the decisive gap and its outcome-changing admissible completions are documented.
+[ ] For R3, the specific gap is established and decisive, admissible alternatives are delimited, and independently checkable reasoning shows different claim outcomes.
+[ ] For each R3 field marked not determinable, the submission explains why and identifies outcome-changing admissible completions.
+[ ] For R3, a remediation condition identifies the artifact or rule needed to make the claim determinable.
+[ ] The outcome is stated separately for each claim and reviewed version.
 [ ] Reproducibility instructions are provided.
 [ ] The conclusion does not overclaim.
 ```
@@ -887,15 +935,18 @@ Before making a recommendation, the reviewer should confirm:
 
 ## 34. Final Review Recommendation
 
-A reviewer should end with one of the following recommendations:
+A reviewer should report a submitter proposal separately from the committee disposition. Use one of the following recommendation labels:
 
 ```text
 Recommend acceptance as R1 — Reproduction.
 Recommend acceptance as R2 — Falsification.
 Recommend acceptance as R3 — Structural Ambiguity.
+Recommend not accepted (unresolved) when no classification has sufficient majority evidence.
 Recommend rejection as invalid or incomplete.
 Recommend revision and resubmission.
 ```
+
+Only an appointed committee can record acceptance or “not accepted (unresolved)”; otherwise report a proposal or a preliminary evidence-insufficient assessment.
 
 The recommendation should include a short justification.
 
