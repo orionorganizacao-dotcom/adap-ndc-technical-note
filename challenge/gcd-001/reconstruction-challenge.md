@@ -173,13 +173,15 @@ R1, R2, or R3 applies to each identified claim under review at a stated reposito
 
 A valid submission should include:
 
-1. **Declared outcome**
+1. **Submitter-proposed outcome**
 
-   One of:
+   For each claim and reviewed version, propose one of:
 
    - R1 — Reproduction
    - R2 — Falsification
    - R3 — Structural Ambiguity
+
+   The submitter may instead state that evidence is insufficient to propose a technical classification. This proposal is not a committee decision or acceptance.
 
 2. **Technical note**
 
@@ -212,11 +214,11 @@ A valid submission should include:
    - source condition;
    - target condition;
    - detection condition;
-   - candidate cuts tested;
+   - candidate cuts tested where determinable, or, for a proposed R3, bounded admissible alternatives and independently checkable reasoning showing how the decisive gap changes the claim outcome;
    - minimum sufficient vertex-cut and why no smaller cut is sufficient;
    - NDC estimate.
 
-   If a missing artifact or undefined rule prevents determination, mark the affected graph or cut **not determinable**, identify the exact gap, and explain its effect instead of supplying an unsupported estimate. Provide minimality reasoning whenever a minimum cut is claimed.
+   If a missing artifact or undefined rule is proposed as R3, mark the affected graph or cut **not determinable** only after identifying the decisive gap, delimiting admissible alternatives, and providing independently checkable reasoning that alternatives produce different claim outcomes. State the remediation condition. Provide sufficiency and minimality reasoning whenever a minimum cut is claimed.
 
 6. **Oracle-boundary analysis**
 
@@ -299,15 +301,18 @@ For worked examples of the four outcomes and unresolved evidence, see §28 of `r
 
 The protocol author has no vote on whether R1, R2, or R3 is technically accepted, or whether a gap is material. The author may clarify published terminology and administrative logistics only.
 
-The committee must classify submissions as:
+The committee’s disposition for each claim/version must be recorded separately from the submitter’s proposal:
 
 - accepted R1;
 - accepted R2;
 - accepted R3;
+- not accepted (unresolved);
 - administratively incomplete;
 - technically insufficient;
 - outside scope;
 - non-reproducible.
+
+“Not accepted (unresolved)” means no technical classification obtained the required majority evidence; it is distinct from administrative incompleteness. “Technically insufficient” may describe the evidence basis, but it does not replace the required claim disposition of “not accepted (unresolved)” when no classification is established.
 
 ---
 
@@ -349,6 +354,8 @@ A submission is administratively valid if it includes:
 - graph representation, or for a proposed R3, affected graph fields marked “not determinable” with the decisive gap, outcome-divergent admissible completions, and independently checkable reasoning;
 - vertex and edge lists, or for a proposed R3, each affected field marked “not determinable” with that same decisive-gap evidence;
 - min-cut calculation memo, or for a proposed R3, the decisive gap and admissible completions demonstrating different claim outcomes; whenever a minimum cut is claimed, include sufficiency and minimality reasoning;
+- candidate cuts tested where determinable, or the same decisive-gap evidence for proposed R3;
+- detection and alteration conditions defined, or, for a proposed R3, their decisive undefinedness, bounded admissible alternatives, different claim outcomes, and remediation condition;
 - oracle-boundary analysis;
 - technical note;
 - reproducibility instructions;

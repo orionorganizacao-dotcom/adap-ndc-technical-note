@@ -44,14 +44,16 @@ This is a check of the supplied synthetic example and its prewritten mutation ca
 ## External review procedure
 
 1. Record the repository commit or release/version, environment, materials, and commands used. Do not use the author’s solver or expected outputs as the primary reconstruction path.
-2. Identify each specific claim and version reviewed. Classify each claim separately as R1, R2, or R3; one review may reach different outcomes for different claims.
+2. Identify each specific claim and version reviewed. Record the reviewer’s proposed outcome separately per claim as R1, R2, or R3, or state that evidence is insufficient to propose a technical classification. This proposal is not committee acceptance.
 3. Reconstruct each target claim independently. Publish the graph, nodes and edges, verifier/adversary assumptions, candidate cuts, and the reason any dependency is or is not material.
 4. Attempt at least one counterexample: add a plausible omitted dependency, vary graph granularity, identify shared custody, suppress an evidence path, or show two materially different reconstructions allowed by the specification.
-5. Report one outcome for each claim:
+5. Report the reviewer’s proposed outcome for each claim, or state that evidence is insufficient to propose one:
    - **R1 — Reproduction:** the specific claim was independently reproduced under stated assumptions;
    - **R2 — Falsification:** a constructive counterexample, smaller cut, invalid assumption, or omitted dependency changes the claim;
-   - **R3 — Structural ambiguity:** accepted only when a specific gap is established and decisive: delimit at least two materially different admissible reconstructions or completions and give independently checkable reasoning that one supports the claim and one falsifies it. If an absent artifact blocks complete alternatives, show how its admissible completions change the outcome. State a remediation condition. A non-decisive indeterminate graph element is only a specification note.
+   - **R3 — Structural ambiguity:** propose only when a specific gap is established and decisive: delimit at least two materially different admissible reconstructions or completions and give independently checkable reasoning that one supports the claim and one falsifies it. If an absent artifact blocks complete alternatives, show how its admissible completions change the outcome. State a remediation condition. A non-decisive indeterminate graph element is only a specification note. Acceptance requires a later committee decision.
 6. State what remains trusted or unobserved, who controls each critical dependency, and whether verification was actually exercised by an affected person.
+
+If evidence is insufficient to propose R1, R2, or R3, state that explicitly rather than forcing a category. A committee, if appointed, records the later majority disposition, including **not accepted (unresolved)** when no classification is supported. Administrative incompleteness remains distinct from that technical disposition.
 
 ## Failure and rejection criteria
 

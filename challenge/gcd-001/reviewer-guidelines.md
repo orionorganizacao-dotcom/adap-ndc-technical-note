@@ -105,16 +105,18 @@ Until a non-author Acceptance Committee is publicly named and review rules are a
 
 ## 5. Evaluation Outcomes
 
-A reviewer must classify each valid submission as one of the following:
+A reviewer records the submitter’s proposed outcome for each claim and reviewed version separately from any later committee disposition. A submitter may propose R1, R2, or R3, or state that the evidence is insufficient to propose a technical classification. A review without an appointed committee is preliminary and is not an acceptance.
 
 ```text
-R1 — Reproduction
-R2 — Falsification
-R3 — Structural Ambiguity
-Invalid / Incomplete
+Submitter proposal: R1 — Reproduction
+Submitter proposal: R2 — Falsification
+Submitter proposal: R3 — Structural Ambiguity
+Evidence insufficient to propose a technical classification
+Committee disposition: accepted R1 / accepted R2 / accepted R3 / not accepted (unresolved)
+Administrative status: valid / Invalid / Incomplete
 ```
 
-The reviewer should not invent additional outcome categories unless the committee formally updates the challenge rules.
+“Not accepted (unresolved)” is a committee disposition, not a submitter proposal or an administrative-incompleteness category. Do not collapse technically insufficient evidence into Invalid / Incomplete.
 
 Classify each specific claim against the repository release/version or commit reviewed. A submission may contain multiple claims and receive different R1/R2/R3 outcomes for them; do not generalize one outcome to A-DAP as a whole.
 
@@ -274,7 +276,7 @@ A submission is administratively complete if it includes:
 - oracle-boundary analysis;
 - detection condition;
 - alteration condition;
-- candidate cuts tested;
+- candidate cuts tested where determinable, or, for a proposed R3, bounded admissible alternatives and independently checkable reasoning showing how the decisive gap changes the claim outcome;
 - minimum vertex-cut sufficiency and minimality reasoning whenever a minimum cut is claimed; if a decisive R3 gap prevents determining the cut, identify the gap and outcome-divergent admissible completions instead of inventing a cut;
 - NDC calculation or challenge, or for a proposed R3, identify the decisive gap and show how admissible completions change the claim’s outcome;
 - reproducibility instructions;
@@ -916,8 +918,8 @@ Before making a recommendation, the reviewer should confirm:
 [ ] Vertices are identified, or for a proposed R3 each not-determinable vertex field has that same justification.
 [ ] Edges are identified, or for a proposed R3 each not-determinable edge field has that same justification.
 [ ] Oracle-bound claims are declared.
-[ ] Detection condition is defined.
-[ ] Alteration condition is defined.
+[ ] Detection condition is defined, or, for a proposed R3, its decisive undefinedness is demonstrated with bounded admissible alternatives, different claim outcomes, and a remediation condition.
+[ ] Alteration condition is defined, or, for a proposed R3, its decisive undefinedness is demonstrated with bounded admissible alternatives, different claim outcomes, and a remediation condition.
 [ ] Candidate cuts are discussed where determinable; otherwise, for a proposed R3, the decisive gap and bounded outcome-divergent admissible completions are documented.
 [ ] Minimum vertex-cut sufficiency and minimality are explained whenever a minimum cut is claimed; if a decisive R3 gap prevents determining it, the gap and outcome-divergent completions are documented instead.
 [ ] NDC calculation or challenge is explained, or for a proposed R3 the decisive gap and its outcome-changing admissible completions are documented.
@@ -933,15 +935,18 @@ Before making a recommendation, the reviewer should confirm:
 
 ## 34. Final Review Recommendation
 
-A reviewer should end with one of the following recommendations:
+A reviewer should report a submitter proposal separately from the committee disposition. Use one of the following recommendation labels:
 
 ```text
 Recommend acceptance as R1 — Reproduction.
 Recommend acceptance as R2 — Falsification.
 Recommend acceptance as R3 — Structural Ambiguity.
+Recommend not accepted (unresolved) when no classification has sufficient majority evidence.
 Recommend rejection as invalid or incomplete.
 Recommend revision and resubmission.
 ```
+
+Only an appointed committee can record acceptance or “not accepted (unresolved)”; otherwise report a proposal or a preliminary evidence-insufficient assessment.
 
 The recommendation should include a short justification.
 

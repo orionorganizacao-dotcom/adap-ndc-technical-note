@@ -28,7 +28,7 @@ An external verifier should be able to:
 - identify vertices and edges;
 - distinguish reconstructible claims from oracle-bound claims;
 - compute or challenge the claimed NDC;
-- classify the result as R1, R2, or R3.
+- state a submitter-proposed result per claim/version (R1/R2/R3), or state that evidence is insufficient; reserve acceptance or “not accepted (unresolved)” for a later committee disposition.
 
 The goal is not to trust the author.
 
@@ -498,7 +498,7 @@ For GCD-001, detection may include:
 
 The verifier must state which detection condition is used in the NDC calculation.
 
-If the detection condition is undefined or unstable, the result may qualify as R3.
+An undefined or unstable detection condition may support R3 only if the gap is decisive for a specific claim/version and bounded admissible completions produce different claim outcomes with independently checkable reasoning and a stated remediation condition.
 
 ---
 
@@ -521,7 +521,7 @@ Possible alteration targets include:
 
 The verifier must state the alteration condition used for the cut calculation.
 
-If the alteration condition is unclear, the result may qualify as R3.
+An unclear alteration condition may support R3 only if the gap is decisive for a specific claim/version and bounded admissible completions produce different claim outcomes with independently checkable reasoning and a stated remediation condition.
 
 ---
 
@@ -762,13 +762,13 @@ A verifier should answer:
 - Are graph edges defined?
 - Are A/V roles clear?
 - Are oracle-bound claims separated?
-- What is the detection condition?
-- What is the alteration condition?
-- What candidate cuts were tested?
+- What is the detection condition, or, for a proposed R3, how does its decisive undefinedness across bounded admissible alternatives change the claim outcome, and what resolves it?
+- What is the alteration condition, or, for a proposed R3, how does its decisive undefinedness across bounded admissible alternatives change the claim outcome, and what resolves it?
+- What candidate cuts were tested, or, for a proposed R3, what admissible alternatives and independently checkable reasoning show that the decisive gap changes the claim outcome?
 - What is the minimum sufficient vertex-cut?
 - What NDC value is computed?
 - Does the computed value match the published claim?
-- Is the result R1, R2, or R3?
+- What outcome does the submitter propose for each claim/version, or is evidence insufficient to propose one? What later committee disposition, if any, was reached?
 
 ---
 
