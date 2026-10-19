@@ -274,8 +274,8 @@ A submission is administratively complete if it includes:
 - vertex list, or for a proposed R3, identify each not-determinable vertex field and justify it under the same decisive-gap evidence requirement;
 - edge list, or for a proposed R3, identify each not-determinable edge field and justify it under the same decisive-gap evidence requirement;
 - oracle-boundary analysis;
-- detection condition;
-- alteration condition;
+- detection condition defined, or, for a proposed R3, its decisive undefinedness with bounded admissible alternatives, independently checkable different claim outcomes, and a remediation condition (see §33);
+- alteration condition defined, or, for a proposed R3, its decisive undefinedness with bounded admissible alternatives, independently checkable different claim outcomes, and a remediation condition (see §33);
 - candidate cuts tested where determinable, or, for a proposed R3, bounded admissible alternatives and independently checkable reasoning showing how the decisive gap changes the claim outcome;
 - minimum vertex-cut sufficiency and minimality reasoning whenever a minimum cut is claimed; if a decisive R3 gap prevents determining the cut, identify the gap and outcome-divergent admissible completions instead of inventing a cut;
 - NDC calculation or challenge, or for a proposed R3, identify the decisive gap and show how admissible completions change the claim’s outcome;
