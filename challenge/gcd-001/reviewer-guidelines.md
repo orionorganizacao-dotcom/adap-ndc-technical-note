@@ -237,7 +237,9 @@ A strong R3 submission should show exactly where the ambiguity occurs and how it
 
 ## 9. Invalid or Incomplete Submission
 
-A submission may be classified as **Invalid / Incomplete** if it does not meet basic administrative or technical requirements.
+A submission may be classified as **Invalid / Incomplete** if required submission items are missing or explicit eligibility requirements are not met.
+
+Distinguish those failures from evidence that is present and reviewable but technically insufficient. Administrative screening checks completeness and eligibility; it must not decide whether the supplied evidence establishes R1, R2, or a decisive R3 gap. Record an evidence-insufficient assessment separately; any later **not accepted (unresolved)** disposition belongs to the appointed committee under §28.
 
 Examples include:
 
@@ -953,7 +955,9 @@ The recommendation should include a short justification.
 Suggested wording:
 
 ```text
-Based on the submitted materials and the reconstruction evidence, I recommend [R1/R2/R3/Invalid/Revision] because [brief reason].
+Preliminary assessment for claim [claim], version [version]: [proposed R1/R2/R3 / evidence insufficient / invalid or incomplete / revision requested], because [brief reason]. This is not a committee disposition.
+
+Committee-review recommendation for claim [claim], version [version], if serving on an appointed committee: [accept R1/R2/R3 / not accepted (unresolved) / reject as invalid or incomplete / revision and resubmission], because [brief reason], under §28. The committee's actual decision, votes, and reasoning are recorded separately.
 ```
 
 ---
