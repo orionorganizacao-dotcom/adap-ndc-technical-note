@@ -52,15 +52,15 @@ Branch:
 Date accessed:
 ```
 
-### Declared outcome
+### Claims and proposed outcomes
 
-Select exactly one:
+List each specific claim and the repository release/version or commit against which it is assessed. State the submitter’s proposed outcome for each claim; different claims may have different proposals. This is a proposal, not a committee decision or acceptance. If the evidence is insufficient to propose R1, R2, or R3, say so.
 
-```text
-[ ] R1 — Reproduction
-[ ] R2 — Falsification
-[ ] R3 — Structural Ambiguity
-```
+| Claim ID | Exact claim under review | Release/version or commit | Submitter-proposed outcome (R1/R2/R3 or evidence insufficient) |
+|---|---|---|---|
+| C1 | [claim] | [version or commit] | [proposal or evidence insufficient] |
+
+Do not infer a repository-wide or A-DAP-wide outcome from one claim.
 
 ---
 
@@ -153,6 +153,17 @@ Summarize the published graph/custody claim.
 ```text
 [Explain here]
 ```
+
+### Graph determinability
+
+Select one for each claim where applicable:
+
+```text
+[ ] Determinable from the reviewed materials
+[ ] Not determinable because of a proposed decisive specification gap (R3 candidate; complete §18 with outcome-divergent admissible completions and remediation)
+```
+
+If not determinable, identify the exact required artifact that is missing or the rule that is undefined, delimit the admissible alternatives, and provide independently checkable reasoning that at least one completion supports and another falsifies the claim. Cite where the materials establish the gap’s relevance, explain which vertices, edges, custody relation, or other reconstruction step cannot be determined, and state the remediation condition. Do not invent the missing graph.
 
 ---
 
@@ -294,6 +305,8 @@ Accepted formats include:
 ```text
 [Paste graph representation here or reference attached file]
 ```
+
+If the graph is **not determinable** for a proposed R3, identify the decisive gap, delimit admissible alternatives, and give independently checkable reasoning showing different claim outcomes. Include any graph portion that can be reconstructed; do not fabricate missing vertices or edges.
 
 ---
 
@@ -462,13 +475,15 @@ Vertices included:
 Reasoning:
 ```
 
-### Why this cut is sufficient
+If the graph/cut is not determinable for a proposed R3, write **Not determinable** above and identify the decisive gap and admissible completions showing different claim outcomes; do not provide an unsupported cut or NDC. Whenever a minimum cut is claimed, explain why it is sufficient and why no smaller valid cut works.
+
+### Why this cut is sufficient (complete when a cut is claimed)
 
 ```text
 [Explain here]
 ```
 
-### Why smaller cuts are insufficient
+### Why smaller cuts are insufficient (complete when a minimum cut is claimed)
 
 ```text
 [Explain here]
@@ -520,7 +535,7 @@ Explain:
 
 ## 18. Outcome Justification
 
-Select the declared outcome and justify it.
+For each Claim ID in Section 1, justify the submitter-proposed outcome. Complete the relevant proposal subsection(s); proposals apply to the specified claim and version only and are not committee decisions.
 
 ---
 
@@ -569,13 +584,19 @@ A valid R2 should provide a constructive demonstration, such as:
 
 ### R3 — Structural Ambiguity
 
-Use this section if the specification is ambiguous.
+Use this section to propose R3 for a specific claim and reviewed repository version only when the gap is decisive.
 
 ```text
 [Explain why the claim qualifies as R3]
 ```
 
-A valid R3 should identify ambiguity affecting at least one of:
+A valid R3 must identify the exact missing artifact or undefined rule, delimit admissible completions by the reviewed materials and stated assumptions, and provide independently checkable reasoning that the gap is outcome-determinative. Provide at least two materially different admissible reconstructions or completions: one under which the claim holds and one under which it fails (for example, NDC > 1 versus NDC ≤ 1). If an absent artifact prevents complete alternatives, demonstrate how admissible completions of that artifact can change the claim’s outcome.
+
+If the claim holds under every admissible completion, R1 requires positive, independent, inspectable reproduction evidence; absence of a counterexample is not reproduction. If it fails under every admissible completion, R2 requires constructive, independently checkable falsification. Failure to confirm R3 does not imply R1 or R2. An indeterminate graph element that does not change the claim’s outcome is a specification note, not R3.
+
+Identify the precise decisive gap, cite the relevant specification and repository version, delimit admissible alternatives, and provide independently checkable reasoning for different claim outcomes. Mark the affected graph or cut **not determinable** only with this evidence; do not invent missing elements. Every R3 proposal must state a remediation condition: the specific artifact to supply or rule to define that would make the claim determinable.
+
+A qualifying gap may affect:
 
 - canonicalization;
 - artifact availability;
@@ -587,7 +608,7 @@ A valid R3 should identify ambiguity affecting at least one of:
 - minimum vertex-cut reasoning;
 - dependency interpretation.
 
-If possible, show two or more materially different reconstructions permitted by the current specification.
+Do not use R3 for a transient access or environment error, timeout, unavailable compute resource, or incomplete submission alone. Record operational failures separately and retry where reasonable. An incomplete submission is Invalid / Incomplete unless a specification-level gap is independently demonstrated.
 
 ---
 
@@ -675,6 +696,12 @@ I understand that author-provided tools must not be used as the primary computat
 I understand that record integrity is not decision truth.
 
 I understand that oracle-bound claims must be declared rather than treated as structurally verified.
+
+I understand that R1, R2, or R3 applies to a specific claim and repository version, not to A-DAP as a whole.
+
+I understand that R3 requires a demonstrated decisive gap, materially different admissible completions with different claim outcomes, and a remediation condition.
+
+I have disclosed my independence and relationships, including any relationship with the author, repository owner, affiliated organization, or challenge sponsor.
 ```
 
 Reviewer confirmation:
@@ -687,43 +714,61 @@ Reviewer confirmation:
 
 ## 23. Final Conclusion
 
-State the final conclusion in one paragraph.
+State the submitter’s proposed conclusion separately for each specific claim and reviewed repository version. Do not present this proposal as a committee decision or accepted outcome. The committee fields below are reserved for a later decision, if a committee is appointed.
 
 ```text
-[Insert final conclusion here]
+Claim:
+Reviewed version (commit or release):
+Submitter-proposed outcome (R1/R2/R3, or evidence insufficient):
+Submitter’s evidence and concise reasoning:
+For proposed R3, decisive gap, outcome-divergent admissible completions, and remediation condition:
+
+Committee decision (completed only by the committee, if appointed):
+Majority vote and reasoning:
+Accepted classification or “not accepted (unresolved)”:
 ```
 
-Recommended final wording:
+Use the applicable claim- and version-specific wording to state a proposal, not an acceptance:
 
 ```text
-Based on the materials reviewed and the reconstruction performed, I classify this submission as [R1/R2/R3] because [brief reason].
+Proposed R1: I propose R1 for claim [claim], version [version], because [brief, independently checkable reproduction reasoning].
+Proposed R2: I propose R2 for claim [claim], version [version], because [constructive falsification and independently checkable reasoning].
+Proposed R3: I propose R3 for claim [claim], version [version], because [decisive gap]; admissible completion [A] supports the claim and completion [B] falsifies it. The claim can be determined if [specific artifact or rule is supplied/defined].
+Evidence insufficient: I cannot propose R1, R2, or R3 for claim [claim], version [version], because [state which evidence is insufficient]. This is not a committee disposition.
+Committee-only disposition: [record the later majority classification or “not accepted (unresolved),” votes, and reasoning here.]
 ```
 
 ---
 
 ## 24. Minimal Honest Claim
 
-This submission should support only one of the following claims.
+For each specific claim and reviewed version, this submission may propose only the matching claim below. Different claims may have different proposals. These statements do not signify committee acceptance.
 
-If R1:
-
-```text
-The GCD-001 NDC claim was reproduced under the published specification.
-```
-
-If R2:
+For a specific claim/version proposed as R1:
 
 ```text
-The GCD-001 NDC claim was falsified through a constructive demonstration.
+I propose R1 for claim [claim] for version [version]: it was reproduced under the published specification through [brief, independently checkable reasoning].
 ```
 
-If R3:
+For a specific claim/version proposed as R2:
 
 ```text
-The GCD-001 specification requires correction before deterministic reconstruction is possible.
+I propose R2 for claim [claim] for version [version]: it was constructively falsified through [brief, independently checkable counterexample].
 ```
 
-No submission should claim full validation of A-DAP.
+For a specific claim/version proposed as R3:
+
+```text
+I propose R3 for claim [claim] for version [version]: the specification requires correction before deterministic reconstruction is possible because [decisive gap and outcome-divergent admissible completions]. The claim can be determined if [specific artifact or rule is supplied/defined].
+```
+
+For the submitter’s evidence-insufficient statement:
+
+```text
+The evidence is insufficient for the submitter to propose R1, R2, or R3 for claim [claim], version [version]. Any later committee disposition is recorded separately in §23.
+```
+
+No submission should claim full validation of A-DAP. The protocol author has no vote on technical acceptance or on whether an R3 gap is material.
 
 ---
 
@@ -734,5 +779,5 @@ Reviewer name or pseudonym:
 Date:
 Version of submission:
 Commit or snapshot reviewed:
-Declared outcome:
+Submitter-proposed outcome:
 ```

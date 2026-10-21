@@ -28,7 +28,7 @@ An external verifier should be able to:
 - identify vertices and edges;
 - distinguish reconstructible claims from oracle-bound claims;
 - compute or challenge the claimed NDC;
-- classify the result as R1, R2, or R3.
+- state a submitter-proposed result per claim/version (R1/R2/R3), or state that evidence is insufficient; reserve acceptance or “not accepted (unresolved)” for a later committee disposition.
 
 The goal is not to trust the author.
 
@@ -255,7 +255,8 @@ The verifier should attempt to reconstruct:
 - oracle-boundary classification;
 - minimum vertex-cut;
 - NDC estimate;
-- final outcome classification: R1, R2, or R3.
+- submitter-proposed outcome for each claim/version (R1, R2, or R3), or a statement that evidence is insufficient to propose a technical classification;
+- later committee disposition, if a committee is appointed and reaches a majority decision.
 
 ---
 
@@ -497,7 +498,7 @@ For GCD-001, detection may include:
 
 The verifier must state which detection condition is used in the NDC calculation.
 
-If the detection condition is undefined or unstable, the result may qualify as R3.
+An undefined or unstable detection condition may support R3 only if the gap is decisive for a specific claim/version and bounded admissible completions produce different claim outcomes with independently checkable reasoning and a stated remediation condition.
 
 ---
 
@@ -520,7 +521,7 @@ Possible alteration targets include:
 
 The verifier must state the alteration condition used for the cut calculation.
 
-If the alteration condition is unclear, the result may qualify as R3.
+An unclear alteration condition may support R3 only if the gap is decisive for a specific claim/version and bounded admissible completions produce different claim outcomes with independently checkable reasoning and a stated remediation condition.
 
 ---
 
@@ -555,7 +556,7 @@ The verifier should explain:
 
 If a smaller valid cut exists than the claimed one, the result may qualify as R2.
 
-If the minimum cut cannot be determined because of ambiguity, the result may qualify as R3.
+An indeterminate minimum cut may support R3 only when the gap is decisive for the specific claim and reviewed version, with bounded admissible completions and independently checkable reasoning showing different outcomes. If the evidence does not establish R1, R2, or decisive R3, the disposition is **not accepted (unresolved)**; failure to confirm R3 does not establish R1 or R2.
 
 ---
 
@@ -578,13 +579,20 @@ If the computed value matches under the published specification, the result may 
 
 If the computed value contradicts the claim, the result may qualify as R2.
 
-If the computed value cannot be determined because the specification is ambiguous, the result may qualify as R3.
+If the computed value cannot be determined because the specification is ambiguous, the result may qualify as R3 only when the ambiguity is decisive under §11.
 
 ---
 
 ## 11. Classification Rules
 
-The verifier must classify the outcome as R1, R2, or R3.
+The verifier must state a proposed outcome for each specific claim and reviewed version. A submitter may propose R1, R2, or R3, or state that the evidence is insufficient to propose a technical classification. A submitter proposal is not a committee decision or acceptance.
+
+Apply these evidentiary requirements:
+
+- **R1 — Reproduction:** requires positive, independent, inspectable reproduction of the claim; absence of a counterexample or failure to establish R2/R3 is insufficient.
+- **R2 — Falsification:** requires a constructive, independently checkable falsification. If the falsification depends on an admissible completion of a claimed gap, it must hold under every admissible completion to take precedence over R3.
+- **R3 — Structural Ambiguity:** requires an established and decisive gap for the claim/version, with delimited admissible completions and independently checkable reasoning showing that one supports the claim and another falsifies it. State the artifact or rule needed to make the claim determinable.
+- **Not accepted (unresolved):** if the evidence does not support R1, R2, or decisive R3, do not force a technical classification. Lack of confirmation for R3 does not establish R1 or R2.
 
 ---
 
@@ -629,7 +637,7 @@ R2 is a successful adversarial finding.
 
 ### R3 — Structural Ambiguity
 
-Classify as R3 if:
+Potential sources of a gap include:
 
 - canonicalization is ambiguous;
 - artifacts are missing;
@@ -641,6 +649,8 @@ Classify as R3 if:
 - minimum cut cannot be deterministically computed;
 - oracle-boundary classification is unstable;
 - the specification permits more than one materially different reconstruction.
+
+These conditions alone do not establish R3. Accept R3 only when the gap is established and decisive for the specific claim/version, with bounded admissible completions and independently checkable reasoning showing that one supports the claim and another falsifies it, plus a remediation condition.
 
 R3 does not mean the claim is false.
 
@@ -673,19 +683,22 @@ A failed reconstruction may indicate R2 or R3.
 
 A complete reviewer submission should include:
 
-- declared outcome: R1, R2, or R3;
+- submitter-proposed outcome (R1/R2/R3), or statement that evidence is insufficient to propose a technical classification;
+- claim and reviewed repository version to which that outcome applies;
 - reviewer identity or pseudonym;
 - materials reviewed;
 - reconstruction code;
-- graph representation;
-- vertex list;
-- edge list;
-- min-cut calculation memo;
+- graph representation, or for R3, the affected graph element(s) marked **not determinable** with the specific decisive gap and bounded, outcome-divergent admissible completions;
+- vertex list, or for R3, each field not determinable with its justification and evidence that admissible completions change the claim outcome;
+- edge list, or for R3, each field not determinable with its justification and evidence that admissible completions change the claim outcome;
+- min-cut calculation memo, or for R3, the missing rule/artifact that prevents the calculation and the outcome-divergent admissible completions;
 - oracle-boundary analysis;
 - NDC calculation or challenge;
 - reproducibility instructions;
 - independence declaration;
 - technical note of 2–5 pages.
+
+For R3, the graph, vertex, edge, cut-memo, and NDC fields may be marked **not determinable** only when the submission delimits admissible alternatives, gives independently checkable reasoning for at least one completion supporting and one falsifying the claim, and states the artifact or rule that would make the claim determinable. Whenever a minimum cut is claimed, explain its sufficiency and why no smaller valid cut works. A field may not be marked not determinable solely because it is unavailable, inconvenient, or unresolved by the submitter.
 
 The submission should use `submission-template.md`.
 
@@ -749,13 +762,13 @@ A verifier should answer:
 - Are graph edges defined?
 - Are A/V roles clear?
 - Are oracle-bound claims separated?
-- What is the detection condition?
-- What is the alteration condition?
-- What candidate cuts were tested?
+- What is the detection condition, or, for a proposed R3, how does its decisive undefinedness across bounded admissible alternatives change the claim outcome, and what resolves it?
+- What is the alteration condition, or, for a proposed R3, how does its decisive undefinedness across bounded admissible alternatives change the claim outcome, and what resolves it?
+- What candidate cuts were tested, or, for a proposed R3, what admissible alternatives and independently checkable reasoning show that the decisive gap changes the claim outcome?
 - What is the minimum sufficient vertex-cut?
 - What NDC value is computed?
 - Does the computed value match the published claim?
-- Is the result R1, R2, or R3?
+- What outcome does the submitter propose for each claim/version, or is evidence insufficient to propose one? What later committee disposition, if any, was reached?
 
 ---
 

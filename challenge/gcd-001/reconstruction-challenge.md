@@ -73,7 +73,7 @@ No result should be described as independently accepted until evaluated by a non
 
 ## 4. Eligible Outcomes
 
-A valid submission must declare one of three admissible outcomes:
+A valid submission must propose one of three technical outcomes for each claim and reviewed version, or state that evidence is insufficient to propose a technical classification:
 
 - **R1 — Reproduction**
 - **R2 — Falsification**
@@ -143,7 +143,9 @@ A successful falsification improves the protocol and should not be treated as a 
 
 ## 7. R3 — Structural Ambiguity
 
-A submission qualifies as **R3 — Structural Ambiguity** if the published specification is incomplete or ambiguous enough to prevent deterministic reconstruction.
+A submission qualifies as **R3 — Structural Ambiguity** for a specific claim and reviewed repository version only if the gap is decisive. It must show at least one admissible completion of the missing artifact or undefined rule under which the claim holds and at least one admissible completion under which it fails (for example, NDC > 1 versus NDC ≤ 1).
+
+If the claim holds under every admissible completion, R1 requires positive, independent, inspectable reproduction evidence; absence of a counterexample is not reproduction. If it fails under every admissible completion, R2 requires constructive, independently checkable falsification. Failure to confirm R3 does not imply R1 or R2. An indeterminate graph element that does not change the claim’s outcome is recorded as a specification note, not R3.
 
 Valid R3 findings may include ambiguity in:
 
@@ -157,9 +159,13 @@ Valid R3 findings may include ambiguity in:
 - minimum vertex-cut reasoning;
 - dependency interpretation.
 
-A valid R3 submission should show how the ambiguity affects the reconstruction.
+A valid R3 submission must identify the exact missing artifact or undefined rule, delimit the admissible completions by the reviewed materials and stated assumptions, and give independently checkable reasoning showing the effect on the reconstruction and claim outcome. R3 acceptance requires at least two materially different admissible reconstructions or completions: one under which the claim holds and one under which it fails. If an absent artifact prevents constructing complete alternatives, demonstrate how admissible completions of that artifact can still change the claim’s outcome. The affected graph, edge, cut, or NDC may be marked **not determinable** only with this evidence; do not invent a graph or cut to fill the gap.
 
-If possible, it should demonstrate two or more materially different reconstructions permitted by the current specification.
+Every R3 finding must state a remediation condition: the specific artifact to supply or rule to define that would make the claim determinable.
+
+R3 concerns a specification-level blocker, not a reviewer’s operational difficulty. A transient access or environment failure, timeout, unavailable compute resource, or incomplete submission is not R3 by itself. Record operational failures and retry where reasonable; classify a materially incomplete submission as administratively incomplete. A required artifact missing from the published challenge package, or an undefined rule needed for reconstruction, may support R3 when its effect is demonstrated.
+
+R1, R2, or R3 applies to each identified claim under review at a stated repository release/version or commit. A submission may report different outcomes for different claims; do not classify A-DAP as a whole from one claim.
 
 ---
 
@@ -167,13 +173,15 @@ If possible, it should demonstrate two or more materially different reconstructi
 
 A valid submission should include:
 
-1. **Declared outcome**
+1. **Submitter-proposed outcome**
 
-   One of:
+   For each claim and reviewed version, propose one of:
 
    - R1 — Reproduction
    - R2 — Falsification
    - R3 — Structural Ambiguity
+
+   The submitter may instead state that evidence is insufficient to propose a technical classification. This proposal is not a committee decision or acceptance.
 
 2. **Technical note**
 
@@ -198,17 +206,20 @@ A valid submission should include:
    - table
    - other inspectable format
 
-5. **Min-cut calculation memo**
+5. **Graph and cut analysis**
 
-   The participant must explain:
+   For a determinable graph/cut, explain:
 
    - graph model used;
    - source condition;
    - target condition;
-   - detection condition;
-   - candidate cuts tested;
-   - minimum sufficient vertex-cut;
+   - detection condition, or, for a proposed R3, its decisive undefinedness with bounded admissible alternatives, independently checkable different claim outcomes, and remediation condition;
+   - alteration condition, or, for a proposed R3, its decisive undefinedness with bounded admissible alternatives, independently checkable different claim outcomes, and remediation condition;
+   - candidate cuts tested where determinable, or, for a proposed R3, bounded admissible alternatives and independently checkable reasoning showing how the decisive gap changes the claim outcome;
+   - minimum sufficient vertex-cut and why no smaller cut is sufficient;
    - NDC estimate.
+
+   If a missing artifact or undefined rule is proposed as R3, mark the affected graph or cut **not determinable** only after identifying the decisive gap, delimiting admissible alternatives, and providing independently checkable reasoning that alternatives produce different claim outcomes. State the remediation condition. Provide sufficiency and minimality reasoning whenever a minimum cut is claimed.
 
 6. **Oracle-boundary analysis**
 
@@ -257,21 +268,52 @@ No Acceptance Committee has been publicly appointed yet.
 
 Until such committee is named, no submission should be described as independently accepted.
 
-The intended committee structure is:
+The committee, when appointed, must consist of three publicly named external reviewers and must pre-name at least one alternate reviewer.
 
-- three publicly named external reviewers;
-- no voting power for the protocol author;
-- skeptical interpretation prevails in case of disagreement.
+Each committee member and alternate must provide the same independence and relationship disclosure required of submitters, including relationships with the author, repository owner, affiliated organizations, and challenge sponsor. A member with a disclosed conflict for a submission must recuse, and a pre-named alternate replaces that member for that submission.
 
-The committee should classify submissions as:
+For each claim, members must first vote separately on evidence sufficiency: whether the submitted evidence is sufficient for R1, whether it is sufficient for R2, and, for each claimed gap, whether the gap exists and whether it is decisive. These are yes/no votes. Members then vote one provisional technical classification (R1, R2, or R3). An absolute majority (2 of 3) is required for every adopted finding. No abstentions are allowed; a member who cannot decide must state why in the decision note and still cast a vote.
+
+Apply this precedence:
+
+1. **R2:** Accept R2 only with majority support for sufficient, constructive, independently checkable falsification. If the result depends on an admissible completion of a claimed gap, the falsification must hold under every admissible completion to take precedence over R3.
+2. **R3:** Otherwise, accept R3 only if a majority confirms both that the gap exists and is decisive under §7, with bounded, independently checkable admissible completions producing different outcomes and a stated remediation condition.
+3. **R1:** Otherwise, accept R1 only with majority support for sufficient, positive, independent reproduction. If admissible completions are relevant, the claim must hold under every such completion. Failure to establish R2 or R3 is not evidence for R1.
+4. **Not accepted (unresolved):** If none of these evidentiary conditions receives the required majority, record the claim as **not accepted (unresolved)**, never as R1.
+
+If the initial R1/R2/R3 classification votes split with no majority, hold two separate binary votes, without abstention:
+
+(a) Is the claimed gap established and decisive under §7? A “yes” requires a majority on both gap existence and decisiveness. If yes, classify R3 unless R2’s constructive falsification holds under every admissible completion, in which case classify R2.
+
+(b) If a majority does not confirm both the existence and decisiveness of the gap, decide between R1 and R2 only if the corresponding positive evidence-sufficiency vote has a majority. The absence of a majority for R3 does not imply R1 or R2. If neither R1 nor R2 has sufficient evidence by majority, record **not accepted (unresolved)**. Rejection of a gap allegation is not evidence for either R1 or R2.
+
+“Unresolved disagreement” means no absolute majority after this procedure. A member’s inability to decide is explained in the decision note, not treated as an abstention. A minority dissent is published but does not change the classification.
+
+Decision hierarchy:
+
+```text
+R2 over R1 when constructive falsification is valid.
+R2 over R3 when constructive falsification holds under every admissible reading.
+R3 over R1 only when a gap is established and decisive under §7.
+Invalid over R1 when independence or reproducibility is missing.
+```
+
+For worked examples of the four outcomes and unresolved evidence, see §28 of `reviewer-guidelines.md`.
+
+The protocol author has no vote on whether R1, R2, or R3 is technically accepted, or whether a gap is material. The author may clarify published terminology and administrative logistics only.
+
+The committee’s disposition for each claim/version must be recorded separately from the submitter’s proposal:
 
 - accepted R1;
 - accepted R2;
 - accepted R3;
+- not accepted (unresolved);
 - administratively incomplete;
 - technically insufficient;
 - outside scope;
 - non-reproducible.
+
+“Not accepted (unresolved)” means no technical classification obtained the required majority evidence; it is distinct from administrative incompleteness. “Technically insufficient” may describe the evidence basis, but it does not replace the required claim disposition of “not accepted (unresolved)” when no classification is established.
 
 ---
 
@@ -292,6 +334,7 @@ The author must not decide:
 - whether R1 was successfully reproduced;
 - whether R2 falsifies the claim;
 - whether R3 establishes structural ambiguity;
+- whether a claimed gap exists or is decisive;
 - whether the submission is technically accepted.
 
 This rule prevents adversarial validation from becoming self-validation with extra steps.
@@ -304,13 +347,16 @@ Before technical review, a submission may be checked for administrative complete
 
 A submission is administratively valid if it includes:
 
-- declared outcome;
+- proposed outcome (R1/R2/R3) for each claim and reviewed version, or a statement that evidence is insufficient to propose a technical classification;
 - reviewer identity or pseudonym;
 - independence declaration;
 - materials reviewed;
 - reconstruction method;
-- graph representation;
-- min-cut calculation memo;
+- graph representation, or for a proposed R3, affected graph fields marked “not determinable” with the decisive gap, outcome-divergent admissible completions, and independently checkable reasoning;
+- vertex and edge lists, or for a proposed R3, each affected field marked “not determinable” with that same decisive-gap evidence;
+- min-cut calculation memo, or for a proposed R3, the decisive gap and admissible completions demonstrating different claim outcomes; whenever a minimum cut is claimed, include sufficiency and minimality reasoning;
+- candidate cuts tested where determinable, or the same decisive-gap evidence for proposed R3;
+- detection and alteration conditions defined, or, for a proposed R3, their decisive undefinedness, bounded admissible alternatives, different claim outcomes, and remediation condition;
 - oracle-boundary analysis;
 - technical note;
 - reproducibility instructions;
@@ -442,7 +488,7 @@ Submissions sent before the official channel is declared should not be treated a
 
 ## 19. Public Disclosure
 
-After the formal challenge closes, the repository should disclose:
+After the formal challenge closes, the repository must disclose:
 
 - number of submissions received;
 - number of administratively valid submissions;
@@ -450,9 +496,12 @@ After the formal challenge closes, the repository should disclose:
 - number of accepted R2 outcomes;
 - number of accepted R3 outcomes;
 - number of invalid or incomplete submissions;
-- committee decision summary;
+- each committee member’s vote and short reasoning for each claim, including dissents and votes on the existence and decisiveness of each claimed gap;
+- any conflicts, recusals, and alternate substitutions;
 - unresolved ambiguities;
 - specification changes triggered by the challenge.
+
+Aggregate counts alone are insufficient.
 
 No result should be described as full validation of A-DAP.
 
