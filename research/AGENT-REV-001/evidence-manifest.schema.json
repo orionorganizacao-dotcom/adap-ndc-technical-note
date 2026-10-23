@@ -1,95 +1,559 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/orionorganizacao-dotcom/adap-ndc-technical-note/blob/main/research/AGENT-REV-001/evidence-manifest.schema.json",
-  "title": "AGENT-REV-001 evidence manifest v0.1",
-  "description": "Schema for a per-run evidence manifest. Structural validation does not confirm event authenticity or independent replication.",
+  "$id": "https://github.com/orionorganizacao-dotcom/adap-ndc-technical-note/blob/agent-rev-
+001/research/AGENT-REV-001/evidence-manifest.schema.json",
+  "title": "AGENT-REV-001 evidence manifest schema v0.2 (pre-execution revision)",
+  "description": "Proposed per-run 
+evidence manifest contract. Separates protocol readiness, validation status and run outcome. Schema validation can check structure and claims of evidence presence, not authenticity or independent 
+verification. The actual AGENT-REV-001 pilot remains blocked; no runs were executed.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["protocol_id", "protocol_version", "status", "run_id", "arm", "authorization", "gates", "files", "classification"],
+  "required": [
+    
+"protocol_id",
+    "protocol_version",
+    "schema_version",
+    "validation_status",
+    "protocol_readiness",
+    "run_state",
+    "run_id",
+    "arm",
+    
+"authorization",
+    "gates",
+    "files",
+    "classification"
+  ],
   "properties": {
-    "protocol_id": { "const": "AGENT-REV-001" },
-    "protocol_version": { "const": "v0.1" },
-    "status": { "const": "NOT VALIDATED — PILOT BLOCKED" },
-    "run_id": { "type": "string", "minLength": 1 },
-    "arm": { "enum": ["C0", "T1", "T2", "T3", "T4"] },
-    "recorded_at_utc": { "type": "string", "format": "date-time" },
+    "protocol_id": {
+      "const": "AGENT-REV-001"
+    },
+    
+"protocol_version": {
+      "const": "v0.1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "arm": {
+      "enum": [
+        "C0",
+        
+"T1",
+        "T2",
+        "T3",
+        "T4"
+      ]
+    },
+    "recorded_at_utc": {
+      "type": "string",
+      "format": 
+"date-time"
+    },
     "authorization": {
-      "type": "object", "additionalProperties": false,
-      "required": ["status", "scope"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "scope"
+      
+],
       "properties": {
-        "status": { "enum": ["PENDING", "APPROVED", "REJECTED"] },
-        "scope": { "type": "string", "minLength": 1 },
-        "approval_record": { "type": ["string", "null"] },
-        "approved_by": { "type": ["string", "null"] }
+        "status": {
+          "enum": [
+            "PENDING",
+            "APPROVED",
+            "REJECTED"
+          ]
+        },
+        "scope": {
+          "type": 
+"string",
+          "minLength": 1
+        },
+        "approval_record": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "approved_by": 
+{
+          "type": [
+            "string",
+            "null"
+          ]
+        }
       },
-      "allOf": [{"if": {"properties": {"status": {"const": "APPROVED"}}, "required": ["status"]}, "then": {"required": ["approval_record", "approved_by"], "properties": {"approval_record": {"type": "string", "minLength": 1}, "approved_by": {"type": "string", "minLength": 1}}}}]
+      "allOf": [
+        {
+          "if": {
+            "properties": 
+{
+              "status": {
+                "const": "APPROVED"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": 
+{
+            "required": [
+              "approval_record",
+              "approved_by"
+            ],
+            "properties": {
+              "approval_record": {
+                "type": 
+"string",
+                "minLength": 1
+              },
+              "approved_by": {
+                "type": "string",
+                "minLength": 1
+              
+}
+            }
+          }
+        }
+      ]
     },
     "gates": {
-      "type": "object", "additionalProperties": false,
-      "required": ["gate_0", "gate_1", "gate_2", "gate_3", "gate_4"],
+      "type": "object",
+      "additionalProperties": 
+false,
+      "required": [
+        "gate_0",
+        "gate_1",
+        "gate_2",
+        "gate_3",
+        "gate_4"
+      ],
       "properties": {
-        "gate_0": { "$ref": "#/$defs/gate" },
-        "gate_1": { "$ref": "#/$defs/gate" },
-        "gate_2": { "$ref": "#/$defs/gate" },
-        "gate_3": { "$ref": "#/$defs/gate" },
-        "gate_4": { "$ref": "#/$defs/gate" }
+        "gate_0": {
+          "$ref": 
+"#/$defs/gate"
+        },
+        "gate_1": {
+          "$ref": "#/$defs/gate"
+        },
+        "gate_2": {
+          "$ref": "#/$defs/gate"
+        },
+        "gate_3": 
+{
+          "$ref": "#/$defs/gate"
+        },
+        "gate_4": {
+          "$ref": "#/$defs/gate"
+        }
       }
     },
-    "frozen_git_commit": { "type": ["string", "null"], "pattern": "^[0-9a-f]{40}$" },
-    "source_snapshot": { "type": ["string", "null"] },
-    "principal_pseudonym": { "type": ["string", "null"] },
-    "session_id": { "type": ["string", "null"] },
-    "workflow_id": { "type": ["string", "null"] },
-    "deployment_id": { "type": ["string", "null"] },
-    "idempotency_key": { "type": ["string", "null"] },
+    
+"frozen_git_commit": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "source_snapshot": 
+{
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "principal_pseudonym": {
+      "type": [
+        
+"string",
+        "null"
+      ]
+    },
+    "session_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "workflow_id": 
+{
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "deployment_id": {
+      "type": [
+        "string",
+        "null"
+      
+]
+    },
+    "idempotency_key": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "files": {
-      "type": "array",
-      "items": { "$ref": "#/$defs/artifact" },
+      "type": 
+"array",
+      "items": {
+        "$ref": "#/$defs/artifact"
+      },
       "uniqueItems": true
     },
     "classification": {
-      "enum": ["DOCUMENTED_REPRODUCED", "CONTRADICTION_REPRODUCED", "POLICY_VIOLATION_TESTED", "OBSERVABILITY_GAP", "INCONCLUSIVE"]
+      "enum": [
+        
+"NOT_EVALUATED",
+        "DOCUMENTED_REPRODUCED",
+        "CONTRADICTION_REPRODUCED",
+        "POLICY_VIOLATION_TESTED",
+        
+"OBSERVABILITY_GAP",
+        "INCONCLUSIVE"
+      ]
     },
-    "limitations": { "type": "array", "items": { "type": "string" } }
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      
+}
+    },
+    "schema_version": {
+      "const": "v0.2"
+    },
+    "validation_status": {
+      "const": "NOT VALIDATED"
+    
+},
+    "protocol_readiness": {
+      "enum": [
+        "PILOT_BLOCKED",
+        "PILOT_AUTHORIZED"
+      
+]
+    },
+    "run_state": {
+      "enum": [
+        "NOT_EXECUTED",
+        "EXECUTED"
+      ]
+    }
   },
-  "allOf": [
+  "allOf": 
+[
     {
-      "if": { "properties": {"classification": {"enum": ["DOCUMENTED_REPRODUCED", "CONTRADICTION_REPRODUCED", "POLICY_VIOLATION_TESTED"]}}, "required": ["classification"] },
+      "if": {
+        "properties": {
+          "protocol_readiness": {
+            "const": "PILOT_BLOCKED"
+          }
+        
+},
+        "required": [
+          "protocol_readiness"
+        ]
+      },
       "then": {
         "properties": {
-          "authorization": { "properties": { "status": {"const": "APPROVED"} } },
-          "gates": { "properties": {
-            "gate_0": {"properties": {"status": {"const": "PASS"}}},
-            "gate_1": {"properties": {"status": {"const": "PASS"}}},
-            "gate_2": {"properties": {"status": {"const": "PASS"}}},
-            "gate_3": {"properties": {"status": {"const": "PASS"}}},
-            "gate_4": {"properties": {"status": {"const": "PASS"}}}
-          }}
+          "run_state": {
+            "const": 
+"NOT_EXECUTED"
+          },
+          "classification": {
+            "const": "NOT_EVALUATED"
+          }
+        }
+      }
+    },
+    
+{
+      "if": {
+        "properties": {
+          "run_state": {
+            "const": "NOT_EXECUTED"
+          }
         },
-        "required": ["frozen_git_commit"],
-        "properties": { "frozen_git_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" } }
+        "required": [
+          "run_state"
+        
+]
+      },
+      "then": {
+        "properties": {
+          "classification": {
+            "const": "NOT_EVALUATED"
+          }
+        }
+      
+}
+    },
+    {
+      "if": {
+        "properties": {
+          "run_state": {
+            "const": "EXECUTED"
+          }
+        },
+        "required": 
+[
+          "run_state"
+        ]
+      },
+      "then": {
+        "required": [
+          "frozen_git_commit",
+          "source_snapshot",
+          
+"recorded_at_utc",
+          "idempotency_key"
+        ],
+        "properties": {
+          "protocol_readiness": {
+            "const": 
+"PILOT_AUTHORIZED"
+          },
+          "classification": {
+            "enum": [
+              "DOCUMENTED_REPRODUCED",
+              
+"CONTRADICTION_REPRODUCED",
+              "POLICY_VIOLATION_TESTED",
+              "OBSERVABILITY_GAP",
+              "INCONCLUSIVE"
+            
+]
+          },
+          "frozen_git_commit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          
+"source_snapshot": {
+            "type": "string",
+            "minLength": 1
+          },
+          "idempotency_key": {
+            "type": "string",
+            
+"minLength": 1
+          },
+          "authorization": {
+            "properties": {
+              "status": {
+                "const": "APPROVED"
+              }
+            }
+          
+},
+          "gates": {
+            "properties": {
+              "gate_0": {
+                "properties": {
+                  "status": {
+                    "const": "PASS"
+                  }
+                
+}
+              },
+              "gate_1": {
+                "properties": {
+                  "status": {
+                    "const": "PASS"
+                  }
+                }
+              
+},
+              "gate_2": {
+                "properties": {
+                  "status": {
+                    "const": "PASS"
+                  }
+                }
+              },
+              "gate_3": 
+{
+                "properties": {
+                  "status": {
+                    "const": "PASS"
+                  }
+                }
+              },
+              "gate_4": {
+                
+"properties": {
+                  "status": {
+                    "const": "PASS"
+                  }
+                }
+              }
+            }
+          }
+        }
+      
+}
+    },
+    {
+      "if": {
+        "properties": {
+          "classification": {
+            "enum": [
+              
+"DOCUMENTED_REPRODUCED",
+              "CONTRADICTION_REPRODUCED",
+              "POLICY_VIOLATION_TESTED"
+            ]
+          }
+        
+},
+        "required": [
+          "classification"
+        ]
+      },
+      "then": {
+        "properties": {
+          "files": {
+            "minItems": 1
+          }
+        
+}
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "classification": {
+            "enum": [
+              
+"CONTRADICTION_REPRODUCED",
+              "POLICY_VIOLATION_TESTED"
+            ]
+          }
+        },
+        "required": [
+          "classification"
+        
+]
+      },
+      "then": {
+        "properties": {
+          "files": {
+            "contains": {
+              "type": "object",
+              "required": [
+                
+"independence"
+              ],
+              "properties": {
+                "independence": {
+                  "const": "OWNER_CONTROLLED_SINK"
+                }
+              
+}
+            },
+            "minContains": 1
+          }
+        }
       }
     }
   ],
   "$defs": {
-    "gate": {
-      "type": "object", "additionalProperties": false,
-      "required": ["status"],
+    "gate": 
+{
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status"
+      ],
       "properties": {
-        "status": { "enum": ["PENDING", "PASS", "FAIL", "NOT_APPLICABLE"] },
-        "evidence_ref": { "type": ["string", "null"] }
+        "status": {
+          "enum": 
+[
+            "PENDING",
+            "PASS",
+            "FAIL",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "evidence_ref": {
+          "type": [
+            
+"string",
+            "null"
+          ]
+        }
       },
-      "allOf": [{"if": {"properties": {"status": {"const": "PASS"}}, "required": ["status"]}, "then": {"required": ["evidence_ref"], "properties": {"evidence_ref": {"type": "string", "minLength": 1}}}}]
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": 
+"PASS"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              
+"evidence_ref"
+            ],
+            "properties": {
+              "evidence_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            
+}
+          }
+        }
+      ]
     },
     "artifact": {
-      "type": "object", "additionalProperties": false,
-      "required": ["path", "sha256", "independence"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": 
+[
+        "path",
+        "sha256",
+        "independence"
+      ],
       "properties": {
-        "path": { "type": "string", "minLength": 1 },
-        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-        "independence": { "enum": ["VENDOR_OPERATED", "OWNER_CONTROLLED_SINK", "THIRD_PARTY", "UNKNOWN"] },
-        "record_count": { "type": "integer", "minimum": 0 }
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": 
+{
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "independence": {
+          "enum": [
+            
+"VENDOR_OPERATED",
+            "OWNER_CONTROLLED_SINK",
+            "THIRD_PARTY",
+            "UNKNOWN"
+          ]
+        },
+        
+"record_count": {
+          "type": "integer",
+          "minimum": 0
+        }
       }
     }
   }
-}
+        }
