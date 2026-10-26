@@ -147,6 +147,9 @@
       "required": [
         "project_pseudonym",
         "workspace_pseudonym",
+        "resource_pseudonym",
+        "route",
+        "permission",
         "api_version",
         "software_versions",
         "model_environment",
@@ -163,6 +166,24 @@
         "workspace_pseudonym": {
           "type": "string",
           "minLength": 1
+        },
+        "resource_pseudonym": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "route": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "permission": {
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "api_version": {
           "type": [
