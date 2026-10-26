@@ -1,8 +1,10 @@
 # AGENT-REV-001 Amendment v0.2 — 2026-10-26
 
-**Disposition:** `NOT VALIDATED — PILOT BLOCKED`  
-**Prior protocol:** v0.1; **amended protocol:** v0.2  
-**Prior evidence schema:** v0.2; **replacement evidence schema:** v0.3  
+**Disposition:** `NOT VALIDATED — PILOT BLOCKED`
+
+**Prior protocol:** v0.1; **amended protocol:** v0.2
+
+**Prior evidence schema:** v0.2; **replacement evidence schema:** v0.3
 Protocol and schema versions are independent. This amendment records documentary and offline structural corrections only; it does not authorize or report a pilot.
 
 ## Reason and scope
@@ -25,7 +27,7 @@ SHA-256 values identify exact repository file bytes; they do not attest to evide
 
 | File | Original SHA-256 | Replacement SHA-256 |
 | --- | --- | --- |
-| `protocol.md` | `6e840b3c58b0c3ef46a7e26caf6509659c7c4d08e4d188f6cf359faa35b36bb9` | `b2af0b62c98501d0915e0b9a0f2dd8dd71bdba056dcb98908639e1aac18f9679` |
+| `protocol.md` | `6e840b3c58b0c3ef46a7e26caf6509659c7c4d08e4d188f6cf359faa35b36bb9` | `fd9194671b155a6fc0e6b2a57cea711daee68c45a0c738935735e3bf8c47611a` |
 | `test-matrix.md` | `791e0804f394a52529c1928ac827351a76d0721e81a750b9deb51b8286cd3389` | `3105c42fba326ce4770e8d6eb565b4f1fd458bd814847c5abf1de028471969b4` |
 | `reviewer-checklist.md` | `2eacf7640af149dab9eef5b0d221f06734789d698b5278967b610d2305d0a3a0` | `8b1012207a72d945f0ee63ad7dd85ad348583820d1129378ee66ad1476fce769` |
 | `evidence-manifest.schema.json` | `f81d60a09cd135caa693f21b8756fc3c987e84ee1cc80a7b8c140a65ca6556c0` | `50913a55930607a5d29e4669a85a0033772033657ef235e497b82ea2686e2768` |

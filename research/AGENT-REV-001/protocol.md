@@ -1,9 +1,12 @@
 # AGENT-REV-001 — Revocation, Persistent Authority and Auditability
 
-**Status:** `NOT VALIDATED — PILOT BLOCKED`  
-**Protocol version:** v0.2 (scoped documentary amendment, 2026-10-26)  
-**Evidence schema version:** v0.3  
-**Scope:** Claude Models on Google Cloud (Anthropic-managed) and Claude Managed Agents beta only. No finding transfers automatically to Google-managed Claude or another platform.  
+**Status:** `NOT VALIDATED — PILOT BLOCKED`
+
+**Protocol version:** v0.2 (scoped documentary amendment, 2026-10-26)
+
+**Evidence schema version:** v0.3
+
+**Scope:** Claude Models on Google Cloud (Anthropic-managed) and Claude Managed Agents beta only. No finding transfers automatically to Google-managed Claude or another platform.
 **Execution:** No live pilot, independent validation, or external reproduction is asserted or authorized by this document.
 
 ## 1. Documentary premise and boundaries
